@@ -23,6 +23,12 @@ import {MoviesList, Loading} from '@components';
 //   image500,
 // } from '../api/moviedb';
 import {styles} from '../theme';
+import {
+  image342,
+  fallbackPersonImage,
+  fetchPersonDetails,
+  fetchPersonMovies,
+} from '../Api/MoviesDb';
 
 const ios = Platform.OS == 'ios';
 const verticalMargin = ios ? '' : ' my-3';
@@ -36,27 +42,25 @@ const Actor = () => {
   const [personMovies, setPersonMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  //   useEffect(() => {
-  //     setLoading(true);
-  //     getPersonDetails(item.id);
-  //     getPersonMovies(item.id);
-  //   }, [item]);
+  useEffect(() => {
+    setLoading(true);
+    getPersonDetails(item.id);
+    getPersonMovies(item.id);
+  }, [item]);
 
-  //   const getPersonDetails = async id => {
-  //     const data = await fetchPersonDetails(id);
-  //     console.log('got person details');
-  //     setLoading(false);
-  //     if (data) {
-  //       setPerson(data);
-  //     }
-  //   };
-  //   const getPersonMovies = async id => {
-  //     const data = await fetchPersonMovies(id);
-  //     console.log('got person movies');
-  //     if (data && data.cast) {
-  //       setPersonMovies(data.cast);
-  //     }
-  //   };
+  const getPersonDetails = async id => {
+    const data = await fetchPersonDetails(id);
+    setLoading(false);
+    if (data) {
+      setPerson(data);
+    }
+  };
+  const getPersonMovies = async id => {
+    const data = await fetchPersonMovies(id);
+    if (data && data.cast) {
+      setPersonMovies(data.cast);
+    }
+  };
 
   return (
     <ScrollView
@@ -94,10 +98,10 @@ const Actor = () => {
             }}>
             <View className="items-center rounded-full overflow-hidden h-72 w-72 border-neutral-500 border-2">
               <Image
-                source={require('../assets/images/castImage1.png')}
-                // source={{
-                //   uri: image342(person?.profile_path) || fallbackPersonImage,
-                // }}
+                // source={require('../assets/images/castImage1.png')}
+                source={{
+                  uri: image342(person?.profile_path) || fallbackPersonImage,
+                }}
                 style={{height: height * 0.43, width: width * 0.74}}
               />
             </View>
@@ -116,41 +120,37 @@ const Actor = () => {
             <View className="border-r-2 border-r-neutral-400 px-2 items-center">
               <Text className="text-white font-semibold ">Gender</Text>
               <Text className="text-neutral-300 text-sm">
-                Male
-                {/* {person?.gender == 1 ? 'Female' : 'Male'} */}
+                {person?.gender == 1 ? 'Female' : 'Male'}
               </Text>
             </View>
             <View className="border-r-2 border-r-neutral-400 px-2 items-center">
               <Text className="text-white font-semibold">Birthday</Text>
               <Text className="text-neutral-300 text-sm">
-                1964-09-02
-                {/* {person?.birthday} */}
+                {person?.birthday}
               </Text>
             </View>
             <View className="border-r-2 border-r-neutral-400 px-2 items-center">
-              <Text className="text-white font-semibold">known for</Text>
+              <Text className="text-white font-semibold">Known for</Text>
               <Text className="text-neutral-300 text-sm">
-                Acting
-                {/* {person?.known_for_department} */}
+                {person?.known_for_department}
               </Text>
             </View>
             <View className="px-2 items-center">
               <Text className="text-white font-semibold">Popularity</Text>
               <Text className="text-neutral-300 text-sm">
-                84.23 %{/* {person?.popularity?.toFixed(2)} % */}
+                {person?.popularity?.toFixed(2)} %
               </Text>
             </View>
           </View>
           <View className="my-6 mx-4 space-y-2">
             <Text className="text-white text-lg">Biography</Text>
             <Text className="text-neutral-400 tracking-wide">
-              {/* {person?.biography ? person.biography : 'N/A'} */}
+              {person?.biography ? person.biography : 'N/A'}
             </Text>
           </View>
-          {/* person movies
           {person?.id && personMovies.length > 0 && (
             <MoviesList title="Movies" hideSeeAll={true} data={personMovies} />
-          )} */}
+          )}
         </View>
       )}
     </ScrollView>

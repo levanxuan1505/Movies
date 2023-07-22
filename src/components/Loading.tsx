@@ -1,10 +1,10 @@
-import {View, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import React from 'react';
 import * as Progress from 'react-native-progress';
 import {styles, theme} from '../theme';
 const {width, height} = Dimensions.get('window');
 
-const Loading = () => {
+export default function Loading() {
   return (
     <View
       style={{height, width}}
@@ -16,5 +16,4 @@ const Loading = () => {
       />
     </View>
   );
-};
-export default Loading;
+}

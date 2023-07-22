@@ -11,10 +11,15 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {image185, fallbackMoviePoster} from '../Api/MoviesDb';
+import {
+  image185,
+  image500,
+  fallbackMoviePoster,
+  imageOriginal,
+} from '../Api/MoviesDb';
 const {width, height} = Dimensions.get('window');
 
-export default function MovieList({title, hideSeeAll, data}) {
+export default function Tv({title, hideSeeAll, data}) {
   const navigation = useNavigation();
   // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
@@ -43,15 +48,25 @@ export default function MovieList({title, hideSeeAll, data}) {
                 <Image
                   // source={require('../assets/images/moviePoster1.png')}
                   source={{
-                    uri: image185(item.poster_path) || fallbackMoviePoster,
+                    uri:
+                      image500(item.logo_path) ||
+                      image500(item.poster_path) ||
+                      fallbackMoviePoster,
                   }}
                   className="rounded-3xl"
-                  style={{width: width * 0.33, height: height * 0.22}}
+                  style={{
+                    width: item.name ? width * 0.6 : width * 0.5,
+                    height: height * 0.16,
+                  }}
                 />
                 <Text className="text-neutral-300 ml-1">
-                  {item.title.length > 14
-                    ? item.title.slice(0, 14) + '...'
-                    : item.title}
+                  {item.provider_name
+                    ? item.provider_name.length > 14
+                      ? item.provider_name.slice(0, 14) + '...'
+                      : item.provider_name
+                    : item.name.length > 14
+                    ? item.name.slice(0, 14) + '...'
+                    : item.name}
                 </Text>
               </View>
             </TouchableWithoutFeedback>

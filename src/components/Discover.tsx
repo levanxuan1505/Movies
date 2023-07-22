@@ -11,10 +11,15 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {image185, fallbackMoviePoster} from '../Api/MoviesDb';
+import {
+  image185,
+  image500,
+  fallbackMoviePoster,
+  imageOriginal,
+} from '../Api/MoviesDb';
 const {width, height} = Dimensions.get('window');
 
-export default function MovieList({title, hideSeeAll, data}) {
+export default function Discover({title, hideSeeAll, data}) {
   const navigation = useNavigation();
   // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
@@ -43,10 +48,13 @@ export default function MovieList({title, hideSeeAll, data}) {
                 <Image
                   // source={require('../assets/images/moviePoster1.png')}
                   source={{
-                    uri: image185(item.poster_path) || fallbackMoviePoster,
+                    uri: image500(item.backdrop_path) || fallbackMoviePoster,
                   }}
                   className="rounded-3xl"
-                  style={{width: width * 0.33, height: height * 0.22}}
+                  style={{
+                    width: width * 0.6,
+                    height: height * 0.16,
+                  }}
                 />
                 <Text className="text-neutral-300 ml-1">
                   {item.title.length > 14

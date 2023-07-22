@@ -9,14 +9,51 @@ import {HeartIcon} from 'react-native-heroicons/solid';
 var {width, height} = Dimensions.get('window');
 import {styles, theme} from '../theme';
 import {Cast, MoviesList} from '@components';
+import {
+  fallbackMoviePoster,
+  fetchMovieCredits,
+  fetchMovieDetails,
+  fetchSimilarMovies,
+  image500,
+} from '../Api/MoviesDb';
 const MoviesScreen = () => {
+  const {params: item} = useRoute();
   const navigation = useNavigation();
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [cast, setCast] = useState([1, 2, 3, 4]);
-  const [similarMovies, setSimilarMovies] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9,
-  ]);
-  let moviesName = 'Ant-Man and the Wasp: Quantumania';
+  const [movie, setMovie] = useState({});
+  const [cast, setCast] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [isFavourite, setFavourite] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getMovieDetials(item.id);
+    getMovieCredits(item.id);
+    getSimilarMovies(item.id);
+  }, [item]);
+
+  const getMovieDetials = async id => {
+    const data = await fetchMovieDetails(id);
+    console.log('got movie details');
+    setLoading(false);
+    if (data) {
+      setMovie({...movie, ...data});
+    }
+  };
+  const getMovieCredits = async id => {
+    const data = await fetchMovieCredits(id);
+    console.log('got movie credits');
+    if (data && data.cast) {
+      setCast(data.cast);
+    }
+  };
+  const getSimilarMovies = async id => {
+    const data = await fetchSimilarMovies(id);
+    console.log('got similar movies');
+    if (data && data.results) {
+      setSimilarMovies(data.results);
+    }
+  };
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -30,16 +67,16 @@ const MoviesScreen = () => {
             style={styles.background}>
             <ChevronLeftIcon size="28" strokeWidth={2.5} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)}>
+          <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
             <HeartIcon
               size="35"
-              color={isFavorite ? theme.background : 'white'}
+              color={isFavourite ? theme.background : 'white'}
             />
           </TouchableOpacity>
         </SafeAreaView>
         <View>
           <Image
-            source={require('../assets/images/moviePoster1.png')}
+            source={{uri: image500(movie.poster_path) || fallbackMoviePoster}}
             style={{width, height: height * 0.55}}
           />
           <LinearGradient
@@ -59,25 +96,31 @@ const MoviesScreen = () => {
       <View style={{marginTop: -(height * 0.09)}} className="space-y-3">
         {/* title */}
         <Text className="text-white text-center text-3xl font-bold tracking-wider">
-          {moviesName}
+          {item.title}
         </Text>
         {/* status release runtiime */}
-        <Text className="text-neutral-400 text-center text-base font-bold font-semibold">
-          Released * 2020 * 170 min
-        </Text>
+        {movie?.id ? (
+          <Text className="text-neutral-400 font-semibold text-base text-center">
+            {movie?.status} • {movie?.release_date?.split('-')[0] || 'N/A'} •{' '}
+            {movie?.runtime} min
+          </Text>
+        ) : null}
         <View className="flex-row justify-center mx-4 space-x-2">
-          <Text className="text-neutral-400 text-center text-base font-bold font-semibold">
-            Action *
-          </Text>
-          <Text className="text-neutral-400 text-center text-base font-bold font-semibold">
-            Thrill *
-          </Text>
-          <Text className="text-neutral-400 text-center text-base font-bold font-semibold">
-            Comendy
-          </Text>
+          {movie?.genres?.map((genre, index) => {
+            let showDot = index + 1 != movie.genres.length;
+            return (
+              <Text
+                key={index}
+                className="text-neutral-400 font-semibold text-base text-center">
+                {genre?.name} {showDot ? '•' : null}
+              </Text>
+            );
+          })}
         </View>
         {/* description */}
-        <Text className="text-neutral-400 mx-4 tracking-wide">Abc</Text>
+        <Text className="text-neutral-400 mx-4 tracking-wide">
+          {movie?.overview}
+        </Text>
       </View>
       {/* Cast */}
       <Cast cast={cast} navigation={navigation} />

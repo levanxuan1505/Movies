@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@react-navigation/stack": "^6.3.17",
+    "axios": "^1.4.0",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.72.3",
@@ -33,8 +34,7 @@
     "react-native-star-rating": "^1.1.0",
     "react-native-svg": "^13.10.0",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-virtualized-view": "^1.0.0",
-    "twrnc": "^3.6.3"
+    "react-native-virtualized-view": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
