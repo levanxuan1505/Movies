@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions":{
+    "noImplicitAny":false,
+    "strict":true,
+    // Path alias config
+    "baseUrl": ".",
+    "paths": {
+
+      "@components": ["src/components/index"],
+      "@constants": ["src/constants/index"],
+      "@navigators": ["src/navigators/index"],
+      "@screens": ["src/screens/index"],
+      "@utils": ["src/utils/index"],
+      "@css/*":["src/css/*"],
+      "@theme/*":["src/theme/*"]
+      
+      
+    }
+  },
+}
