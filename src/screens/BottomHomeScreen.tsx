@@ -11,14 +11,11 @@ import HomeScreen from './HomeScreen';
 import SportScreen from './SportScreen';
 import HBOScreen from './HBOScreen';
 import TelevisionScreen from './TelevisionScreen';
-import tw from 'twrnc';
-
 // redux import
 // import {useSelector} from 'react-redux';
 import {Display} from '@utils';
 //
 const Tab = createBottomTabNavigator();
-
 export default function BottomHomeScreen() {
   //reduxSelector
   //   const notification = useSelector((state: any) => state.notification);

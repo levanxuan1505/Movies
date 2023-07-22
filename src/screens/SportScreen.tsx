@@ -3,7 +3,7 @@ import React from 'react';
 
 const SportScreen = () => {
   return (
-    <View className="mt-8 px-2">
+    <View className="">
       <Text className="text-2xl text-black dark:text-white">
         React native CLI
       </Text>

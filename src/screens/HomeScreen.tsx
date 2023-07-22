@@ -6,7 +6,6 @@ import {
   Bars3CenterLeftIcon,
   MagnifyingGlassIcon,
 } from 'react-native-heroicons/outline';
-import tw from 'twrnc';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../theme';
 import {TrendingMovies, MoviesList} from '@components';
@@ -17,11 +16,11 @@ const HomeScreen = () => {
   const [upComingMovies, setUpComingMovies] = useState([1, 2, 3, 4]);
   const [topRatedMovies, setTopRatedMovies] = useState([1, 2, 3, 4]);
   return (
-    <View style={tw`flex-1 bg-neutral-800 `}>
-      <SafeAreaView style={tw`{ios} ? -mb-2 : -mb-3 bg-transparent `}>
-        <View style={tw`flex-row justify-between items-center mx-4 `}>
+    <View className="flex-1 bg-neutral-800 ">
+      <SafeAreaView className="{ios} ? -mb-2 : -mb-3 bg-transparent">
+        <View className="flex-row justify-between items-center mx-4">
           <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
-          <Text style={tw`text-white text-3xl font-bold`}>
+          <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>Vie_</Text>On
           </Text>
           <TouchableOpacity>
