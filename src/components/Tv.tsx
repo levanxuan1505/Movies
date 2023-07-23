@@ -19,7 +19,7 @@ import {
 } from '../Api/MoviesDb';
 const {width, height} = Dimensions.get('window');
 
-export default function Tv({title, hideSeeAll, data}) {
+export default function Tv({name, title, hideSeeAll, data}) {
   const navigation = useNavigation();
   // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
@@ -44,28 +44,25 @@ export default function Tv({title, hideSeeAll, data}) {
             <TouchableWithoutFeedback
               key={index}
               onPress={() => navigation.push('Movies', item)}>
-              <View className="space-y-1 mr-4">
+              <View className="space-y-1 mr-4 justify-center">
                 <Image
                   // source={require('../assets/images/moviePoster1.png')}
                   source={{
-                    uri:
-                      image500(item.logo_path) ||
-                      image500(item.poster_path) ||
-                      fallbackMoviePoster,
+                    uri: image500(item[name]) || fallbackMoviePoster,
                   }}
                   className="rounded-3xl"
                   style={{
-                    width: item.name ? width * 0.6 : width * 0.5,
-                    height: height * 0.16,
+                    width: item.name ? width * 0.7 : width * 0.46,
+                    height: item.name ? height * 0.17 : height * 0.14,
                   }}
                 />
                 <Text className="text-neutral-300 ml-1">
                   {item.provider_name
-                    ? item.provider_name.length > 14
-                      ? item.provider_name.slice(0, 14) + '...'
+                    ? item.provider_name.length > 18
+                      ? item.provider_name.slice(0, 18) + '...'
                       : item.provider_name
-                    : item.name.length > 14
-                    ? item.name.slice(0, 14) + '...'
+                    : item.name.length > 30
+                    ? item.name.slice(0, 30) + '...'
                     : item.name}
                 </Text>
               </View>

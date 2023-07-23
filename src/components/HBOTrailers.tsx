@@ -25,7 +25,11 @@ const HBOTrailers = ({title, hideSeeAll, data, firstItem}) => {
         {!hideSeeAll && (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('SeeAll', {title: title, data: data})
+              navigation.navigate('SeeAllHBO', {
+                title: title,
+                data: data,
+                firstItem: firstItem,
+              })
             }>
             <Text style={styles.text} className="text-lg">
               See All
@@ -39,7 +43,7 @@ const HBOTrailers = ({title, hideSeeAll, data, firstItem}) => {
           <MovieCard handleClick={handleClick} item={item} />
         )}
         firstItem={firstItem}
-        // loop={true}
+        loop={true}
         inactiveSlideScale={0.55}
         inactiveSlideOpacity={0.6}
         sliderWidth={width}

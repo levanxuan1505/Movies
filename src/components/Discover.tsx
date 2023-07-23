@@ -21,7 +21,6 @@ const {width, height} = Dimensions.get('window');
 
 export default function Discover({title, hideSeeAll, data}) {
   const navigation = useNavigation();
-  // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">
@@ -57,8 +56,8 @@ export default function Discover({title, hideSeeAll, data}) {
                   }}
                 />
                 <Text className="text-neutral-300 ml-1">
-                  {item.title.length > 14
-                    ? item.title.slice(0, 14) + '...'
+                  {item.title.length > 33
+                    ? item.title.slice(0, 33) + '...'
                     : item.title}
                 </Text>
               </View>

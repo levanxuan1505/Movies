@@ -2,7 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 import {View, Text, Dimensions, Image, ImageBackground} from 'react-native';
 import React from 'react';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -10,26 +10,45 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {image500} from '../Api/MoviesDb';
 var {width, height} = Dimensions.get('window');
-const HBOTrending = ({data}) => {
+const HBOTrending = ({data, name}) => {
   const navigation = useNavigation();
   const handleClick = item => {
     navigation.navigate('Movies', item);
   };
+  const [index, setIndex] = React.useState(data.length / 2);
+  const isCarousel = React.useRef(null);
   return (
-    <View className="mb-8">
-      <Text className="text-white text-xl mx-4 mb-5">HBO GO</Text>
+    <View className="mb-8" style={{marginBottom: -15}}>
+      <Text className="text-white text-xl mx-4 mb-5">{name}</Text>
       <Carousel
         data={data}
         renderItem={({item}) => (
           <MovieCard handleClick={handleClick} item={item} />
         )}
         firstItem={data.length / 2}
-        // loop={true}
-        // inactiveSlideScale={0.86}
+        loop={true}
+        inactiveSlideScale={0.88}
+        ref={isCarousel}
+        onSnapToItem={index => setIndex(index)}
         inactiveSlideOpacity={0.6}
         sliderWidth={width}
         itemWidth={width * 0.62}
         slideStyle={{display: 'flex', alignItems: 'center'}}
+      />
+      <Pagination
+        dotsLength={data.length}
+        activeDotIndex={index}
+        carouselRef={isCarousel}
+        dotStyle={{
+          width: 10,
+          height: 10,
+          borderRadius: 10,
+          marginHorizontal: -10,
+          backgroundColor: 'rgba(0, 0, 0, 0.92)',
+        }}
+        inactiveDotOpacity={0.6}
+        inactiveDotScale={0.5}
+        tappableDots={true}
       />
     </View>
   );

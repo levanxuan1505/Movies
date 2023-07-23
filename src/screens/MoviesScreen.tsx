@@ -34,7 +34,7 @@ const MoviesScreen = () => {
 
   const getMovieDetials = async id => {
     const data = await fetchMovieDetails(id);
-    console.log('got movie details');
+    // console.log('got movie details');
     setLoading(false);
     if (data) {
       setMovie({...movie, ...data});
@@ -42,14 +42,14 @@ const MoviesScreen = () => {
   };
   const getMovieCredits = async id => {
     const data = await fetchMovieCredits(id);
-    console.log('got movie credits');
+    // console.log('got movie credits');
     if (data && data.cast) {
       setCast(data.cast);
     }
   };
   const getSimilarMovies = async id => {
     const data = await fetchSimilarMovies(id);
-    console.log('got similar movies');
+    // console.log('got similar movies');
     if (data && data.results) {
       setSimilarMovies(data.results);
     }
@@ -87,7 +87,7 @@ const MoviesScreen = () => {
           <LinearGradient
             colors={[
               'transparent',
-              'rgba(23, 23, 23, 0.8)',
+              'rgba(23, 23, 23, 0.6)',
               'rgba(23, 23, 23, 1)',
             ]}
             className="absolute bottom-0"

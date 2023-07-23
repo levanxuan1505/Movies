@@ -8,22 +8,22 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {image500} from '../Api/MoviesDb';
 var {width, height} = Dimensions.get('window');
-const TrendingMovies = ({data}) => {
+const TrendingMovies = ({data, name}) => {
   const navigation = useNavigation();
   const handleClick = item => {
     navigation.navigate('Movies', item);
   };
   return (
     <View className="mb-8">
-      <Text className="text-white text-xl mx-4 mb-5">Trending</Text>
+      <Text className="text-white text-xl mx-4 mb-5">{name}</Text>
       <Carousel
         data={data}
         renderItem={({item}) => (
           <MovieCard handleClick={handleClick} item={item} />
         )}
         firstItem={1}
-        // loop={true}
-        // inactiveSlideScale={0.86}
+        loop={true}
+        inactiveSlideScale={0.88}
         inactiveSlideOpacity={0.6}
         sliderWidth={width}
         itemWidth={width * 0.62}

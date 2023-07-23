@@ -13,13 +13,16 @@ import React, {useCallback, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {XMarkIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
-import {fallbackMoviePoster, image185, searchMovies} from '../Api/MoviesDb';
+import {fallbackMoviePoster, image500, searchMovies} from '../Api/MoviesDb';
 import {debounce} from 'lodash';
 import {Loading} from '@components';
 
 const {width, height} = Dimensions.get('window');
 
-const SearchScreen = () => {
+const SearchScreen = ({route}) => {
+  const data = route.params.name;
+
+  const search = data ? 'Search ' + data : 'Search Movies';
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
@@ -50,12 +53,14 @@ const SearchScreen = () => {
       <View className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full">
         <TextInput
           onChangeText={handleTextDebounce}
-          placeholder="Search Movies..."
+          placeholder={search}
           placeholderTextColor={'lightgray'}
           value={debounce(handleSearch)}
           className="pb-1 pl-6 flex-1 text-base font-semibold text-white tracking-wider"
         />
-        <TouchableOpacity className="rounded-full p-3 m-1 bg-neutral-500">
+        <TouchableOpacity
+          className="rounded-full p-3 m-1 bg-neutral-500"
+          onPress={() => navigation.goBack()}>
           <XMarkIcon size="25" color="white" />
         </TouchableOpacity>
       </View>
@@ -80,7 +85,7 @@ const SearchScreen = () => {
                   <View className="space-y-2 mb-4">
                     <Image
                       source={{
-                        uri: image185(item.poster_path) || fallbackMoviePoster,
+                        uri: image500(item.poster_path) || fallbackMoviePoster,
                       }}
                       //   source={require('../assets/images/moviePoster1.png')}
                       className="rounded-3xl"

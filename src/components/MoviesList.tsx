@@ -16,7 +16,6 @@ const {width, height} = Dimensions.get('window');
 
 export default function MovieList({title, hideSeeAll, data}) {
   const navigation = useNavigation();
-  // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">

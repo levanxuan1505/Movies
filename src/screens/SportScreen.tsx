@@ -1,10 +1,10 @@
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {View, Text, Platform, RefreshControl} from 'react-native';
+import {View, Text, Platform, Dimensions, RefreshControl} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {MagnifyingGlassIcon, FilmIcon} from 'react-native-heroicons/outline';
+import {MagnifyingGlassIcon, BoltIcon} from 'react-native-heroicons/outline';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../theme';
 import {
@@ -15,6 +15,7 @@ import {
   HBOTrailers,
   Tv,
   HBODiscover,
+  Discover,
 } from '@components';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -26,8 +27,8 @@ import {
   fetchTvChannelsMovies,
   fetchTvMovies,
 } from '../Api/MoviesDb';
-const ios = Platform.OS === 'ios';
-const android = Platform.OS === 'android';
+import {YoutubeID} from '@constants';
+var {width} = Dimensions.get('window');
 const SportScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -75,38 +76,50 @@ const SportScreen = () => {
   };
   const getNowPlayingMovies = async () => {
     const data = await fetchNowPlayingMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setNowPlayingMovies(data.results);
     setIsLoadingMovies(false);
   };
   const getDiscoverMovies = async () => {
     const data = await fetchDiscoverMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setDiscoverMovies(data.results);
     setIsLoadingMovies(false);
   };
   const getTvMovies = async () => {
     const data = await fetchTvMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setTv(data.results);
     setIsLoadingMovies(false);
   };
   const getTvChannelsMovies = async () => {
     const data = await fetchTvChannelsMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setTvChannels(data.results);
     setIsLoadingMovies(false);
   };
   return (
-    <View className="flex-1 bg-neutral-800 ">
-      <SafeAreaView className="{ios} ? -mb-2 : -mb-3 bg-transparent">
-        <View className="flex-row justify-between items-center mx-4">
-          <FilmIcon size={30} strokeWidth={2} color="white" />
+    <View style={{position: 'relative'}} className="flex-1 bg-neutral-800">
+      <SafeAreaView
+        style={{
+          backgroundColor: 'rgba(38, 38, 38, 0.7)',
+          position: 'absolute',
+          paddingBottom: -25,
+          paddingTop: -8,
+          zIndex: 1,
+        }}
+        className="{ios} ? -mb-2 : -mb-3 ">
+        <View
+          style={{width: width, paddingHorizontal: 20}}
+          className="flex-row justify-between items-center ">
+          <BoltIcon size={30} strokeWidth={2} color="white" />
 
           <Text className="text-white text-3xl font-bold">
-            <Text style={styles.text}>---HBO_</Text>GO---
+            <Text style={styles.text}>---SPO</Text>
+            <Text style={styles.bluText}>RTS---</Text>
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Search', {name: 'Sports'})}>
             <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
           </TouchableOpacity>
         </View>
@@ -115,13 +128,15 @@ const SportScreen = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 10}}>
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom: 10, paddingTop: 100}}>
         {/* trending */}
-        {discoverMovies.length > 0 && <HBOTrending data={discoverMovies} />}
+        {discoverMovies.length > 0 && (
+          <HBOTrending name="Trending" data={discoverMovies} />
+        )}
         {upComingMovies.length > 0 && (
           <HBOList
-            title="HBO Movies"
+            title="Premier League"
             logo="GO"
             hideSeeAll={false}
             data={upComingMovies}
@@ -129,64 +144,66 @@ const SportScreen = () => {
         )}
         {topRatedMovies.length > 0 && (
           <HBOList
-            title="HBO Top Rated"
+            title="Highlights"
             logo="GO"
             hideSeeAll={false}
             data={topRatedMovies}
           />
         )}
         <HBOList
-          title="HBO Max"
+          title="Roland Garros 2023"
           logo="MAX"
           hideSeeAll={false}
           data={upComingMovies}
         />
         <HBOList
-          title="Now Playing"
+          title="VBA 2023"
           logo="GO"
           hideSeeAll={false}
           data={nowPlayingMovies}
         />
         <HBOList
-          title="Popular"
+          title="Now Playing"
           logo="GO"
           hideSeeAll={false}
           data={upComingMovies}
         />
-        <HBODiscover
-          title="Discover"
+        <Discover title="Serie A" hideSeeAll={false} data={discoverMovies} />
+        <HBOTrailers
+          title="Fomula 1"
+          firstItem={0}
+          hideSeeAll={false}
+          data={YoutubeID[3]}
+        />
+        <HBOList
+          title="Sea Games 32"
           logo="GO"
           hideSeeAll={false}
-          data={discoverMovies}
+          data={upComingMovies}
+        />
+        <HBOList
+          title="Bundesliga"
+          logo="GO"
+          hideSeeAll={false}
+          data={upComingMovies}
+        />
+        <HBOList
+          title="TV Sport Channels"
+          logo="GO"
+          hideSeeAll={false}
+          data={upComingMovies}
+        />
+        <HBOList
+          title="V-League"
+          logo="GO"
+          hideSeeAll={false}
+          data={upComingMovies}
         />
         <HBOTrailers
-          // title="Movies Theater"
-          // hideSeeAll={false}
-          data={upComingMovies}
-        />
-        <HBOList
-          title="Disney"
-          logo="GO"
+          firstItem={1}
+          title="Road to Qatar"
           hideSeeAll={false}
-          data={upComingMovies}
-        />
-        <HBOList
-          title="Movies For Kids"
-          logo="GO"
-          hideSeeAll={false}
-          data={upComingMovies}
-        />
-        <HBOList
-          title="Sports"
-          logo="GO"
-          hideSeeAll={false}
-          data={upComingMovies}
-        />
-        <HBOList
-          title="Tv Shows"
-          logo="GO"
-          hideSeeAll={false}
-          data={upComingMovies}
+          data={YoutubeID[4]}
         />
       </ScrollView>
     </View>

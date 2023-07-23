@@ -1,21 +1,22 @@
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {View, Text, Platform, RefreshControl} from 'react-native';
+import {View, Text, Platform, RefreshControl, Dimensions} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {MagnifyingGlassIcon, FilmIcon} from 'react-native-heroicons/outline';
+import {MagnifyingGlassIcon, TvIcon} from 'react-native-heroicons/outline';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../theme';
 import {
-  HBOTrending,
-  HBOList,
-  MoviesList,
-  Loading,
-  HBOTrailers,
   Tv,
-  HBODiscover,
+  Loading,
+  Discover,
+  HBOList,
+  HBOTrending,
+  HBOTrailers,
+  TrendingMovies,
 } from '@components';
+var {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {
   fetchTrendingMovies,
@@ -75,38 +76,50 @@ const TelevisionScreen = () => {
   };
   const getNowPlayingMovies = async () => {
     const data = await fetchNowPlayingMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setNowPlayingMovies(data.results);
     setIsLoadingMovies(false);
   };
   const getDiscoverMovies = async () => {
     const data = await fetchDiscoverMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setDiscoverMovies(data.results);
     setIsLoadingMovies(false);
   };
   const getTvMovies = async () => {
     const data = await fetchTvMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setTv(data.results);
     setIsLoadingMovies(false);
   };
   const getTvChannelsMovies = async () => {
     const data = await fetchTvChannelsMovies();
-    console.log(data);
+    // console.log(data);
     if (data && data.results) setTvChannels(data.results);
     setIsLoadingMovies(false);
   };
   return (
     <View className="flex-1 bg-neutral-800 ">
-      <SafeAreaView className="{ios} ? -mb-2 : -mb-3 bg-transparent">
-        <View className="flex-row justify-between items-center mx-4">
-          <FilmIcon size={30} strokeWidth={2} color="white" />
+      <SafeAreaView
+        style={{
+          backgroundColor: 'rgba(38, 38, 38, 0.7)',
+          position: 'absolute',
+          paddingBottom: -25,
+          paddingTop: -8,
+          zIndex: 1,
+        }}
+        className="{ios} ? -mb-2 : -mb-3 ">
+        <View
+          style={{width: width, paddingHorizontal: 20}}
+          className="flex-row justify-between items-center ">
+          <TvIcon size={30} strokeWidth={2} color="white" />
 
           <Text className="text-white text-3xl font-bold">
-            <Text style={styles.text}>---HBO_</Text>GO---
+            <Text style={styles.text}>---TELEVI</Text>
+            <Text style={styles.secondaryText}>SIONS---</Text>
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Search', {name: 'Sports'})}>
             <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
           </TouchableOpacity>
         </View>
@@ -115,18 +128,30 @@ const TelevisionScreen = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 10}}>
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom: 10, paddingTop: 100}}>
         {/* trending */}
-        {discoverMovies.length > 0 && <HBOTrending data={discoverMovies} />}
-        {upComingMovies.length > 0 && (
-          <HBOList
-            title="HBO Movies"
-            logo="GO"
-            hideSeeAll={false}
-            data={upComingMovies}
-          />
+        {tvChannels.length > 0 && (
+          <TrendingMovies name={'TV Shows'} data={tvChannels} />
         )}
+        <Tv
+          name="poster_path"
+          title="TV Channel"
+          hideSeeAll={false}
+          data={tvChannels}
+        />
+        <Tv
+          name="backdrop_path"
+          title="TV Shows"
+          hideSeeAll={false}
+          data={tvChannels}
+        />
+        <Tv
+          name="logo_path"
+          title="Social Channels"
+          hideSeeAll={false}
+          data={tv}
+        />
         {topRatedMovies.length > 0 && (
           <HBOList
             title="HBO Top Rated"
@@ -153,17 +178,7 @@ const TelevisionScreen = () => {
           hideSeeAll={false}
           data={upComingMovies}
         />
-        <HBODiscover
-          title="Discover"
-          logo="GO"
-          hideSeeAll={false}
-          data={discoverMovies}
-        />
-        <HBOTrailers
-          // title="Movies Theater"
-          // hideSeeAll={false}
-          data={upComingMovies}
-        />
+        <Discover title="Discover" hideSeeAll={false} data={discoverMovies} />
         <HBOList
           title="Disney"
           logo="GO"

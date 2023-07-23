@@ -7,6 +7,7 @@ import {
   MoviesScreen,
   SearchScreen,
   SeeAllScreen,
+  SeeAllHBOScreen,
 } from '@screens';
 
 const Stack = createStackNavigator();
@@ -20,6 +21,7 @@ const Navigators = () => {
         <Stack.Screen name="Actor" component={ActorScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="SeeAll" component={SeeAllScreen} />
+        <Stack.Screen name="SeeAllHBO" component={SeeAllHBOScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

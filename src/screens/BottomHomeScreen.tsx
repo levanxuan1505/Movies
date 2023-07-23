@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import {Platform} from 'react-native';
+import {Platform, Animated} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -11,26 +11,26 @@ import HomeScreen from './HomeScreen';
 import SportScreen from './SportScreen';
 import HBOScreen from './HBOScreen';
 import TelevisionScreen from './TelevisionScreen';
-// redux import
-// import {useSelector} from 'react-redux';
+
+const av = new Animated.Value(0);
+av.addListener(() => {
+  return;
+});
 import {Display} from '@utils';
 //
 const Tab = createBottomTabNavigator();
 export default function BottomHomeScreen() {
-  //reduxSelector
-  //   const notification = useSelector((state: any) => state.notification);
-  //   const bookmark = useSelector((state: any) => state.bookmark);
-  //   const userName = useSelector((state: any) => state.user);
-  //   const cart = useSelector((state: any) => state.cart);
-  //   const enoughCondition = userName[0].userName && cart.length;
-  //   const enoughBookmark = userName[0].userName && bookmark.length;
-  //   //using Redux Toolkit
-  //   const badgeHome = userName[0].userName && notification.length;
-  //   const badgeCart = enoughCondition;
-  //   const badgeBookmark = bookmark.length;
-  //
   return (
     <Tab.Navigator
+      screenListeners={{
+        focus: () => {
+          Animated.timing(av, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+          }).start();
+        },
+      }}
       screenOptions={{
         tabBarActiveTintColor: Colors.DEFAULT_GREEN,
         // tabBarShowLabel: false,
@@ -67,13 +67,13 @@ export default function BottomHomeScreen() {
         }}
       />
       <Tab.Screen
-        name="Sport"
+        name="Sports"
         component={SportScreen}
         options={{
           // tabBarBadge: enoughBookmark ? badgeBookmark : null,
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="sports-rugby" size={28} color={color} />
+            <Icon name="sports-esports" size={28} color={color} />
           ),
         }}
       />
