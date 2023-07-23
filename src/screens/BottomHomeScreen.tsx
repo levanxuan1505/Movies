@@ -78,7 +78,7 @@ export default function BottomHomeScreen() {
         }}
       />
       <Tab.Screen
-        name="HBO"
+        name="HBO GO"
         component={HBOScreen}
         options={{
           // tabBarBadge: badgeHome ? badgeHome : null,

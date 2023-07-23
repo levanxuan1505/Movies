@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableWithoutFeedback,
+  ImageBackground,
   Image,
   Dimensions,
   TouchableOpacity,
@@ -11,10 +12,10 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
+import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 const {width, height} = Dimensions.get('window');
 
-export default function MovieList({title, hideSeeAll, data}) {
+export default function HBOList({title, logo, hideSeeAll, data}) {
   const navigation = useNavigation();
   // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
@@ -43,14 +44,40 @@ export default function MovieList({title, hideSeeAll, data}) {
               key={index}
               onPress={() => navigation.push('Movies', item)}>
               <View className="space-y-1 mr-4">
-                <Image
-                  // source={require('../assets/images/moviePoster1.png')}
+                <ImageBackground
                   source={{
                     uri: image500(item.poster_path) || fallbackMoviePoster,
                   }}
-                  className="rounded-3xl"
-                  style={{width: width * 0.33, height: height * 0.22}}
-                />
+                  style={{
+                    position: 'relative',
+                    width: width * 0.33,
+                    height: height * 0.22,
+                  }}>
+                  <Image
+                    source={
+                      logo === 'GO'
+                        ? require('../assets/images/logoHBO.png')
+                        : require('../assets/images/hboMaxlogo.png')
+                    }
+                    style={
+                      logo === 'GO'
+                        ? {
+                            position: 'absolute',
+                            left: -2,
+                            top: -9,
+                            width: width * 0.14,
+                            height: height * 0.04,
+                          }
+                        : {
+                            position: 'absolute',
+                            top: 4,
+                            left: 4,
+                            width: width * 0.13,
+                            height: height * 0.01,
+                          }
+                    }
+                  />
+                </ImageBackground>
                 <Text className="text-neutral-300 ml-1">
                   {item.title.length > 14
                     ? item.title.slice(0, 14) + '...'

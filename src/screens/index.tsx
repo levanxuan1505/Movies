@@ -6,6 +6,7 @@ import HBOScreen from './HBOScreen';
 import MoviesScreen from './MoviesScreen';
 import ActorScreen from './ActorScreen';
 import SearchScreen from './SearchScreen';
+import SeeAllScreen from './SeeAllScreen';
 export {
   HBOScreen,
   HomeScreen,
@@ -13,6 +14,7 @@ export {
   SportScreen,
   MoviesScreen,
   SearchScreen,
+  SeeAllScreen,
   TelevisionScreen,
   BottomHomeScreen,
 };

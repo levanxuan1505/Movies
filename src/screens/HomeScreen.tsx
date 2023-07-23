@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {View, Text, Platform, RefreshControl} from 'react-native';
+import {View, Text, Platform, RefreshControl, LogBox} from 'react-native';
+LogBox.ignoreLogs(['Sending...']);
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {

@@ -76,7 +76,12 @@ const MoviesScreen = () => {
         </SafeAreaView>
         <View>
           <Image
-            source={{uri: image500(movie.poster_path) || fallbackMoviePoster}}
+            source={{
+              uri:
+                image500(movie.poster_path) ||
+                image500(item.logo_path) ||
+                fallbackMoviePoster,
+            }}
             style={{width, height: height * 0.55}}
           />
           <LinearGradient
