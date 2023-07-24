@@ -11,17 +11,12 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {
-  image185,
-  image500,
-  fallbackMoviePoster,
-  imageOriginal,
-} from '../Api/MoviesDb';
+import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
+
 const {width, height} = Dimensions.get('window');
 
 export default function Tv({name, title, hideSeeAll, data}) {
   const navigation = useNavigation();
-  // const moviesName = 'Ant-Man and the Wasp: Quantumania';
   return (
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">

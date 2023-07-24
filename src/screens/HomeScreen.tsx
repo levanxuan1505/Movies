@@ -122,7 +122,9 @@ const HomeScreen = () => {
         <View
           style={{width: width, paddingHorizontal: 20}}
           className="flex-row justify-between items-center ">
-          <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
+          <TouchableOpacity onPress={() => navigation.navigate('DrawerScreen')}>
+            <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
+          </TouchableOpacity>
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---VIE_</Text>
             <Text style={styles.yellowColor}>ON---</Text>

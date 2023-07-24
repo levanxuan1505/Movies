@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import {image185, fallbackPersonImage} from '../Api/MoviesDb';
-// import {fallbackPersonImage, image185, image342} from '../api/moviedb';
 var {width, height} = Dimensions.get('window');
 export default function Cast({cast, navigation}) {
   return (

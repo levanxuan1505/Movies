@@ -22,7 +22,10 @@ export default function HBODiscover({title, hideSeeAll, data}) {
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg">{title}</Text>
         {!hideSeeAll && (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('SeeAll', {title: title, data: data})
+            }>
             <Text style={styles.text} className="text-lg">
               See All
             </Text>

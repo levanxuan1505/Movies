@@ -11,12 +11,7 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {
-  image185,
-  image500,
-  fallbackMoviePoster,
-  imageOriginal,
-} from '../Api/MoviesDb';
+import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
 const {width, height} = Dimensions.get('window');
 
 export default function Discover({title, hideSeeAll, data}) {

@@ -203,7 +203,7 @@ const HBOScreen = () => {
           title="Movies For Kids"
           logo="GO"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={topRatedMovies}
         />
         <HBOList
           title="MAX Sports"

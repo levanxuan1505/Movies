@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable curly */
 import {
   View,
@@ -37,9 +38,19 @@ const SeeAllScreen = ({route}) => {
   const [results, setResults] = useState(data);
   // const results = data;
   return (
-    <View className="flex-1 bg-neutral-800 ">
-      <SafeAreaView className="{ios} ? -mb-2 : -mb-3 bg-transparent">
-        <View className="flex-row justify-between items-center mx-4">
+    <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
+      <SafeAreaView
+        style={{
+          backgroundColor: 'rgba(38, 38, 38, 0.7)',
+          position: 'absolute',
+          zIndex: 1,
+          paddingBottom: -25,
+          paddingTop: -8,
+        }}
+        className="{ios} ? -mb-2 : -mb-3">
+        <View
+          style={{width: width, paddingHorizontal: 20}}
+          className="flex-row justify-between items-center">
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="rounded-xl p-1"
@@ -65,7 +76,7 @@ const SeeAllScreen = ({route}) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15}}
+          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
           className="space-y-3">
           <Text className="text-white font-semibold ml-1">
             Results ({results.length})

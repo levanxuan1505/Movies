@@ -3,10 +3,7 @@
 import {View, Text, Dimensions, Image, ImageBackground} from 'react-native';
 import React from 'react';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {image500} from '../Api/MoviesDb';
 var {width, height} = Dimensions.get('window');

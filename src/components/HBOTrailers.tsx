@@ -62,25 +62,6 @@ const HBOTrailers = ({title, hideSeeAll, data, firstItem}) => {
 const MovieCard = ({item, handleClick}) => {
   return (
     <TouchableWithoutFeedback onPress={() => handleClick(item)}>
-      {/* <ImageBackground
-        source={{uri: image500(item.poster_path)}}
-        style={{
-          position: 'relative',
-          width: width * 0.6,
-          height: height * 0.4,
-        }}>
-        <Image
-          source={require('../assets/images/logoHBO.png')}
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: -8,
-            width: width * 0.2,
-            height: height * 0.06,
-          }}
-          // className="rounded-3xl"
-        />
-      </ImageBackground> */}
       <YouTube
         videoId={item.youtubeID} // The YouTube video ID
         play={false} // control playback of video with true/false
