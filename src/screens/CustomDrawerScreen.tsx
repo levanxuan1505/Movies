@@ -21,7 +21,7 @@ const CustomDrawerScreen = () => {
               styles.viewContainer,
               {
                 width: '100%',
-                height: 80,
+                height: 70,
                 paddingHorizontal: 0,
                 justifyContent: 'center',
                 backgroundColor: 'transparent',
@@ -31,8 +31,23 @@ const CustomDrawerScreen = () => {
             <Text style={[styles.textLarge, {color: '#F53920'}]}>ON---</Text>
           </View>
 
-          <TouchableOpacity style={styles.viewContainer}>
-            <Text style={styles.text}>User Name</Text>
+          <TouchableOpacity
+            style={[
+              styles.viewContainer,
+              {
+                height: 55,
+                backgroundColor: 'transparent',
+                paddingHorizontal: 14,
+              },
+            ]}>
+            <Iconssss name="user-circle" size={40} color="#00AA13" />
+            <Text
+              style={[
+                styles.text,
+                {color: '#00AA13', fontWeight: '800', fontSize: 26},
+              ]}>
+              Lê Quốc Kiệt
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
