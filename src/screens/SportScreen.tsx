@@ -14,8 +14,10 @@ import {
   Loading,
   HBOTrailers,
   Tv,
+  SportList,
   HBODiscover,
   Discover,
+  SportTrending,
 } from '@components';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -47,6 +49,9 @@ const SportScreen = () => {
   const [tv, setTv] = useState([]);
   const [tvChannels, setTvChannels] = useState([]);
   const [isLoadingMovies, setIsLoadingMovies] = useState(true);
+  const indexOfSports = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+  ];
   useEffect(() => {
     getTrendingMovies();
     getUpcomingMovies();
@@ -132,72 +137,88 @@ const SportScreen = () => {
         contentContainerStyle={{paddingBottom: 10, paddingTop: 100}}>
         {/* trending */}
         {discoverMovies.length > 0 && (
-          <HBOTrending name="Trending" data={discoverMovies} />
+          <SportTrending name="Trending" data={indexOfSports} />
         )}
-        {upComingMovies.length > 0 && (
-          <HBOList
-            title="Premier League"
-            logo="GO"
+        {indexOfSports.length > 0 && (
+          <SportList
+            title="Sport TV shows"
+            logo="sportsTVshow"
             hideSeeAll={false}
-            data={upComingMovies}
+            data={indexOfSports}
+            symbol="null"
           />
         )}
-        {topRatedMovies.length > 0 && (
-          <HBOList
-            title="Highlights"
-            logo="GO"
+        {indexOfSports.length > 0 && (
+          <SportList
+            title="International Friendly"
+            logo="internationalFriendly"
             hideSeeAll={false}
-            data={topRatedMovies}
+            data={indexOfSports}
+            symbol="null"
           />
         )}
-        <HBOList
+        <SportList
           title="Roland Garros 2023"
-          logo="MAX"
+          logo="Roland"
+          symbol="skySport"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={indexOfSports}
         />
-        <HBOList
+        <SportList
           title="VBA 2023"
-          logo="GO"
+          logo="vba"
+          symbol="espn"
           hideSeeAll={false}
-          data={nowPlayingMovies}
+          data={indexOfSports}
         />
-        <HBOList
-          title="Now Playing"
-          logo="GO"
+        <SportList
+          title="UpComing Sports"
+          logo="upComingSport"
+          symbol="null"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={indexOfSports}
         />
-        <Discover title="Serie A" hideSeeAll={false} data={discoverMovies} />
+        <SportList
+          title="Serie A 2023"
+          logo="serieA"
+          symbol="espn"
+          hideSeeAll={false}
+          data={indexOfSports}
+        />
+        <SportList
+          title="TV Channels"
+          logo="tvChannels"
+          symbol="null"
+          hideSeeAll={false}
+          data={indexOfSports}
+        />
         <HBOTrailers
           title="Fomula 1"
           firstItem={0}
           hideSeeAll={false}
           data={YoutubeID[3]}
         />
-        <HBOList
+        <SportList
           title="Sea Games 32"
-          logo="GO"
+          logo="upComingSport"
+          symbol="null"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={indexOfSports}
         />
-        <HBOList
+        <SportList
           title="Bundesliga"
-          logo="GO"
+          logo="bundesliga"
+          symbol="null"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={indexOfSports}
         />
-        <HBOList
-          title="TV Sport Channels"
-          logo="GO"
-          hideSeeAll={false}
-          data={upComingMovies}
-        />
-        <HBOList
+
+        <SportList
           title="V-League"
-          logo="GO"
+          logo="vLeague"
+          symbol="null"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={indexOfSports}
         />
         <HBOTrailers
           firstItem={1}

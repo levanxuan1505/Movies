@@ -1,17 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {View, Text, Dimensions, Image, ImageBackground} from 'react-native';
 import React from 'react';
+import {styles} from '../theme';
+import {View, Text, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 import YouTube from 'react-native-youtube';
-import {YoutubeID} from '@constants';
 import {useNavigation} from '@react-navigation/native';
-import {image500} from '../Api/MoviesDb';
-import {styles} from '../theme';
 var {width, height} = Dimensions.get('window');
 const HBOTrailers = ({title, hideSeeAll, data, firstItem}) => {
   const navigation = useNavigation();
@@ -39,21 +37,21 @@ const HBOTrailers = ({title, hideSeeAll, data, firstItem}) => {
       </View>
       <Carousel
         data={data}
-        renderItem={({item}) => (
-          <MovieCard handleClick={handleClick} item={item} />
-        )}
-        firstItem={firstItem}
         loop={true}
-        inactiveSlideScale={0.55}
-        inactiveSlideOpacity={0.6}
+        firstItem={1}
         sliderWidth={width}
         itemWidth={width * 0.69}
+        inactiveSlideScale={0.55}
+        inactiveSlideOpacity={0.6}
         slideStyle={{
           display: 'flex',
           alignItems: 'center',
           paddingHorizontal: 15,
           paddingTop: 25,
         }}
+        renderItem={({item}) => (
+          <MovieCard handleClick={handleClick} item={item} />
+        )}
       />
     </View>
   );

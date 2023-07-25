@@ -1,14 +1,7 @@
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {
-  View,
-  Text,
-  Platform,
-  RefreshControl,
-  Dimensions,
-  LogBox,
-} from 'react-native';
+import {View, Text, RefreshControl, Dimensions, LogBox} from 'react-native';
 LogBox.ignoreLogs(['Sending...']);
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -22,6 +15,7 @@ import {
   TrendingMovies,
   MoviesList,
   Loading,
+  SportList,
   HBOList,
   Tv,
   Discover,
@@ -32,12 +26,13 @@ import {
   fetchUpcomingMovies,
   fetchTopRatedMovies,
   fetchDiscoverMovies,
+  fetchSimilarMovies,
   fetchNowPlayingMovies,
   fetchTvChannelsMovies,
   fetchTvMovies,
 } from '../Api/MoviesDb';
 import {YoutubeID} from '@constants';
-var {width, height} = Dimensions.get('window');
+var {width} = Dimensions.get('window');
 import {HBOTrailers} from '@components';
 const HomeScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -49,21 +44,35 @@ const HomeScreen = () => {
     }, 500);
   }, []);
   const navigation = useNavigation();
+  const [listMovies, setListMovies] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [upComingMovies, setUpComingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [discoverMovies, setDiscoverMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [hboMovies, setHboMovies] = useState([]);
+  const [moviesTheathers, setHboMoviesTheathers] = useState([]);
+  const [disneyMovies, setDisneyMovies] = useState([]);
+  const [moviesForKids, setMoviesForKids] = useState([]);
   const [tv, setTv] = useState([]);
   const [tvChannels, setTvChannels] = useState([]);
   const [isLoadingMovies, setIsLoadingMovies] = useState(true);
+  const indexOfSports = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+  ];
   useEffect(() => {
     getTrendingMovies();
     getUpcomingMovies();
     getTopRatedMovies();
     getDiscoverMovies();
     getNowPlayingMovies();
-    getTvChannelsMovies();
+    getSimilarMovies(603692);
+    getSimilarMovies2(455476);
+    getSimilarMovies3(575264),
+      getSimilarMovies4(2787),
+      getSimilarMovies5(9980),
+      getSimilarMovies6(10567),
+      getTvChannelsMovies();
     getTvMovies();
   }, []);
   const getTrendingMovies = async () => {
@@ -107,6 +116,49 @@ const HomeScreen = () => {
     // console.log(data);
     if (data && data.results) setTvChannels(data.results);
     setIsLoadingMovies(false);
+  };
+  //
+  const getSimilarMovies = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setListMovies(data.results);
+    }
+  };
+  const getSimilarMovies2 = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setNowPlayingMovies(data.results);
+    }
+  };
+  const getSimilarMovies3 = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setHboMovies(data.results);
+    }
+  };
+  const getSimilarMovies4 = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setHboMoviesTheathers(data.results);
+    }
+  };
+  const getSimilarMovies5 = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setDisneyMovies(data.results);
+    }
+  };
+  const getSimilarMovies6 = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setMoviesForKids(data.results);
+    }
   };
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
@@ -171,12 +223,12 @@ const HomeScreen = () => {
           data={YoutubeID[0]}
           firstItem={YoutubeID[0].length / 2}
         />
-        <MoviesList title="Popular" hideSeeAll={false} data={upComingMovies} />
+        <MoviesList title="Popular" hideSeeAll={false} data={listMovies} />
         <HBOList
           title="HBO Movies"
           logo="GO"
           hideSeeAll={false}
-          data={topRatedMovies}
+          data={hboMovies}
         />
         <Discover title="Discover" hideSeeAll={false} data={discoverMovies} />
         <Tv
@@ -194,27 +246,35 @@ const HomeScreen = () => {
         <MoviesList
           title="Movies Theater"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={moviesTheathers}
         />
-        <MoviesList title="Disney" hideSeeAll={false} data={upComingMovies} />
+        <MoviesList title="Disney" hideSeeAll={false} data={disneyMovies} />
         <MoviesList
           title="Movies For Kids"
           hideSeeAll={false}
-          data={discoverMovies}
+          data={moviesForKids}
         />
-        <HBOList
-          title="MAX Sports"
-          logo="Max"
+        <HBOTrailers
+          title="Fomula 1"
+          firstItem={0}
           hideSeeAll={false}
-          data={upComingMovies}
+          data={YoutubeID[3]}
         />
-        <MoviesList title="Sports" hideSeeAll={false} data={upComingMovies} />
-        <MoviesList title="Tv Shows" hideSeeAll={false} data={upComingMovies} />
-        <MoviesList
-          title="HBO Movies"
+        <SportList
+          title="Sport Max"
+          logo="internationalFriendly"
           hideSeeAll={false}
-          data={upComingMovies}
+          data={indexOfSports}
+          symbol="null"
         />
+        <SportList
+          title="Roland Garros 2023"
+          logo="Roland"
+          symbol="skySport"
+          hideSeeAll={false}
+          data={indexOfSports}
+        />
+        <TrendingMovies name="TV Shows" data={tvChannels} />
       </ScrollView>
     </View>
   );

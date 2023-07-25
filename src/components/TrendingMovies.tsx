@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, Dimensions, Image} from 'react-native';
 import React from 'react';
 import Carousel from 'react-native-snap-carousel';
@@ -18,16 +19,19 @@ const TrendingMovies = ({data, name}) => {
       <Text className="text-white text-xl mx-4 mb-5">{name}</Text>
       <Carousel
         data={data}
+        loop={true}
+        firstItem={1}
+        autoplay={true}
+        sliderWidth={width}
+        autoplayInterval={4000}
+        itemWidth={width * 0.62}
+        inactiveSlideScale={0.88}
+        inactiveSlideOpacity={0.6}
+        loopClonesPerSide={data.length - 1}
+        slideStyle={{display: 'flex', alignItems: 'center'}}
         renderItem={({item}) => (
           <MovieCard handleClick={handleClick} item={item} />
         )}
-        firstItem={1}
-        loop={true}
-        inactiveSlideScale={0.88}
-        inactiveSlideOpacity={0.6}
-        sliderWidth={width}
-        itemWidth={width * 0.62}
-        slideStyle={{display: 'flex', alignItems: 'center'}}
       />
     </View>
   );

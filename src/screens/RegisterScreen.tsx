@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
 import {Display} from '@utils';
 import {Colors} from '@constants';
@@ -93,7 +94,7 @@ const RegisterScreen = () => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
   return (
-    <SafeAreaView style={{backgroundColor: Colors.DEFAULT_WHITE, flex: 1}}>
+    <SafeAreaView className="flex-1 bg-neutral-800">
       <Loader visible={loading} />
       <View
         style={{
@@ -118,6 +119,7 @@ const RegisterScreen = () => {
         </View>
       </View>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingTop: Display.setWidth(0),
           paddingHorizontal: 20,
@@ -129,7 +131,7 @@ const RegisterScreen = () => {
             onFocus={() => handleError(null, 'email')}
             iconName="email-outline"
             label="Email"
-            placeholder="Nhập email của bạn"
+            placeholder="Your Email"
             error={errors.email}
           />
 
@@ -138,7 +140,7 @@ const RegisterScreen = () => {
             onFocus={() => handleError(null, 'fullname')}
             iconName="account-outline"
             label="Full Name"
-            placeholder="Nhập tên đầy đủ của bạn"
+            placeholder="Your Full Name"
             error={errors.fullname}
           />
 
@@ -148,7 +150,7 @@ const RegisterScreen = () => {
             onFocus={() => handleError(null, 'phone')}
             iconName="phone-outline"
             label="Phone Number"
-            placeholder="Nhập số điện thoại của bạn"
+            placeholder="Your Number"
             error={errors.phone}
           />
           <Input
@@ -156,22 +158,23 @@ const RegisterScreen = () => {
             onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
             label="Password"
-            placeholder="Nhập mật khẩu của bạn"
+            placeholder="Your Password"
             error={errors.password}
             password
           />
           <Button logo="register" title="Register" onPress={validate} />
-          <Text
-            onPress={navigation.goBack}
-            style={{
-              color: Colors.DEFAULT_YELLOW,
-              fontWeight: '700',
-              textAlign: 'center',
-              fontSize: 18,
-              paddingTop: 10,
-            }}>
-            Bạn đã có tài khoản? Đăng nhập
-          </Text>
+          <TouchableOpacity onPress={navigation.goBack}>
+            <Text
+              style={{
+                color: Colors.DEFAULT_YELLOW,
+                fontWeight: '700',
+                textAlign: 'center',
+                fontSize: 18,
+                paddingTop: 10,
+              }}>
+              Bạn đã có tài khoản? Đăng nhập
+            </Text>
+          </TouchableOpacity>
           <View
             style={{
               width: width * 0.92,

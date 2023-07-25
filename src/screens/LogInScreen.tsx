@@ -9,6 +9,8 @@ import {
   StatusBar,
   Dimensions,
   SafeAreaView,
+  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import {Colors} from '@constants';
 // import {useDispatch} from 'react-redux';
@@ -79,8 +81,8 @@ const SignInScreen = () => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
   return (
-    <SafeAreaView style={{backgroundColor: Colors.DEFAULT_WHITE, flex: 1}}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView className="flex-1 bg-neutral-800">
+      <StatusBar barStyle="light-content" />
       <Loader visible={loading} />
       <View style={{paddingTop: Display.setWidth(0), paddingHorizontal: 20}}>
         <View
@@ -124,7 +126,7 @@ const SignInScreen = () => {
             onFocus={() => handleError(null, 'email')}
             iconName="email-outline"
             label="Email"
-            placeholder="Nhập email của bạn"
+            placeholder="Enter Your Email"
             error={errors.email}
           />
           <Input
@@ -132,24 +134,25 @@ const SignInScreen = () => {
             onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
             label="Password"
-            placeholder="Nhập mật khẩu của bạn"
+            placeholder="Enter Your Password"
             error={errors.password}
             password
           />
           <Button logo="login" title="Log in" onPress={validate} />
           <ButtonSocial logo="facebook" title="Log In with Facebook" />
           <ButtonSocial logo="google" title="Log In with Google" />
-          <Text
-            onPress={() => navigation.navigate('Register')}
-            style={{
-              color: Colors.DEFAULT_YELLOW,
-              fontWeight: '700',
-              textAlign: 'center',
-              fontSize: 18,
-              paddingTop: 20,
-            }}>
-            Bạn chưa có tài khoản? Đăng ký ngay
-          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text
+              style={{
+                color: Colors.DEFAULT_YELLOW,
+                fontWeight: '700',
+                textAlign: 'center',
+                fontSize: 18,
+                paddingTop: 20,
+              }}>
+              Bạn chưa có tài khoản? Đăng ký ngay
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

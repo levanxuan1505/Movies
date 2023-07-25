@@ -98,7 +98,9 @@ const SeeAllHBOScreen = ({route}) => {
         <Loading />
       ) : data.length > 0 ? (
         <View>
-          <Text className="text-white font-semibold ml-1">
+          <Text
+            style={{paddingHorizontal: 20}}
+            className="text-white font-semibold ml-1">
             Results ({data.length})
           </Text>
           <Carousel

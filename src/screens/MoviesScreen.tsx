@@ -31,7 +31,7 @@ const MoviesScreen = () => {
     getMovieCredits(item.id);
     getSimilarMovies(item.id);
   }, [item]);
-
+  console.log(item.id);
   const getMovieDetials = async id => {
     const data = await fetchMovieDetails(id);
     // console.log('got movie details');

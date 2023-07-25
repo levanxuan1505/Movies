@@ -12,6 +12,8 @@ import Button from './Button';
 import Loader from './Loader';
 import Input from './Input';
 import ButtonSocial from './ButtonSocial';
+import SportTrending from './SportTrending';
+import SportList from './SportList';
 export {
   Tv,
   Cast,
@@ -21,10 +23,12 @@ export {
   HBOList,
   Loading,
   Discover,
+  SportList,
   MoviesList,
   HBODiscover,
   HBOTrending,
   HBOTrailers,
+  SportTrending,
   ButtonSocial,
   TrendingMovies,
 };

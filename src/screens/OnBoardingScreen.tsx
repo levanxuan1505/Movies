@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const OnBoardingScreen = () => {
   const navigation = useNavigation();
   const handleDone = () => {
-    navigation.push('Drawer');
+    navigation.replace('Drawer');
   };
   const DoneButton = ({...props}) => {
     return (

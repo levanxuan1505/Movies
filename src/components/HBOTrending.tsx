@@ -19,18 +19,21 @@ const HBOTrending = ({data, name}) => {
       <Text className="text-white text-xl mx-4 mb-5">{name}</Text>
       <Carousel
         data={data}
+        loop={true}
+        firstItem={1}
+        autoplay={true}
+        ref={isCarousel}
+        sliderWidth={width}
+        autoplayInterval={4000}
+        itemWidth={width * 0.62}
+        inactiveSlideScale={0.88}
+        inactiveSlideOpacity={0.6}
+        loopClonesPerSide={data.length - 1}
+        onSnapToItem={index => setIndex(index)}
+        slideStyle={{display: 'flex', alignItems: 'center'}}
         renderItem={({item}) => (
           <MovieCard handleClick={handleClick} item={item} />
         )}
-        firstItem={data.length / 2}
-        loop={true}
-        inactiveSlideScale={0.88}
-        ref={isCarousel}
-        onSnapToItem={index => setIndex(index)}
-        inactiveSlideOpacity={0.6}
-        sliderWidth={width}
-        itemWidth={width * 0.62}
-        slideStyle={{display: 'flex', alignItems: 'center'}}
       />
       <Pagination
         dotsLength={data.length}

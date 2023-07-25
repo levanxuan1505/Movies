@@ -3,26 +3,18 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   Platform,
-  Dimensions,
   ScrollView,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
+import {styles} from '../theme';
+import {MoviesList, Loading} from '@components';
 import React, {useEffect, useState} from 'react';
-import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {MoviesList, Loading} from '@components';
-// import {
-//   fallbackPersonImage,
-//   fetchPersonDetails,
-//   fetchPersonMovies,
-//   image185,
-//   image342,
-//   image500,
-// } from '../api/moviedb';
-import {styles} from '../theme';
 import {
   image342,
   fallbackPersonImage,
@@ -108,19 +100,17 @@ const Actor = () => {
           </View>
           <View className="mt-6">
             <Text className="text-3xl text-white font-bold text-center">
-              Keanu Reeves
-              {/* {person?.name} */}
+              {person?.name}
             </Text>
             <Text className="text-neutral-500 text-base text-center">
-              {/* {person?.place_of_birth} */}
-              Beirut, Lebanon
+              {person?.place_of_birth}
             </Text>
           </View>
           <View className="mx-3 p-4 mt-6 flex-row justify-between items-center bg-neutral-700 rounded-full ">
             <View className="border-r-2 border-r-neutral-400 px-2 items-center">
               <Text className="text-white font-semibold ">Gender</Text>
               <Text className="text-neutral-300 text-sm">
-                {person?.gender == 1 ? 'Female' : 'Male'}
+                {person?.gender === 1 ? 'Female' : 'Male'}
               </Text>
             </View>
             <View className="border-r-2 border-r-neutral-400 px-2 items-center">

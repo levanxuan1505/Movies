@@ -24,13 +24,13 @@ const Input = ({
               ? Colors.DEFAULT_RED
               : isFocused
               ? Colors.DEFAULT_GREEN
-              : Colors.LIGHT_GREY,
+              : Colors.DARK_FOUR,
             alignItems: 'center',
           },
         ]}>
         <Icon
           name={iconName}
-          style={{color: Colors.DEFAULT_GREEN, fontSize: 22, marginRight: 10}}
+          style={{color: Colors.DEFAULT_GREEN, fontSize: 28, marginRight: 10}}
         />
         <TextInput
           autoCorrect={false}
@@ -51,12 +51,12 @@ const Input = ({
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: Colors.DEFAULT_GREEN, fontSize: 22}}
+            style={{color: Colors.DEFAULT_GREEN, fontSize: 28}}
           />
         )}
       </View>
       {error && (
-        <Text style={{marginTop: 7, color: Colors.DEFAULT_RED, fontSize: 12}}>
+        <Text style={{marginTop: 7, color: Colors.DEFAULT_RED, fontSize: 14}}>
           {error}
         </Text>
       )}
@@ -72,7 +72,7 @@ const style = StyleSheet.create({
   },
   inputContainer: {
     height: 55,
-    backgroundColor: Colors.DEFAULT_GREY,
+    backgroundColor: Colors.INACTIVE_GREY,
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderWidth: 0.5,
