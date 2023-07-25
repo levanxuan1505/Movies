@@ -51,7 +51,7 @@ const CustomDrawerScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('User')}
+            onPress={() => navigation.navigate('User', {title: 'User_Info'})}
             style={styles.viewContainer}>
             <Iconsss name="user" size={28} color="#00AA13" />
             <Text style={styles.text}>User Information</Text>
@@ -59,61 +59,73 @@ const CustomDrawerScreen = () => {
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('Watching')}>
+            onPress={() =>
+              navigation.navigate('Watching', {title: 'Watching'})
+            }>
             <Icon name="history" size={28} color="#00AA13" />
             <Text style={styles.text}>Watching</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('MyList')}>
+            onPress={() => navigation.navigate('MyList', {title: 'MyLists'})}>
             <Iconsss name="hearto" size={28} color="#00AA13" />
             <Text style={styles.text}>My Lists</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('Transaction')}>
+            onPress={() =>
+              navigation.navigate('Transaction', {title: 'Transaction'})
+            }>
             <Iconssss name="credit-card" size={28} color="#00AA13" />
             <Text style={styles.text}>Transaction</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('LogInTV')}>
+            onPress={() => navigation.navigate('LogInTV', {title: 'LogInTV'})}>
             <Iconssss name="tv" size={28} color="#00AA13" />
             <Text style={styles.text}>Log In SmartTV</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('ManageDevices')}>
+            onPress={() =>
+              navigation.navigate('ManageDevices', {title: 'ManageDevices'})
+            }>
             <Icon name="devices" size={28} color="#00AA13" />
             <Text style={styles.text}>Manage Devices</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('Settings')}>
+            onPress={() =>
+              navigation.navigate('Settings', {title: 'Settings'})
+            }>
             <Icons name="settings-outline" size={28} color="#00AA13" />
             <Text style={styles.text}>Settings</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('TermsOfUse')}>
+            onPress={() =>
+              navigation.navigate('TermsOfUse', {title: 'TermsOfUse'})
+            }>
             <Iconssss name="paper-plane-o" size={28} color="#00AA13" />
             <Text style={styles.text}>Terms of Use</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('Privary')}>
+            onPress={() =>
+              navigation.navigate('PrivacyPolicy', {title: 'Privacy_Policy'})
+            }>
             <Icons name="newspaper-outline" size={28} color="#00AA13" />
-            <Text style={styles.text}>Privacy policy</Text>
+            <Text style={styles.text}>Privacy Policy</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.viewContainer, {height: 70}]}
-            onPress={() => navigation.navigate('LogInTV')}>
+            onPress={() => navigation.navigate('LogIn')}>
             <Icons name="log-out-outline" size={38} color="#F53920" />
             <Text
               style={[
@@ -135,7 +147,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 7,
+    marginVertical: 8.5,
     position: 'relative',
     width: '90%',
     height: 50,
