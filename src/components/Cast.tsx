@@ -1,14 +1,7 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {image185, fallbackPersonImage} from '../Api/MoviesDb';
-var {width, height} = Dimensions.get('window');
+import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 export default function Cast({cast, navigation}) {
   return (
     <View className="my-6">

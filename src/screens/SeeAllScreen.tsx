@@ -3,29 +3,29 @@
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
-  RefreshControl,
   Image,
   ScrollView,
-  TouchableWithoutFeedback,
   Dimensions,
+  RefreshControl,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import {Loading} from '@components';
+import React, {useState} from 'react';
 import {styles, theme} from '../theme';
-import React, {useCallback, useState} from 'react';
+import {RootStackParams} from '@navigators';
+const {width, height} = Dimensions.get('window');
+import {useNavigation} from '@react-navigation/native';
+import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {HeartIcon} from 'react-native-heroicons/solid';
-import {useNavigation} from '@react-navigation/native';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
-import {Loading} from '@components';
-
-const {width, height} = Dimensions.get('window');
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const SeeAllScreen = ({route}) => {
   const data = route.params.data;
   const title = route.params.title;
-  const [isFavourite, setFavourite] = useState(false);
+  const [isFavorite, setFavorite] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -33,9 +33,10 @@ const SeeAllScreen = ({route}) => {
       setRefreshing(false);
     }, 500);
   }, []);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState(data);
   // const results = data;
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
@@ -60,17 +61,17 @@ const SeeAllScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
+          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
             <HeartIcon
               size="35"
-              color={isFavourite ? theme.background : 'white'}
+              color={isFavorite ? theme.background : 'white'}
             />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
       {loading ? (
         <Loading />
-      ) : results.length > 0 ? (
+      ) : data.length > 0 ? (
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -79,10 +80,10 @@ const SeeAllScreen = ({route}) => {
           contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
           className="space-y-3">
           <Text className="text-white font-semibold ml-1">
-            Results ({results.length})
+            Results ({data.length})
           </Text>
           <View className="flex-row justify-between flex-wrap">
-            {results.map((item, index) => {
+            {data.map((item, index) => {
               return (
                 <TouchableWithoutFeedback
                   key={index}

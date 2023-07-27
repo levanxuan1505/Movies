@@ -7,6 +7,7 @@ import ActorScreen from './ActorScreen';
 import SearchScreen from './SearchScreen';
 import DrawerScreen from './DrawerScreen';
 import MoviesScreen from './MoviesScreen';
+import SplashScreen from './SplashScreen';
 import SeeAllScreen from './SeeAllScreen';
 import MyListsScreen from './MyListsScreen';
 import SettingScreen from './SettingScreen';
@@ -32,6 +33,7 @@ export {
   SearchScreen,
   SeeAllScreen,
   DrawerScreen,
+  SplashScreen,
   SettingScreen,
   MyListsScreen,
   RegisterScreen,

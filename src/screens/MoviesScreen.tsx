@@ -1,14 +1,4 @@
-import {View, Text, ScrollView, Dimensions, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import LinearGradient from 'react-native-linear-gradient';
-import {HeartIcon} from 'react-native-heroicons/solid';
-var {width, height} = Dimensions.get('window');
-import {styles, theme} from '../theme';
-import {Cast, MoviesList} from '@components';
+/* eslint-disable react-native/no-inline-styles */
 import {
   fallbackMoviePoster,
   fetchMovieCredits,
@@ -16,23 +6,40 @@ import {
   fetchSimilarMovies,
   image500,
 } from '../Api/MoviesDb';
+import {styles, theme} from '../theme';
+import {RootStackParams} from '@navigators';
+import {Cast, MoviesList} from '@components';
+var {width, height} = Dimensions.get('window');
+import React, {useEffect, useState} from 'react';
+import {HeartIcon} from 'react-native-heroicons/solid';
+import LinearGradient from 'react-native-linear-gradient';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {View, Text, ScrollView, Dimensions, Image} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+export interface Data {
+  id: string;
+  password: number;
+}
 const MoviesScreen = () => {
   const {params: item} = useRoute();
-  const navigation = useNavigation();
-  const [movie, setMovie] = useState({});
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [cast, setCast] = useState([]);
-  const [similarMovies, setSimilarMovies] = useState([]);
-  const [isFavourite, setFavourite] = useState(false);
+  const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const [isFavorite, setFavorite] = useState(false);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  console.log(item.id);
   useEffect(() => {
     setLoading(true);
-    getMovieDetials(item.id);
+    getMovieDetails(item.id);
     getMovieCredits(item.id);
     getSimilarMovies(item.id);
   }, [item]);
-  console.log(item.id);
-  const getMovieDetials = async id => {
+  const getMovieDetails = async id => {
     const data = await fetchMovieDetails(id);
     // console.log('got movie details');
     setLoading(false);
@@ -67,10 +74,10 @@ const MoviesScreen = () => {
             style={styles.background}>
             <ChevronLeftIcon size="28" strokeWidth={2.5} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
+          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
             <HeartIcon
               size="35"
-              color={isFavourite ? theme.background : 'white'}
+              color={isFavorite ? theme.background : 'white'}
             />
           </TouchableOpacity>
         </SafeAreaView>

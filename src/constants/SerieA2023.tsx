@@ -1,0 +1,21 @@
+const SerieA2023 = [
+  {image: require('../assets/serieA/1.jpg')},
+  {image: require('../assets/serieA/2.jpg')},
+  {image: require('../assets/serieA/3.jpg')},
+  {image: require('../assets/serieA/4.jpg')},
+  {image: require('../assets/serieA/5.jpg')},
+  {image: require('../assets/serieA/6.jpg')},
+  {image: require('../assets/serieA/7.jpg')},
+  {image: require('../assets/serieA/8.jpg')},
+  {image: require('../assets/serieA/9.jpg')},
+  {image: require('../assets/serieA/10.jpg')},
+  {image: require('../assets/serieA/11.jpg')},
+  {image: require('../assets/serieA/12.jpg')},
+  {image: require('../assets/serieA/13.jpg')},
+  {image: require('../assets/serieA/14.jpg')},
+  {image: require('../assets/serieA/15.jpg')},
+  {image: require('../assets/serieA/16.jpg')},
+  {image: require('../assets/serieA/17.jpg')},
+  {image: require('../assets/serieA/18.jpg')},
+];
+export default SerieA2023;

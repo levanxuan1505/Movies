@@ -10,24 +10,24 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
+import {Loading} from '@components';
 import {styles, theme} from '../theme';
+const {width, height} = Dimensions.get('window');
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ChevronLeftIcon} from 'react-native-heroicons/outline';
+import {fetchTrendingMovies} from '../Api/MoviesDb';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
-import {Loading} from '@components';
-import {fetchTrendingMovies} from '../Api/MoviesDb';
-const {width, height} = Dimensions.get('window');
 
 const ManageDevicesScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
-  const [isFavourite, setFavourite] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isFavorite, setFavorite] = useState(false);
   const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
-  const [loading, setLoading] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -67,10 +67,10 @@ const ManageDevicesScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
+          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
             <HeartIcon
               size="35"
-              color={isFavourite ? theme.background : 'white'}
+              color={isFavorite ? theme.background : 'white'}
             />
           </TouchableOpacity>
         </View>

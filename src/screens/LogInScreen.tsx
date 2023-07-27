@@ -9,28 +9,35 @@ import {
   StatusBar,
   Dimensions,
   SafeAreaView,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
+import {Display} from '@utils';
 import {Colors} from '@constants';
-// import {useDispatch} from 'react-redux';
-// import {changeName} from '../redux/userSlice';
+import {useDispatch} from 'react-redux';
 const {width} = Dimensions.get('window');
+import {RootStackParams} from '@navigators';
 import LottieView from 'lottie-react-native';
+import {changeName} from '../redux/userSlice';
+import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonSocial, Input, Loader} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Display} from '@utils';
-import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export interface ISignUpData {
   email: string;
   password: string;
 }
+export interface Error {
+  email: string;
+  password: number;
+}
 const SignInScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const [inputs, setInputs] = useState<ISignUpData>({email: '', password: ''});
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Error>({});
   const [loading, setLoading] = useState(false);
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const validate = async () => {
     Keyboard.dismiss();
     let isValid = true;
@@ -58,7 +65,7 @@ const SignInScreen = () => {
           inputs.email === userData?.email &&
           inputs.password === userData?.password
         ) {
-          //   dispatch(changeName({userName: userData.fullname}));
+          dispatch(changeName({userName: userData.fullname}));
           navigation.replace('Drawer');
           AsyncStorage.setItem(
             'userData',
@@ -122,21 +129,22 @@ const SignInScreen = () => {
         </View>
         <View>
           <Input
-            onChangeText={(text: string) => handleOnchange(text, 'email')}
-            onFocus={() => handleError(null, 'email')}
-            iconName="email-outline"
             label="Email"
-            placeholder="Enter Your Email"
+            password={false}
+            iconName="email-outline"
             error={errors.email}
+            placeholder="Enter Your Email"
+            onFocus={() => handleError(null, 'email')}
+            onChangeText={(text: string) => handleOnchange(text, 'email')}
           />
           <Input
+            label="Password"
+            password={true}
+            iconName="lock-outline"
+            error={errors.password}
+            placeholder="Enter Your Password"
             onChangeText={(text: string) => handleOnchange(text, 'password')}
             onFocus={() => handleError(null, 'password')}
-            iconName="lock-outline"
-            label="Password"
-            placeholder="Enter Your Password"
-            error={errors.password}
-            password
           />
           <Button logo="login" title="Log in" onPress={validate} />
           <ButtonSocial logo="facebook" title="Log In with Facebook" />
@@ -144,13 +152,13 @@ const SignInScreen = () => {
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text
               style={{
-                color: Colors.DEFAULT_YELLOW,
-                fontWeight: '700',
-                textAlign: 'center',
                 fontSize: 18,
                 paddingTop: 20,
+                fontWeight: '700',
+                textAlign: 'center',
+                color: Colors.DEFAULT_YELLOW,
               }}>
-              Bạn chưa có tài khoản? Đăng ký ngay
+              You don't have an account? Register here
             </Text>
           </TouchableOpacity>
         </View>

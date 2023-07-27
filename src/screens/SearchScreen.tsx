@@ -1,33 +1,35 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable curly */
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   Image,
-  ScrollView,
-  TouchableWithoutFeedback,
+  TextInput,
   Dimensions,
+  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import React, {useCallback, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {XMarkIcon} from 'react-native-heroicons/outline';
-import {useNavigation} from '@react-navigation/native';
-import {fallbackMoviePoster, image500, searchMovies} from '../Api/MoviesDb';
 import {debounce} from 'lodash';
 import {Loading} from '@components';
-
+import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
+import React, {useCallback, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {XMarkIcon} from 'react-native-heroicons/outline';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {fallbackMoviePoster, image500, searchMovies} from '../Api/MoviesDb';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const SearchScreen = ({route}) => {
+export default function SearchScreen({route}) {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const data = route.params.name;
-
-  const search = data ? 'Search ' + data : 'Search Movies';
-  const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
+
   const handleSearch = search => {
-    if (search && search.length > 2) {
+    if (search && search.length > 0) {
       setLoading(true);
       searchMovies({
         query: search,
@@ -35,7 +37,7 @@ const SearchScreen = ({route}) => {
         language: 'en-US',
         page: '1',
       }).then(data => {
-        // console.log('got search results');
+        console.log('got search results');
         setLoading(false);
         if (data && data.results) setResults(data.results);
       });
@@ -45,7 +47,8 @@ const SearchScreen = ({route}) => {
     }
   };
 
-  const handleTextDebounce = useCallback(debounce(handleSearch, 400), []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleTextDebounce = useCallback(debounce(handleSearch, 200), []);
 
   return (
     <SafeAreaView className="bg-neutral-800 flex-1">
@@ -53,14 +56,13 @@ const SearchScreen = ({route}) => {
       <View className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full">
         <TextInput
           onChangeText={handleTextDebounce}
-          placeholder={search}
+          placeholder={data ? 'Search ' + data : 'Search Movies'}
           placeholderTextColor={'lightgray'}
-          value={debounce(handleSearch)}
           className="pb-1 pl-6 flex-1 text-base font-semibold text-white tracking-wider"
         />
         <TouchableOpacity
-          className="rounded-full p-3 m-1 bg-neutral-500"
-          onPress={() => navigation.goBack()}>
+          onPress={() => navigation.goBack()}
+          className="rounded-full p-3 m-1 bg-neutral-500">
           <XMarkIcon size="25" color="white" />
         </TouchableOpacity>
       </View>
@@ -81,13 +83,13 @@ const SearchScreen = ({route}) => {
               return (
                 <TouchableWithoutFeedback
                   key={index}
-                  onPress={() => navigation.navigate('Movies', item)}>
+                  onPress={() => navigation.push('Movies', item)}>
                   <View className="space-y-2 mb-4">
                     <Image
                       source={{
                         uri: image500(item.poster_path) || fallbackMoviePoster,
                       }}
-                      //   source={require('../assets/images/moviePoster1.png')}
+                      // source={require('../assets/images/moviePoster2.png')}
                       className="rounded-3xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />
@@ -112,5 +114,4 @@ const SearchScreen = ({route}) => {
       )}
     </SafeAreaView>
   );
-};
-export default SearchScreen;
+}

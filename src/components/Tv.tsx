@@ -2,21 +2,24 @@
 import {
   View,
   Text,
-  ScrollView,
-  TouchableWithoutFeedback,
   Image,
   Dimensions,
+  ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
-
+import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
+import {useNavigation} from '@react-navigation/native';
+import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export default function Tv({name, title, hideSeeAll, data}) {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   return (
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">

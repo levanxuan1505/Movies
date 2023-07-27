@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
 import {Colors} from '../constants';
 import LottieView from 'lottie-react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 const Button = ({title, logo, onPress = () => {}}) => {
   return (
     <TouchableOpacity

@@ -1,0 +1,21 @@
+const UpcomingSports = [
+  {image: require('../assets/upcomingSports/1.jpg')},
+  {image: require('../assets/upcomingSports/2.jpg')},
+  {image: require('../assets/upcomingSports/3.jpg')},
+  {image: require('../assets/upcomingSports/4.jpg')},
+  {image: require('../assets/upcomingSports/5.jpg')},
+  {image: require('../assets/upcomingSports/6.jpg')},
+  {image: require('../assets/upcomingSports/7.jpg')},
+  {image: require('../assets/upcomingSports/8.jpg')},
+  {image: require('../assets/upcomingSports/9.jpg')},
+  {image: require('../assets/upcomingSports/10.jpg')},
+  {image: require('../assets/upcomingSports/11.jpg')},
+  {image: require('../assets/upcomingSports/12.jpg')},
+  {image: require('../assets/upcomingSports/13.jpg')},
+  {image: require('../assets/upcomingSports/14.jpg')},
+  {image: require('../assets/upcomingSports/15.jpg')},
+  {image: require('../assets/upcomingSports/16.jpg')},
+  {image: require('../assets/upcomingSports/17.jpg')},
+  {image: require('../assets/upcomingSports/18.jpg')},
+];
+export default UpcomingSports;

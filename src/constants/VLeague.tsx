@@ -1,0 +1,21 @@
+const VLeague = [
+  {image: require('../assets/vLeague/1.jpg')},
+  {image: require('../assets/vLeague/2.jpg')},
+  {image: require('../assets/vLeague/3.jpg')},
+  {image: require('../assets/vLeague/4.jpg')},
+  {image: require('../assets/vLeague/5.jpg')},
+  {image: require('../assets/vLeague/6.jpg')},
+  {image: require('../assets/vLeague/7.jpg')},
+  {image: require('../assets/vLeague/8.jpg')},
+  {image: require('../assets/vLeague/9.jpg')},
+  {image: require('../assets/vLeague/10.jpg')},
+  {image: require('../assets/vLeague/11.jpg')},
+  {image: require('../assets/vLeague/12.jpg')},
+  {image: require('../assets/vLeague/13.jpg')},
+  {image: require('../assets/vLeague/14.jpg')},
+  {image: require('../assets/vLeague/15.jpg')},
+  {image: require('../assets/vLeague/16.jpg')},
+  {image: require('../assets/vLeague/17.jpg')},
+  {image: require('../assets/vLeague/18.jpg')},
+];
+export default VLeague;

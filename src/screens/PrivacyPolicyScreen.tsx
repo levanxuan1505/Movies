@@ -11,23 +11,23 @@ import {
   Dimensions,
 } from 'react-native';
 import {styles, theme} from '../theme';
+import {Loading} from '@components';
 import React, {useEffect, useState} from 'react';
+const {width, height} = Dimensions.get('window');
+import {fetchTrendingMovies} from '../Api/MoviesDb';
+import {useNavigation} from '@react-navigation/native';
+import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {HeartIcon} from 'react-native-heroicons/solid';
-import {useNavigation} from '@react-navigation/native';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
-import {Loading} from '@components';
-import {fetchTrendingMovies} from '../Api/MoviesDb';
-const {width, height} = Dimensions.get('window');
 
 const PrivacyPolicyScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const [isFavourite, setFavourite] = useState(false);
   const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
-  const [loading, setLoading] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

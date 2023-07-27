@@ -1,0 +1,21 @@
+const VBA2023 = [
+  {image: require('../assets/vba/1.jpg')},
+  {image: require('../assets/vba/2.jpg')},
+  {image: require('../assets/vba/3.jpg')},
+  {image: require('../assets/vba/4.jpg')},
+  {image: require('../assets/vba/5.jpg')},
+  {image: require('../assets/vba/6.jpg')},
+  {image: require('../assets/vba/7.jpg')},
+  {image: require('../assets/vba/8.jpg')},
+  {image: require('../assets/vba/9.jpg')},
+  {image: require('../assets/vba/10.jpg')},
+  {image: require('../assets/vba/11.jpg')},
+  {image: require('../assets/vba/12.jpg')},
+  {image: require('../assets/vba/13.jpg')},
+  {image: require('../assets/vba/14.jpg')},
+  {image: require('../assets/vba/15.jpg')},
+  {image: require('../assets/vba/16.jpg')},
+  {image: require('../assets/vba/17.jpg')},
+  {image: require('../assets/vba/18.jpg')},
+];
+export default VBA2023;

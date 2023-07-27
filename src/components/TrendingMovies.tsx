@@ -1,16 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, Dimensions, Image} from 'react-native';
 import React from 'react';
-import Carousel from 'react-native-snap-carousel';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
 import {image500} from '../Api/MoviesDb';
-var {width, height} = Dimensions.get('window');
+import {RootStackParams} from '@navigators';
+let {width, height} = Dimensions.get('window');
+import Carousel from 'react-native-snap-carousel';
+import {useNavigation} from '@react-navigation/native';
+import {View, Text, Dimensions, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 const TrendingMovies = ({data, name}) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const handleClick = item => {
     navigation.navigate('Movies', item);
   };
@@ -39,7 +41,7 @@ const TrendingMovies = ({data, name}) => {
 
 const MovieCard = ({item, handleClick}) => {
   return (
-    <TouchableWithoutFeedback onPress={() => handleClick(item)}>
+    <TouchableOpacity onPress={() => handleClick(item)}>
       <Image
         // source={require('../assets/images/moviePoster1.png')}
         source={{uri: image500(item.poster_path)}}
@@ -49,7 +51,7 @@ const MovieCard = ({item, handleClick}) => {
         }}
         className="rounded-3xl"
       />
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 export default TrendingMovies;

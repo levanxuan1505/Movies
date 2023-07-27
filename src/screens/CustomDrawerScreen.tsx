@@ -1,17 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useSelector} from 'react-redux';
+import {RootStackParams} from '@navigators';
 import Icons from 'react-native-vector-icons/Ionicons';
-import Iconss from 'react-native-vector-icons/Fontisto';
-import Iconsss from 'react-native-vector-icons/AntDesign';
-import Iconssss from 'react-native-vector-icons/FontAwesome';
-// import {Navigation} from 'react-native-feather';
 import {useNavigation} from '@react-navigation/native';
+import Iconsss from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Iconssss from 'react-native-vector-icons/FontAwesome';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 const CustomDrawerScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const user = useSelector((state: any) => state.user);
+
   return (
     <View style={{flex: 1, backgroundColor: 'rgb(38 38 38)'}}>
       <SafeAreaView>
@@ -31,29 +36,60 @@ const CustomDrawerScreen = () => {
             <Text style={[styles.textLarge, {color: '#F53920'}]}>ON---</Text>
           </View>
 
-          <TouchableOpacity
-            style={[
-              styles.viewContainer,
-              {
-                height: 55,
-                backgroundColor: 'transparent',
-                paddingHorizontal: 14,
-              },
-            ]}>
-            <Iconssss name="user-circle" size={40} color="#00AA13" />
-            <Text
+          {user[0].userName ? (
+            <TouchableOpacity
               style={[
-                styles.text,
-                {color: '#00AA13', fontWeight: '800', fontSize: 26},
+                styles.viewContainer,
+                {
+                  height: 55,
+                  backgroundColor: 'transparent',
+                  paddingHorizontal: 14,
+                },
               ]}>
-              Lê Quốc Kiệt
-            </Text>
-          </TouchableOpacity>
-
+              <View>
+                <Image
+                  style={{
+                    width: 45,
+                    height: 45,
+                    borderRadius: 30,
+                    resizeMode: 'center',
+                  }}
+                  source={require('../assets/images/avatar.jpeg')}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.text,
+                  {color: '#00AA13', fontWeight: '800', fontSize: 26},
+                ]}>
+                {user[0].userName}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('LogIn')}
+              style={[
+                styles.viewContainer,
+                {
+                  height: 55,
+                  backgroundColor: 'transparent',
+                  paddingHorizontal: 14,
+                },
+              ]}>
+              <Iconssss name="user-circle" size={40} color="#00AA13" />
+              <Text
+                style={[
+                  styles.text,
+                  {color: '#00AA13', fontWeight: '800', fontSize: 26},
+                ]}>
+                Log in
+              </Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             onPress={() => navigation.navigate('User', {title: 'User_Info'})}
             style={styles.viewContainer}>
-            <Iconsss name="user" size={28} color="#00AA13" />
+            <Iconsss name="user" size={30} color="#00AA13" />
             <Text style={styles.text}>User Information</Text>
           </TouchableOpacity>
 
@@ -62,7 +98,7 @@ const CustomDrawerScreen = () => {
             onPress={() =>
               navigation.navigate('Watching', {title: 'Watching'})
             }>
-            <Icon name="history" size={28} color="#00AA13" />
+            <Icon name="history" size={32} color="#00AA13" />
             <Text style={styles.text}>Watching</Text>
           </TouchableOpacity>
 
@@ -123,18 +159,33 @@ const CustomDrawerScreen = () => {
             <Icons name="newspaper-outline" size={28} color="#00AA13" />
             <Text style={styles.text}>Privacy Policy</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.viewContainer, {height: 70}]}
-            onPress={() => navigation.navigate('LogIn')}>
-            <Icons name="log-out-outline" size={38} color="#F53920" />
-            <Text
-              style={[
-                styles.text,
-                {color: 'red', fontSize: 30, fontWeight: '700'},
-              ]}>
-              Log out
-            </Text>
-          </TouchableOpacity>
+          {user[0].userName ? (
+            <TouchableOpacity
+              style={[styles.viewContainer, {height: 70}]}
+              onPress={() => navigation.navigate('LogIn')}>
+              <Icons name="log-out-outline" size={38} color="#F53920" />
+              <Text
+                style={[
+                  styles.text,
+                  {color: 'red', fontSize: 30, fontWeight: '700'},
+                ]}>
+                Log out
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.viewContainer, {paddingLeft: 12, height: 70}]}
+              onPress={() => navigation.navigate('LogIn')}>
+              <Icons name="log-in-outline" size={38} color="#00AA13" />
+              <Text
+                style={[
+                  styles.text,
+                  {color: '#00AA13', fontSize: 30, fontWeight: '700'},
+                ]}>
+                Log in
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </SafeAreaView>
     </View>

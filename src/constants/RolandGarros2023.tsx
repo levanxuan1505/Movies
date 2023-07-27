@@ -1,0 +1,21 @@
+const RolandGarros = [
+  {image: require('../assets/rolandGarros/1.jpg')},
+  {image: require('../assets/rolandGarros/2.jpg')},
+  {image: require('../assets/rolandGarros/3.jpg')},
+  {image: require('../assets/rolandGarros/4.jpg')},
+  {image: require('../assets/rolandGarros/5.jpg')},
+  {image: require('../assets/rolandGarros/6.jpg')},
+  {image: require('../assets/rolandGarros/7.jpg')},
+  {image: require('../assets/rolandGarros/8.jpg')},
+  {image: require('../assets/rolandGarros/9.jpg')},
+  {image: require('../assets/rolandGarros/10.jpg')},
+  {image: require('../assets/rolandGarros/11.jpg')},
+  {image: require('../assets/rolandGarros/12.jpg')},
+  {image: require('../assets/rolandGarros/13.jpg')},
+  {image: require('../assets/rolandGarros/14.jpg')},
+  {image: require('../assets/rolandGarros/15.jpg')},
+  {image: require('../assets/rolandGarros/16.jpg')},
+  {image: require('../assets/rolandGarros/17.jpg')},
+  {image: require('../assets/rolandGarros/18.jpg')},
+];
+export default RolandGarros;

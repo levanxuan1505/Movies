@@ -1,19 +1,23 @@
-import TrendingMovies from './TrendingMovies';
-import MoviesList from './MoviesList';
-import Loading from './Loading';
-import Cast from './Cast';
 import Tv from './Tv';
-import Discover from './Discover';
-import HBOTrending from './HBOTrending';
+import Cast from './Cast';
+import Input from './Input';
+import Loader from './Loader';
+import Button from './Button';
+import Loading from './Loading';
 import HBOList from './HBOList';
+import Discover from './Discover';
+import SportList from './SportList';
+import MoviesList from './MoviesList';
+import HBOTrending from './HBOTrending';
 import HBODiscover from './HBODiscover';
 import HBOTrailers from './HBOTrailers';
-import Button from './Button';
-import Loader from './Loader';
-import Input from './Input';
 import ButtonSocial from './ButtonSocial';
 import SportTrending from './SportTrending';
-import SportList from './SportList';
+import TrendingMovies from './TrendingMovies';
+import TvBodyComponent from './TvBodyComponent';
+import HBOBodyComponent from './HBOBodyComponent';
+import HomeBodyComponent from './HomeBodyComponent';
+import SportsBodyComponent from './SportsBodyComponent';
 export {
   Tv,
   Cast,
@@ -28,7 +32,11 @@ export {
   HBODiscover,
   HBOTrending,
   HBOTrailers,
-  SportTrending,
   ButtonSocial,
+  SportTrending,
   TrendingMovies,
+  TvBodyComponent,
+  HBOBodyComponent,
+  HomeBodyComponent,
+  SportsBodyComponent,
 };

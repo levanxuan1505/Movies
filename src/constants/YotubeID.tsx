@@ -217,6 +217,11 @@ const YoutubeID = [
       youtubeID: 'D4mZwIgloeQ',
       title: 'F1® 23 | Official Gameplay Features Deep Dive',
     },
+    {
+      id: 7,
+      youtubeID: 'jKlL6wvGrbc',
+      title: 'F1 Theme - Build Up & Starting Grid',
+    },
   ],
   // Road to Qatar
   [

@@ -1,19 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, Dimensions, Image} from 'react-native';
 import React from 'react';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
-import {image500} from '../Api/MoviesDb';
 var {width, height} = Dimensions.get('window');
+import {View, Text, Dimensions, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+//
 const SportTrending = ({data, name}) => {
-  const navigation = useNavigation();
-  const handleClick = item => {
-    navigation.navigate('Movies', item);
-  };
   const [index, setIndex] = React.useState(data.length / 2);
   const isCarousel = React.useRef(null);
   return (
@@ -33,9 +25,7 @@ const SportTrending = ({data, name}) => {
         onSnapToItem={index => setIndex(index)}
         loopClonesPerSide={data.length - 1}
         slideStyle={{display: 'flex', alignItems: 'center'}}
-        renderItem={({item}) => (
-          <MovieCard handleClick={handleClick} item={item} />
-        )}
+        renderItem={({item}) => <MovieCard item={item} />}
       />
       <Pagination
         dotsLength={data.length}
@@ -56,9 +46,9 @@ const SportTrending = ({data, name}) => {
   );
 };
 
-const MovieCard = ({item, handleClick}) => {
+const MovieCard = ({item}) => {
   return (
-    <TouchableWithoutFeedback onPress={() => handleClick(item)}>
+    <TouchableOpacity>
       <Image
         // source={require('../assets/images/moviePoster1.png')}
         source={
@@ -102,9 +92,8 @@ const MovieCard = ({item, handleClick}) => {
           width: width * 0.6,
           height: height * 0.4,
         }}
-        // className="rounded-3xl"
       />
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 export default SportTrending;

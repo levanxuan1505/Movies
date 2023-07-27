@@ -62,17 +62,17 @@ export default function HBOList({title, logo, hideSeeAll, data}) {
                       logo === 'GO'
                         ? {
                             position: 'absolute',
-                            left: -2,
+                            left: 0,
                             top: -9,
-                            width: width * 0.14,
+                            width: width * 0.13,
                             height: height * 0.04,
                           }
                         : {
                             position: 'absolute',
-                            top: 4,
-                            left: 4,
-                            width: width * 0.13,
-                            height: height * 0.01,
+                            top: 7,
+                            left: 7,
+                            width: width * 0.12,
+                            height: height * 0.009,
                           }
                     }
                   />

@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
+import {Colors} from '../constants';
 import React, {useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
-import {Colors} from '../constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Input = ({
   label,
-  iconName,
   error,
   password,
+  iconName,
   onFocus = () => {},
   ...props
 }) => {
@@ -66,16 +66,16 @@ const Input = ({
 
 const style = StyleSheet.create({
   label: {
-    marginVertical: 5,
     fontSize: 14,
+    marginVertical: 5,
     color: Colors.DEFAULT_GREEN,
   },
   inputContainer: {
     height: 55,
-    backgroundColor: Colors.INACTIVE_GREY,
+    borderWidth: 0.5,
     flexDirection: 'row',
     paddingHorizontal: 15,
-    borderWidth: 0.5,
+    backgroundColor: Colors.INACTIVE_GREY,
   },
 });
 export default Input;

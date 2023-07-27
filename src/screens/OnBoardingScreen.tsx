@@ -4,18 +4,18 @@
 import {
   View,
   Text,
-  StyleSheet,
   Dimensions,
+  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 const {width} = Dimensions.get('window');
+import SplashScreen from './SplashScreen';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 import Onboarding from 'react-native-onboarding-swiper';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 const OnBoardingScreen = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const handleDone = () => {
     navigation.replace('Drawer');
@@ -84,21 +84,22 @@ const OnBoardingScreen = () => {
       </TouchableOpacity>
     );
   };
-  return (
+  return isLoading ? (
+    <SplashScreen setIsLoading={setIsLoading} />
+  ) : (
     <View style={styles.container}>
       <Onboarding
-        bottomBarHighlight={false}
+        skipToPage={2}
         onDone={handleDone}
+        bottomBarHeight={110}
+        DotComponent={DotButton}
+        titleStyles={styles.title}
+        bottomBarHighlight={false}
         SkipButtonComponent={SkipButton}
         DoneButtonComponent={DoneButton}
         NextButtonComponent={NextButton}
-        DotComponent={DotButton}
-        titleStyles={styles.title}
-        // showPagination={false}
-        transitionAnimationDuration={1000}
         subTitleStyles={styles.subTitle}
-        skipToPage={2}
-        bottomBarHeight={110}
+        transitionAnimationDuration={1000}
         pages={[
           {
             backgroundColor: '#CEE8E7',
@@ -157,30 +158,30 @@ const styles = StyleSheet.create({
     height: width * 0.9,
   },
   doneButton: {
-    paddingHorizontal: 20,
     paddingVertical: 12,
-    backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
   },
   textButton: {
     fontSize: 20,
-    fontWeight: '800',
     color: '#00AA13',
+    fontWeight: '800',
   },
   title: {
     fontSize: 40,
-    fontWeight: '900',
     color: '#FBA83C',
+    fontWeight: '900',
   },
   subTitle: {
     fontSize: 20,
-    fontWeight: '600',
     color: '#FBA83C',
+    fontWeight: '600',
   },
   dotButton: {
-    marginHorizontal: 5,
     borderRadius: 10,
+    marginHorizontal: 5,
   },
 });
 export default OnBoardingScreen;

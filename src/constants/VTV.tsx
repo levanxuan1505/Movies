@@ -1,0 +1,23 @@
+const VTV = [
+  {image: require('../assets/vtv/1.jpg')},
+  {image: require('../assets/vtv/2.jpg')},
+  {image: require('../assets/vtv/3.jpg')},
+  {image: require('../assets/vtv/4.jpg')},
+  {image: require('../assets/vtv/5.jpg')},
+  {image: require('../assets/vtv/6.jpg')},
+  {image: require('../assets/vtv/7.jpg')},
+  {image: require('../assets/vtv/8.jpg')},
+  {image: require('../assets/vtv/9.jpg')},
+  {image: require('../assets/vtv/10.jpg')},
+  {image: require('../assets/vtv/11.jpg')},
+  {image: require('../assets/vtv/12.jpg')},
+  {image: require('../assets/vtv/13.jpg')},
+  {image: require('../assets/vtv/14.jpg')},
+  {image: require('../assets/vtv/15.jpg')},
+  {image: require('../assets/vtv/16.jpg')},
+  {image: require('../assets/vtv/17.jpg')},
+  {image: require('../assets/vtv/18.jpg')},
+  {image: require('../assets/vtv/19.jpg')},
+  {image: require('../assets/vtv/20.jpg')},
+];
+export default VTV;

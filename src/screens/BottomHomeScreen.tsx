@@ -1,22 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
-import {Platform, Animated} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Icons from 'react-native-vector-icons/Ionicons';
-import Iconss from 'react-native-vector-icons/Fontisto';
-import {Colors} from '@constants';
-import HomeScreen from './HomeScreen';
-import SportScreen from './SportScreen';
-import HBOScreen from './HBOScreen';
-import TelevisionScreen from './TelevisionScreen';
-
 const av = new Animated.Value(0);
 av.addListener(() => {
   return;
 });
+import React from 'react';
 import {Display} from '@utils';
+import {Colors} from '@constants';
+import HBOScreen from './HBOScreen';
+import HomeScreen from './HomeScreen';
+import SportScreen from './SportScreen';
+import {Platform, Animated} from 'react-native';
+import TelevisionScreen from './TelevisionScreen';
+import Iconss from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 //
 const Tab = createBottomTabNavigator();
 export default function BottomHomeScreen() {
@@ -63,7 +63,9 @@ export default function BottomHomeScreen() {
         options={{
           // tabBarBadge: badgeCart ? badgeCart : null,
           headerShown: false,
-          tabBarIcon: ({color}) => <Icons name="tv" size={28} color={color} />,
+          tabBarIcon: ({color}) => (
+            <Icons name="youtube-tv" size={28} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -73,7 +75,7 @@ export default function BottomHomeScreen() {
           // tabBarBadge: enoughBookmark ? badgeBookmark : null,
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="sports-esports" size={28} color={color} />
+            <Icon name="sports-esports" size={32} color={color} />
           ),
         }}
       />

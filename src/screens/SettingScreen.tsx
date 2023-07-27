@@ -3,23 +3,23 @@
 import {
   View,
   Text,
-  TouchableOpacity,
-  RefreshControl,
   Image,
-  ScrollView,
-  TouchableWithoutFeedback,
   Dimensions,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import {Loading} from '@components';
 import {styles, theme} from '../theme';
 import React, {useEffect, useState} from 'react';
+const {width, height} = Dimensions.get('window');
+import {fetchTrendingMovies} from '../Api/MoviesDb';
+import {useNavigation} from '@react-navigation/native';
+import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {HeartIcon} from 'react-native-heroicons/solid';
-import {useNavigation} from '@react-navigation/native';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
-import {Loading} from '@components';
-import {fetchTrendingMovies} from '../Api/MoviesDb';
-const {width, height} = Dimensions.get('window');
 
 const SettingScreen = ({route}) => {
   const title = route.params.title;

@@ -13,19 +13,30 @@ import {
 } from 'react-native';
 import {Display} from '@utils';
 import {Colors} from '@constants';
+const {width} = Dimensions.get('window');
+import {RootStackParams} from '@navigators';
+import LottieView from 'lottie-react-native';
 import {Button, Loader, Input} from '@components';
 import {useNavigation} from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
-const {width} = Dimensions.get('window');
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+export interface Error {
+  email: string;
+  password: string;
+  fullname: string;
+  phone: number;
+}
 const RegisterScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const [inputs, setInputs] = React.useState({
     email: '',
     fullname: '',
     phone: '',
     password: '',
   });
-  const [errors, setErrors] = React.useState({});
+  const [errors, setErrors] = React.useState<Error>({});
   const [loading, setLoading] = React.useState(false);
 
   const validate = () => {
@@ -127,40 +138,43 @@ const RegisterScreen = () => {
         }}>
         <View>
           <Input
-            onChangeText={(text: string) => handleOnchange(text, 'email')}
-            onFocus={() => handleError(null, 'email')}
-            iconName="email-outline"
+            password={false}
             label="Email"
-            placeholder="Your Email"
             error={errors.email}
+            iconName="email-outline"
+            placeholder="Your Email"
+            onFocus={() => handleError(null, 'email')}
+            onChangeText={(text: string) => handleOnchange(text, 'email')}
           />
 
           <Input
-            onChangeText={(text: string) => handleOnchange(text, 'fullname')}
-            onFocus={() => handleError(null, 'fullname')}
-            iconName="account-outline"
+            password={false}
             label="Full Name"
-            placeholder="Your Full Name"
             error={errors.fullname}
+            iconName="account-outline"
+            placeholder="Your Full Name"
+            onFocus={() => handleError(null, 'fullname')}
+            onChangeText={(text: string) => handleOnchange(text, 'fullname')}
           />
 
           <Input
-            keyboardType="numeric"
-            onChangeText={(text: string) => handleOnchange(text, 'phone')}
-            onFocus={() => handleError(null, 'phone')}
-            iconName="phone-outline"
+            password={false}
             label="Phone Number"
-            placeholder="Your Number"
             error={errors.phone}
+            keyboardType="numeric"
+            iconName="phone-outline"
+            placeholder="Your Number"
+            onFocus={() => handleError(null, 'phone')}
+            onChangeText={(text: string) => handleOnchange(text, 'phone')}
           />
           <Input
-            onChangeText={(text: string) => handleOnchange(text, 'password')}
-            onFocus={() => handleError(null, 'password')}
-            iconName="lock-outline"
+            password={true}
             label="Password"
-            placeholder="Your Password"
             error={errors.password}
-            password
+            iconName="lock-outline"
+            placeholder="Your Password"
+            onFocus={() => handleError(null, 'password')}
+            onChangeText={(text: string) => handleOnchange(text, 'password')}
           />
           <Button logo="register" title="Register" onPress={validate} />
           <TouchableOpacity onPress={navigation.goBack}>
@@ -172,16 +186,17 @@ const RegisterScreen = () => {
                 fontSize: 18,
                 paddingTop: 10,
               }}>
-              Bạn đã có tài khoản? Đăng nhập
+              You have an account? Log In
             </Text>
           </TouchableOpacity>
           <View
             style={{
               width: width * 0.92,
               height: width * 0.6,
+              alignItems: 'center',
+              margin: 0,
             }}>
             <LottieView
-              style={{}}
               source={require('../assets/OnboardingAnimations/7.json')}
               autoPlay
               loop

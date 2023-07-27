@@ -5,28 +5,28 @@
 import {
   View,
   Text,
-  TouchableOpacity,
-  RefreshControl,
   Image,
   ScrollView,
   Dimensions,
+  RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import {styles, theme} from '../theme';
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {HeartIcon} from 'react-native-heroicons/solid';
-import {useNavigation} from '@react-navigation/native';
 import {Loading} from '@components';
+import React, {useState} from 'react';
+import {styles, theme} from '../theme';
 import YouTube from 'react-native-youtube';
 const {width, height} = Dimensions.get('window');
+import Carousel from 'react-native-snap-carousel';
+import {useNavigation} from '@react-navigation/native';
+import {HeartIcon} from 'react-native-heroicons/solid';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 
 const SeeAllHBOScreen = ({route}) => {
   const data = route.params.data;
   const title = route.params.title;
   const firstItem = route.params.firstItem;
-  const [isFavourite, setFavourite] = useState(false);
+  const [isFavorite, setFavorite] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -84,10 +84,10 @@ const SeeAllHBOScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavourite(!isFavourite)}>
+          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
             <HeartIcon
               size="35"
-              color={isFavourite ? theme.background : 'white'}
+              color={isFavorite ? theme.background : 'white'}
             />
           </TouchableOpacity>
         </View>
@@ -101,17 +101,15 @@ const SeeAllHBOScreen = ({route}) => {
           <Text
             style={{paddingHorizontal: 20}}
             className="text-white font-semibold ml-1">
-            Results ({data.length})
+            Results: ({data.length})
           </Text>
           <Carousel
             data={data}
-            renderItem={({item}) => <MovieCard item={item} />}
+            sliderWidth={width}
             firstItem={firstItem}
-            // loop={true}
+            itemWidth={width * 0.69}
             inactiveSlideScale={0.55}
             inactiveSlideOpacity={0.6}
-            sliderWidth={width}
-            itemWidth={width * 0.69}
             slideStyle={{
               display: 'flex',
               alignItems: 'center',
@@ -119,6 +117,7 @@ const SeeAllHBOScreen = ({route}) => {
               marginVertical: 25,
               paddingBottom: 70,
             }}
+            renderItem={({item}) => <MovieCard item={item} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="flex-row justify-center flex-wrap">

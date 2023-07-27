@@ -25,18 +25,18 @@ const Loader = ({visible = false}) => {
 const style = StyleSheet.create({
   loader: {
     height: 70,
-    backgroundColor: Colors.DEFAULT_WHITE,
-    marginHorizontal: 50,
     borderRadius: 5,
+    marginHorizontal: 50,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: Colors.DEFAULT_WHITE,
   },
   container: {
-    position: 'absolute',
     zIndex: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'absolute',
     justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 

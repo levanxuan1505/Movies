@@ -9,27 +9,30 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {styles} from '../theme';
+import {RootStackParams} from '@navigators';
 import {MoviesList, Loading} from '@components';
 import React, {useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
-  image342,
-  fallbackPersonImage,
-  fetchPersonDetails,
+  image500,
   fetchPersonMovies,
+  fetchPersonDetails,
+  fallbackPersonImage,
 } from '../Api/MoviesDb';
 
-const ios = Platform.OS == 'ios';
+const ios = Platform.OS === 'ios';
 const verticalMargin = ios ? '' : ' my-3';
-var {width, height} = Dimensions.get('window');
+let {width, height} = Dimensions.get('window');
 
 const Actor = () => {
   const {params: item} = useRoute();
-  const [isFavourite, toggleFavourite] = useState(false);
-  const navigation = useNavigation();
+  const [isFavorite, toggleFavorite] = useState(false);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [person, setPerson] = useState({});
   const [personMovies, setPersonMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -70,8 +73,8 @@ const Actor = () => {
           <ChevronLeftIcon size="28" strokeWidth={2.5} color="white" />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
-          <HeartIcon size="35" color={isFavourite ? 'red' : 'white'} />
+        <TouchableOpacity onPress={() => toggleFavorite(!isFavorite)}>
+          <HeartIcon size="35" color={isFavorite ? 'red' : 'white'} />
         </TouchableOpacity>
       </SafeAreaView>
 
@@ -92,7 +95,7 @@ const Actor = () => {
               <Image
                 // source={require('../assets/images/castImage1.png')}
                 source={{
-                  uri: image342(person?.profile_path) || fallbackPersonImage,
+                  uri: image500(person?.profile_path) || fallbackPersonImage,
                 }}
                 style={{height: height * 0.43, width: width * 0.74}}
               />

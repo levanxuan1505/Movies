@@ -10,13 +10,16 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
+import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
+import {useNavigation} from '@react-navigation/native';
+import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export default function HBODiscover({title, hideSeeAll, data}) {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   return (
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">
@@ -56,9 +59,9 @@ export default function HBODiscover({title, hideSeeAll, data}) {
                     source={require('../assets/images/logoHBO.png')}
                     style={{
                       position: 'absolute',
-                      left: 4,
-                      top: 0,
-                      width: width * 0.14,
+                      left: 0,
+                      top: -7,
+                      width: width * 0.135,
                       height: height * 0.04,
                     }}
                   />
