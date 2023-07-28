@@ -5,7 +5,7 @@ import {
   Discover,
   SportList,
   HBOTrailers,
-  TrendingMovies,
+  TrendingTV,
 } from '@components';
 import {
   fetchSimilarMovies,
@@ -37,8 +37,8 @@ const TvBodyComponent = () => {
   useEffect(() => {
     getTopRatedMovies();
     getTvChannelsMovies();
-    getSimilarMovies(122);
-    getSimilarMovies2(3558);
+    getSimilarMovies(199);
+    getSimilarMovies2(199);
     getSimilarMovies3(447277);
     getSimilarMovies4(280);
   }, []);
@@ -91,7 +91,7 @@ const TvBodyComponent = () => {
         <>
           {/* trending */}
           {tvChannels.length > 0 && (
-            <TrendingMovies name={'Trending'} data={tvChannels} />
+            <TrendingTV layout={'tinder'} name={'Trending'} data={tvChannels} />
           )}
           <SportList
             title="TV Channels"
@@ -177,7 +177,7 @@ const TvBodyComponent = () => {
             hideSeeAll={false}
             data={YoutubeID[3]}
           />
-          <TrendingMovies name="TV Shows" data={tv} />
+          <TrendingTV name="TV Shows" data={tv} />
         </>
       )}
     </>

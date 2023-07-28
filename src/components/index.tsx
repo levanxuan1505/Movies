@@ -7,7 +7,9 @@ import Loading from './Loading';
 import HBOList from './HBOList';
 import Discover from './Discover';
 import SportList from './SportList';
+import TrendingTV from './TrendingTV';
 import MoviesList from './MoviesList';
+import ModalPoster from './ModalPoster';
 import HBOTrending from './HBOTrending';
 import HBODiscover from './HBODiscover';
 import HBOTrailers from './HBOTrailers';
@@ -29,9 +31,11 @@ export {
   Discover,
   SportList,
   MoviesList,
+  TrendingTV,
   HBODiscover,
   HBOTrending,
   HBOTrailers,
+  ModalPoster,
   ButtonSocial,
   SportTrending,
   TrendingMovies,

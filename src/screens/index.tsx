@@ -22,6 +22,7 @@ import TransactionScreen from './TransactionScreen';
 import LogInSmartTVScreen from './LogInSmartTVScreen';
 import PrivacyPolicyScreen from './PrivacyPolicyScreen';
 import ManageDevicesScreen from './ManageDevicesScreen';
+import SeeAllCoreAPIScreen from './SeeAllCoreAPIScreen';
 export {
   HBOScreen,
   UserScreen,
@@ -46,5 +47,6 @@ export {
   TransactionScreen,
   LogInSmartTVScreen,
   ManageDevicesScreen,
+  SeeAllCoreAPIScreen,
   PrivacyPolicyScreen,
 };

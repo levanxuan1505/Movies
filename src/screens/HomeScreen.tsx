@@ -1,10 +1,10 @@
-/* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/self-closing-comp */
+
 LogBox.ignoreLogs(['Sending...']);
 import React from 'react';
 import {styles} from '../theme';
 var {width} = Dimensions.get('window');
+import {ModalPoster} from '@components';
 import {
   Bars3CenterLeftIcon,
   MagnifyingGlassIcon,
@@ -16,7 +16,7 @@ import {ScrollView} from 'react-native-virtualized-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {View, Text, RefreshControl, Dimensions, LogBox} from 'react-native';
+import {Text, View, LogBox, Dimensions, RefreshControl} from 'react-native';
 //
 const HomeScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -26,11 +26,13 @@ const HomeScreen = () => {
       setRefreshing(false);
     }, 500);
   }, []);
+  console.log('aaaaaaaaa');
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
+      <ModalPoster />
       <SafeAreaView
         style={{
           backgroundColor: 'rgba(38, 38, 38, 0.7)',

@@ -8,9 +8,14 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import {RootStackParams} from '@navigators';
 import React from 'react';
 import {styles} from '../theme';
+import {Navigation} from 'react-native-feather';
 const {width, height} = Dimensions.get('window');
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 interface Props {
   title: string;
   logo: string;
@@ -25,12 +30,18 @@ const SportList: React.FC<Props> = ({
   hideSeeAll,
   data,
 }) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   return (
     <View className="mb-5 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg">{title}</Text>
         {!hideSeeAll && (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('SeeAllCoreAPIS', {data, title, logo})
+            }>
             <Text style={styles.text} className="text-lg">
               See All
             </Text>

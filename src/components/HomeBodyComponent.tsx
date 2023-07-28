@@ -42,12 +42,12 @@ const HomeBodyComponent = () => {
     getNowPlayingMovies();
     getSimilarMovies(603692);
     getSimilarMovies2(455476);
-    getSimilarMovies3(616747);
+    getSimilarMovies3(155);
     getSimilarMovies4(2787);
-    getSimilarMovies5(9980);
+    getSimilarMovies5(8980);
     getSimilarMovies6(667538);
     getSimilarMovies7(298618);
-    getSimilarMovies8(9738);
+    getSimilarMovies8(981324);
     getTvChannelsMovies();
   }, []);
   const getTrendingMovies = async () => {
