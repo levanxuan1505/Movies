@@ -1,24 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, Text, Image, FlatList, Dimensions} from 'react-native';
 import React from 'react';
 import {styles} from '../theme';
 import {RootStackParams} from '@navigators';
+import {FlashList} from '@shopify/flash-list';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+
 interface Props {
   title: string;
   hideSeeAll: boolean;
-  data: Array;
+  data: Array[];
 }
 const MovieList: React.FC<Props> = ({title, hideSeeAll, data}) => {
   const navigation =
@@ -39,14 +34,13 @@ const MovieList: React.FC<Props> = ({title, hideSeeAll, data}) => {
           </TouchableOpacity>
         )}
       </View>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal: 15, paddingVertical: 10}}>
-        {data.map((item, index) => {
-          return (
-            <TouchableWithoutFeedback
+      <View style={{flex: 1, paddingHorizontal: 15, paddingVertical: 10}}>
+        <FlatList
+          data={data}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}) => (
+            <TouchableOpacity
               key={index}
               onPress={() => navigation.push('Movies', item)}>
               <View className="space-y-1 mr-4">
@@ -64,10 +58,10 @@ const MovieList: React.FC<Props> = ({title, hideSeeAll, data}) => {
                     : item.title}
                 </Text>
               </View>
-            </TouchableWithoutFeedback>
-          );
-        })}
-      </ScrollView>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     </View>
   );
 };

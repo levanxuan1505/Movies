@@ -11,27 +11,37 @@ const ButtonSocial = ({title, logo, onPress = () => {}}) => {
       activeOpacity={0.7}
       style={{
         height: 55,
-        width: '100%',
+        width: '50%',
         marginVertical: 7,
         backgroundColor:
-          logo === 'facebook' ? Colors.GOOGLE_BLUE : Colors.SECONDARY_GREEN,
+          logo === 'facebook'
+            ? Colors.FACEBOOK_BLUE
+            : logo === 'google'
+            ? Colors.SECONDARY_GREEN
+            : logo === 'apple'
+            ? Colors.DARK_FIVE
+            : Colors.GOOGLE_BLUE,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
       }}>
-      <View style={{width: 50, height: 50}}>
+      <View style={{width: 35, height: 35}}>
         <LottieView
           source={
             logo === 'facebook'
               ? require('../assets/OnboardingAnimations/facebook.json')
-              : require('../assets/OnboardingAnimations/google.json')
+              : logo === 'google'
+              ? require('../assets/OnboardingAnimations/google.json')
+              : logo === 'apple'
+              ? require('../assets/OnboardingAnimations/apple.json')
+              : require('../assets/OnboardingAnimations/twitter.json')
           }
           autoPlay
           loop
         />
       </View>
       <Text
-        style={{color: Colors.DEFAULT_WHITE, fontWeight: '500', fontSize: 20}}>
+        style={{color: Colors.DEFAULT_WHITE, fontWeight: '600', fontSize: 14}}>
         {title}
       </Text>
     </TouchableOpacity>

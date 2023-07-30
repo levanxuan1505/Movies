@@ -67,8 +67,8 @@ export default function HBODiscover({title, hideSeeAll, data}) {
                   />
                 </ImageBackground>
                 <Text className="text-neutral-300 ml-1">
-                  {item.title.length > 14
-                    ? item.title.slice(0, 14) + '...'
+                  {item.title.length > 40
+                    ? item.title.slice(0, 40) + '...'
                     : item.title}
                 </Text>
               </View>

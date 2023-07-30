@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,11 @@ import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonSocial, Input, Loader} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AuthContext} from '../navigators/AuthProvider';
+const {login}: any = useContext(AuthContext);
+const {user}: any = useContext(AuthContext);
+console.log(user);
+
 export interface ISignUpData {
   email: string;
   password: string;
@@ -30,7 +35,7 @@ export interface Error {
   email: string;
   password: number;
 }
-const SignInScreen = () => {
+const LogInScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -50,14 +55,21 @@ const SignInScreen = () => {
       isValid = false;
     }
     if (isValid) {
-      login();
+      setLoading(true);
+      setTimeout(async () => {
+        login(inputs.email, inputs.password);
+        user === null
+          ? (Alert.alert('Error', 'Email or password is not exactly'),
+            setLoading(false))
+          : (console.log(login(inputs.email, inputs.password), 'inputNull'),
+            setLoading(false),
+            navigation.navigate('Home'));
+      }, 1000);
     }
   };
 
-  const login = () => {
-    setLoading(true);
+  const loginAccess = (email, password) => {
     setTimeout(async () => {
-      setLoading(false);
       let userData = await AsyncStorage.getItem('userData');
       if (userData) {
         userData = JSON.parse(userData);
@@ -65,18 +77,26 @@ const SignInScreen = () => {
           inputs.email === userData?.email &&
           inputs.password === userData?.password
         ) {
-          dispatch(changeName({userName: userData.fullname}));
+          login(inputs.email, inputs.password);
+          // dispatch(changeName({userName: userData.fullname}));
           navigation.replace('Drawer');
           AsyncStorage.setItem(
             'userData',
             JSON.stringify({...userData, loggedIn: true}),
           );
         } else {
-          Alert.alert('Error', 'Invalid Details');
+          Alert.alert('Error', 'Invalid Detailssss');
         }
       } else {
         Alert.alert('Error', 'User does not exist');
       }
+      // if (login(email, password)) {
+      //   setLoading(false);
+      //   console.log(login(email, password));
+      //   login(inputs.email, inputs.password);
+      // } else {
+      //   Alert.alert('Error', 'User does not exist or wrong password');
+      // }
     }, 3000);
   };
 
@@ -147,13 +167,24 @@ const SignInScreen = () => {
             onFocus={() => handleError(null, 'password')}
           />
           <Button logo="login" title="Log in" onPress={validate} />
-          <ButtonSocial logo="facebook" title="Log In with Facebook" />
-          <ButtonSocial logo="google" title="Log In with Google" />
+          <View
+            style={{
+              // flex: 1,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              // justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <ButtonSocial logo="google" title="Log In with Google" />
+            <ButtonSocial logo="apple" title="Log In with Apple ID" />
+            <ButtonSocial logo="facebook" title="Log In with Facebook" />
+            <ButtonSocial logo="twitter" title="Log In with Twitter" />
+          </View>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text
               style={{
                 fontSize: 18,
-                paddingTop: 20,
+                paddingTop: 10,
                 fontWeight: '700',
                 textAlign: 'center',
                 color: Colors.DEFAULT_YELLOW,
@@ -167,4 +198,4 @@ const SignInScreen = () => {
   );
 };
 
-export default SignInScreen;
+export default LogInScreen;

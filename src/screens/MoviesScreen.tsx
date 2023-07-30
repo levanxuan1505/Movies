@@ -12,12 +12,13 @@ import {Cast, MoviesList} from '@components';
 var {width, height} = Dimensions.get('window');
 import React, {useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
+import {ScrollView} from 'react-native-virtualized-view';
 import LinearGradient from 'react-native-linear-gradient';
+import {View, Text, Dimensions, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {View, Text, ScrollView, Dimensions, Image} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export interface Data {
   id: string;
@@ -32,7 +33,6 @@ const MoviesScreen = () => {
   const [loading, setLoading] = useState(false);
   const [isFavorite, setFavorite] = useState(false);
   const [similarMovies, setSimilarMovies] = useState([]);
-  console.log(item.id);
   useEffect(() => {
     setLoading(true);
     getMovieDetails(item.id);

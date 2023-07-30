@@ -19,8 +19,8 @@ import LottieView from 'lottie-react-native';
 import {Button, Loader, Input} from '@components';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AuthContext} from 'src/navigators/AuthProvider';
-
+import {AuthContext} from '../navigators/AuthProvider';
+const {register} = useContext(AuthContext);
 export interface Error {
   email: string;
   password: string;
@@ -37,7 +37,6 @@ const RegisterScreen = () => {
     phone: '',
     password: '',
   });
-  const {register} = useContext(AuthContext);
   const [errors, setErrors] = React.useState<Error>({});
   const [loading, setLoading] = React.useState(false);
 
@@ -83,22 +82,23 @@ const RegisterScreen = () => {
     }
 
     if (isValid) {
-      register(inputs.email, inputs.password);
+      registerAccess();
     }
   };
 
-  // const register = () => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     try {
-  //       setLoading(false);
-  //       AsyncStorage.setItem('userData', JSON.stringify(inputs));
-  //       navigation.navigate('LogIn');
-  //     } catch (error) {
-  //       Alert.alert('Error', 'Something went wrong');
-  //     }
-  //   }, 3000);
-  // };
+  const registerAccess = () => {
+    setLoading(true);
+    setTimeout(() => {
+      try {
+        setLoading(false);
+        AsyncStorage.setItem('userData', JSON.stringify(inputs));
+        register(inputs.email, inputs.password);
+        navigation.navigate('LogIn');
+      } catch (error) {
+        Alert.alert('Error', 'Something went wrong');
+      }
+    }, 2000);
+  };
 
   const handleOnchange = (text: string, input: string) => {
     setInputs(prevState => ({...prevState, [input]: text}));

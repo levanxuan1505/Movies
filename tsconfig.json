@@ -3,7 +3,7 @@
   "compilerOptions":{
     "noImplicitAny":false,
     "strict":true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
     // Path alias config
     "baseUrl": ".",
     "paths": {

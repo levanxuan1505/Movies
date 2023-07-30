@@ -11,39 +11,42 @@ import {
 import {YoutubeID, VBA2023} from '@constants';
 import React, {useEffect, useState} from 'react';
 import {fetchSimilarMovies, fetchTvChannelsMovies} from '../Api/MoviesDb';
+
+//
+
 //
 const HBOBodyComponent = () => {
-  const [tvChannels, setTvChannels] = useState([]);
   const [upComingMovies, setUpComingMovies] = useState([]);
-  const [upComingMovies1, setUpComingMovies1] = useState([]);
-  const [upComingMovies2, setUpComingMovies2] = useState([]);
-  const [upComingMovies3, setUpComingMovies3] = useState([]);
-  const [upComingMovies4, setUpComingMovies4] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [discoverMovies, setDiscoverMovies] = useState([]);
-  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
+  const [HBOMax, setHBOMax] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [HBODisney, setHBODisney] = useState([]);
+  const [moviesForKids, setMoviesForKids] = useState([]);
+  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
+  const [HBOShows, setHBOShows] = useState([]);
+  const [discoverMovies, setDiscoverMovies] = useState([]);
 
   useEffect(() => {
-    getTvChannelsMovies();
-    getSimilarMovies(9980);
-    getSimilarMovies1(575264);
-    getSimilarMovies2(667538);
-    getSimilarMovies3(2787);
-    getSimilarMovies4(296);
-    getSimilarMovies5(13387);
-    getSimilarMovies6(277);
-    getSimilarMovies7(436270);
+    getTopRatedMovies(9980);
+    getUpcomingMovies(575264);
+    getHBOMax(296);
+    getNowPlayingMovies(2787);
+    getPopularMovies(13338);
+    getHBoDisneyMovies(277);
+    getMoviesForKids(436270);
+    getHBOShows();
+    getGODiscover(43399);
   }, []);
   //
-  const getSimilarMovies = async id => {
+  const getTopRatedMovies = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
       setTopRatedMovies(data.results);
     }
   };
-  const getSimilarMovies1 = async id => {
+  const getUpcomingMovies = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
@@ -51,15 +54,15 @@ const HBOBodyComponent = () => {
     }
   };
   //
-  const getSimilarMovies2 = async id => {
+  const getHBOMax = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
-      setDiscoverMovies(data.results);
+      setHBOMax(data.results);
     }
   };
   //
-  const getSimilarMovies3 = async id => {
+  const getNowPlayingMovies = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
@@ -67,48 +70,53 @@ const HBOBodyComponent = () => {
     }
   };
   //
-  const getSimilarMovies4 = async id => {
+  //
+  //
+  const getPopularMovies = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
-      setUpComingMovies1(data.results);
+      setPopularMovies(data.results);
     }
   };
   //
-  const getSimilarMovies5 = async id => {
+  const getHBoDisneyMovies = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
-      setUpComingMovies2(data.results);
+      setHBODisney(data.results);
     }
   };
   //
-  const getSimilarMovies6 = async id => {
+  const getMoviesForKids = async id => {
     const data = await fetchSimilarMovies(id);
     // console.log('got similar movies');
     if (data && data.results) {
-      setUpComingMovies3(data.results);
+      setMoviesForKids(data.results);
     }
   };
   //
-  const getSimilarMovies7 = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setUpComingMovies4(data.results);
-    }
-  };
-  //
-  const getTvChannelsMovies = async () => {
+  const getHBOShows = async () => {
     const data = await fetchTvChannelsMovies();
     // console.log(data);
-    if (data && data.results) setTvChannels(data.results);
+    if (data && data.results) setHBOShows(data.results);
     setIsLoadingMovies(false);
   };
+
+  const getGODiscover = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log('got similar movies');
+    if (data && data.results) {
+      setDiscoverMovies(data.results);
+    }
+  };
+
   return (
     <>
       {isLoadingMovies ? (
-        <Loading />
+        <>
+          <Loading />
+        </>
       ) : (
         <>
           {/* trending */}
@@ -136,7 +144,7 @@ const HBOBodyComponent = () => {
             title="HBO Max"
             logo="MAX"
             hideSeeAll={false}
-            data={upComingMovies1}
+            data={HBOMax}
           />
           <HBOTrailers
             title="HBO Trailer"
@@ -154,7 +162,7 @@ const HBOBodyComponent = () => {
             title="Popular"
             logo="GO"
             hideSeeAll={false}
-            data={upComingMovies2}
+            data={popularMovies}
           />
           <HBODiscover
             title="GO Discover"
@@ -177,13 +185,13 @@ const HBOBodyComponent = () => {
             title="HBO Disney"
             logo="GO"
             hideSeeAll={false}
-            data={upComingMovies3}
+            data={HBODisney}
           />
           <HBOList
             title="Movies For Kids"
             logo="GO"
             hideSeeAll={false}
-            data={upComingMovies4}
+            data={moviesForKids}
           />
           <SportList
             title="VBA Max 2023"
@@ -196,7 +204,7 @@ const HBOBodyComponent = () => {
             name="backdrop_path"
             title="HBO Shows"
             hideSeeAll={false}
-            data={tvChannels}
+            data={HBOShows}
           />
         </>
       )}

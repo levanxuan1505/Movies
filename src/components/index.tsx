@@ -13,6 +13,7 @@ import ModalPoster from './ModalPoster';
 import HBOTrending from './HBOTrending';
 import HBODiscover from './HBODiscover';
 import HBOTrailers from './HBOTrailers';
+import WatchingList from './WatchingList';
 import ButtonSocial from './ButtonSocial';
 import SportTrending from './SportTrending';
 import TrendingMovies from './TrendingMovies';
@@ -36,6 +37,7 @@ export {
   HBOTrending,
   HBOTrailers,
   ModalPoster,
+  WatchingList,
   ButtonSocial,
   SportTrending,
   TrendingMovies,

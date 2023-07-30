@@ -7,6 +7,7 @@ import {
   SportList,
   MoviesList,
   TrendingMovies,
+  WatchingList,
 } from '@components';
 
 import {
@@ -42,12 +43,12 @@ const HomeBodyComponent = () => {
     getNowPlayingMovies();
     getSimilarMovies(603692);
     getSimilarMovies2(455476);
-    getSimilarMovies3(155);
+    getSimilarMovies3(579);
     getSimilarMovies4(2787);
     getSimilarMovies5(8980);
     getSimilarMovies6(667538);
-    getSimilarMovies7(298618);
-    getSimilarMovies8(981324);
+    getSimilarMovies7(321662);
+    getSimilarMovies8(557);
     getTvChannelsMovies();
   }, []);
   const getTrendingMovies = async () => {
@@ -160,8 +161,13 @@ const HomeBodyComponent = () => {
               data={topRatedMovies}
             />
           )}
-          <MoviesList
+          {/* <MoviesList
             title="Now Playing"
+            hideSeeAll={false}
+            data={nowPlayingMovies}
+          /> */}
+          <WatchingList
+            title="Watching"
             hideSeeAll={false}
             data={nowPlayingMovies}
           />

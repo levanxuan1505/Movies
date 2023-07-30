@@ -12,8 +12,9 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
+import {FlashList} from '@shopify/flash-list';
 const {width, height} = Dimensions.get('window');
+import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 
 export default function HBOList({title, logo, hideSeeAll, data}) {
   const navigation = useNavigation();

@@ -17,6 +17,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Text, View, LogBox, Dimensions, RefreshControl} from 'react-native';
+
 //
 const HomeScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -26,7 +27,6 @@ const HomeScreen = () => {
       setRefreshing(false);
     }, 500);
   }, []);
-  console.log('aaaaaaaaa');
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

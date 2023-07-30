@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "412747622947",
+    "project_id": "movies-df5b3",
+    "storage_bucket": "movies-df5b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412747622947:android:4b68f5d614e36446b0df96",
+        "android_client_info": {
+          "package_name": "com.movies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412747622947-c6omk0naug14svq7mci163piplk9ru21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj1lxhOfNQrnCStxBKDL4CqMed9uw2l_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412747622947-c6omk0naug14svq7mci163piplk9ru21.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "412747622947-fjfk77a4v67d8dolk8s8arkg8rgk1kbr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.native.Film"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

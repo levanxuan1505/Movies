@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {useSelector} from 'react-redux';
 import {RootStackParams} from '@navigators';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -10,12 +10,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Iconssss from 'react-native-vector-icons/FontAwesome';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-
+import {AuthContext} from '../navigators/AuthProvider';
 const CustomDrawerScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const {logout}: any = useContext(AuthContext);
 
-  const user = useSelector((state: any) => state.user);
+  const {user}: any = useContext(AuthContext);
+  // console.log(user);
+  // const user = useSelector((state: any) => state.user);
 
   return (
     <View style={{flex: 1, backgroundColor: 'rgb(38 38 38)'}}>
@@ -36,7 +39,7 @@ const CustomDrawerScreen = () => {
             <Text style={[styles.textLarge, {color: '#F53920'}]}>ON---</Text>
           </View>
 
-          {user[0].userName ? (
+          {user?.email ? (
             <TouchableOpacity
               style={[
                 styles.viewContainer,
@@ -62,7 +65,7 @@ const CustomDrawerScreen = () => {
                   styles.text,
                   {color: '#00AA13', fontWeight: '800', fontSize: 26},
                 ]}>
-                {user[0].userName}
+                {user.email}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -159,10 +162,12 @@ const CustomDrawerScreen = () => {
             <Icons name="newspaper-outline" size={28} color="#00AA13" />
             <Text style={styles.text}>Privacy Policy</Text>
           </TouchableOpacity>
-          {user[0].userName ? (
+          {user?.uid ? (
             <TouchableOpacity
               style={[styles.viewContainer, {height: 70}]}
-              onPress={() => navigation.navigate('LogIn')}>
+              onPress={() => {
+                logout(), navigation.navigate('LogIn');
+              }}>
               <Icons name="log-out-outline" size={38} color="#F53920" />
               <Text
                 style={[

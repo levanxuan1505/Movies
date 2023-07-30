@@ -1,7 +1,7 @@
-/* eslint-disable react/react-in-jsx-scope */
 import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 export const AuthContext = createContext();
+
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   return (
@@ -12,22 +12,23 @@ export const AuthProvider = ({children}) => {
         login: async (email, password) => {
           try {
             await auth().signInWithEmailAndPassword(email, password);
-          } catch (err) {
-            console.log(err);
+            console.log(email, 'success');
+          } catch (e) {
+            console.log(e, 'error');
           }
         },
         register: async (email, password) => {
           try {
             await auth().createUserWithEmailAndPassword(email, password);
-          } catch (err) {
-            console.log(err);
+          } catch (e) {
+            console.log(e, 'error');
           }
         },
         logout: async () => {
           try {
             await auth().signOut();
-          } catch (err) {
-            console.log(err);
+          } catch (e) {
+            console.log(e, 'error');
           }
         },
       }}>

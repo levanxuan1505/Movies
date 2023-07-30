@@ -177,7 +177,7 @@ const TvBodyComponent = () => {
             hideSeeAll={false}
             data={YoutubeID[3]}
           />
-          <TrendingTV name="TV Shows" data={tv} />
+          <TrendingTV layout="tinder" name="TV Shows" data={tv} />
         </>
       )}
     </>

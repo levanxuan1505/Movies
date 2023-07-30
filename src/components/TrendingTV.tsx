@@ -65,7 +65,7 @@ const TrendingTV = ({data, name, layout}) => {
       <Carousel
         data={data}
         // layout={'tinder'}
-        layout={'stack'}
+        layout={layout}
         scrollInterpolator={scrollInterpolator4}
         slideStyle={animatedStyles4}
         loop={true}
