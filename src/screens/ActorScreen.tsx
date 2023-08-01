@@ -11,7 +11,7 @@ import {
 import {styles} from '../theme';
 import {RootStackParams} from '@navigators';
 import {MoviesList, Loading} from '@components';
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
@@ -149,4 +149,4 @@ const Actor = () => {
     </ScrollView>
   );
 };
-export default Actor;
+export default memo(Actor);

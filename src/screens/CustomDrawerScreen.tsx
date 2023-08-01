@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext} from 'react';
+import React, {memo, useContext} from 'react';
 import {useSelector} from 'react-redux';
 import {RootStackParams} from '@navigators';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -35,11 +35,13 @@ const CustomDrawerScreen = () => {
                 backgroundColor: 'transparent',
               },
             ]}>
-            <Text style={styles.textLarge}>--VIE_</Text>
-            <Text style={[styles.textLarge, {color: '#F53920'}]}>ON---</Text>
+            <Text style={{fontFamily: 'KaushanScript-Regular'}}>
+              <Text style={styles.textLarge}>--VIE_</Text>
+              <Text style={[styles.textLarge, {color: '#F53920'}]}>ON---</Text>
+            </Text>
           </View>
 
-          {user?.email ? (
+          {user?.displayName ? (
             <TouchableOpacity
               style={[
                 styles.viewContainer,
@@ -55,17 +57,20 @@ const CustomDrawerScreen = () => {
                     width: 45,
                     height: 45,
                     borderRadius: 30,
-                    resizeMode: 'center',
                   }}
-                  source={require('../assets/images/avatar.jpeg')}
+                  source={{uri: user.photoURL}}
                 />
               </View>
               <Text
                 style={[
                   styles.text,
-                  {color: '#00AA13', fontWeight: '800', fontSize: 26},
+                  {
+                    color: '#00AA13',
+                    fontWeight: '700',
+                    fontSize: 26,
+                  },
                 ]}>
-                {user.email}
+                {user.displayName}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -222,4 +227,4 @@ const styles = StyleSheet.create({
     paddingLeft: 70,
   },
 });
-export default CustomDrawerScreen;
+export default memo(CustomDrawerScreen);

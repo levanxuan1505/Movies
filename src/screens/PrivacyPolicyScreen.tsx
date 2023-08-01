@@ -85,9 +85,6 @@ const PrivacyPolicyScreen = ({route}) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
           className="space-y-3">
-          <Text className="text-white font-semibold ml-1">
-            Results ({watchingMovies.length})
-          </Text>
           <View className="flex-row justify-between flex-wrap">
             {watchingMovies.map((item, index) => {
               return (

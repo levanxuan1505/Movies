@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 const {width} = Dimensions.get('window');
 import SplashScreen from './SplashScreen';
 import LottieView from 'lottie-react-native';
@@ -167,21 +167,21 @@ const styles = StyleSheet.create({
   textButton: {
     fontSize: 20,
     color: '#00AA13',
-    fontWeight: '800',
+    fontFamily: 'KaushanScript-Regular',
   },
   title: {
-    fontSize: 40,
-    color: '#FBA83C',
-    fontWeight: '900',
+    fontSize: 50,
+    color: '#24C869',
+    fontFamily: 'KaushanScript-Regular',
   },
   subTitle: {
-    fontSize: 20,
+    fontSize: 19,
     color: '#FBA83C',
-    fontWeight: '600',
+    fontFamily: 'KaushanScript-Regular',
   },
   dotButton: {
     borderRadius: 10,
     marginHorizontal: 5,
   },
 });
-export default OnBoardingScreen;
+export default memo(OnBoardingScreen);

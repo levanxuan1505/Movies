@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {memo} from 'react';
 import {image500} from '../Api/MoviesDb';
 import {RootStackParams} from '@navigators';
 let {width, height} = Dimensions.get('window');
@@ -54,4 +54,4 @@ const MovieCard = ({item, handleClick}) => {
     </TouchableOpacity>
   );
 };
-export default TrendingMovies;
+export default memo(TrendingMovies);

@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 let {width} = Dimensions.get('window');
 import {TvBodyComponent} from '@components';
@@ -42,7 +42,9 @@ const TelevisionScreen = () => {
           className="flex-row justify-between items-center ">
           <TvIcon size={30} strokeWidth={2} color="white" />
 
-          <Text className="text-white text-3xl font-bold">
+          <Text
+            style={{fontFamily: 'KaushanScript-Regular'}}
+            className="text-white text-3xl font-bold">
             <Text style={styles.text}>---TELEVI</Text>
             <Text style={styles.secondaryText}>SIONS---</Text>
           </Text>
@@ -69,4 +71,4 @@ const TelevisionScreen = () => {
   );
 };
 
-export default TelevisionScreen;
+export default memo(TelevisionScreen);

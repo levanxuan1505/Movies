@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 import {View, Text, Dimensions, Image, ImageBackground} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
@@ -79,4 +79,4 @@ const MovieCard = ({item, handleClick}) => {
     </TouchableWithoutFeedback>
   );
 };
-export default HBOTrending;
+export default memo(HBOTrending);

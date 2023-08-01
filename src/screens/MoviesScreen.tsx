@@ -10,7 +10,7 @@ import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 import {Cast, MoviesList} from '@components';
 var {width, height} = Dimensions.get('window');
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {ScrollView} from 'react-native-virtualized-view';
 import LinearGradient from 'react-native-linear-gradient';
@@ -65,8 +65,8 @@ const MoviesScreen = () => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 20}}
-      className="flex-1 bg-neutral-900">
-      <View className="w-full">
+      className=" bg-neutral-900">
+      <View>
         <SafeAreaView className="absolute z-20 w-full flex-row justify-between item-center px-4">
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -119,7 +119,7 @@ const MoviesScreen = () => {
         ) : null}
         <View className="flex-row justify-center mx-4 space-x-2">
           {movie?.genres?.map((genre, index) => {
-            let showDot = index + 1 != movie.genres.length;
+            let showDot = index + 1 !== movie.genres.length;
             return (
               <Text
                 key={index}
@@ -135,14 +135,16 @@ const MoviesScreen = () => {
         </Text>
       </View>
       {/* Cast */}
-      <Cast cast={cast} navigation={navigation} />
-      <MoviesList
-        title="Similar Movies"
-        hideSeeAll={true}
-        data={similarMovies}
-      />
+      {cast.length > 0 && <Cast cast={cast} navigation={navigation} />}
+      {similarMovies.length > 0 && (
+        <MoviesList
+          title="Similar Movies"
+          hideSeeAll={true}
+          data={similarMovies}
+        />
+      )}
     </ScrollView>
   );
 };
 
-export default MoviesScreen;
+export default memo(MoviesScreen);

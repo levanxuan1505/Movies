@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable curly */
 import {
@@ -7,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   RefreshControl,
+  ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -22,32 +24,34 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {fetchNowPlayingMovies} from '../Api/MoviesDb';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const WatchingScreen = ({route}) => {
   const title = route.params.title;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const [isFavorite, setFavorite] = useState(false);
-  const [watchingMovies, setWatchingMovies] = useState([]);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [isFavorite, setFavorite] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  useEffect(() => {
+    getNowPlayingMovies();
+  }, []);
+  const getNowPlayingMovies = async () => {
+    const data = await fetchNowPlayingMovies();
+    // console.log(data);
+    if (data && data.results) setNowPlayingMovies(data.results);
+    // setIsLoadingMovies(false);
+  };
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
   }, []);
-  useEffect(() => {
-    getWatchingMovies();
-  });
-  const getWatchingMovies = async () => {
-    const data = await fetchUpcomingMovies();
-    // console.log(data);
-    if (data && data.results) setWatchingMovies(data.results);
-    setLoading(false);
-  };
+
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
       <SafeAreaView
@@ -72,16 +76,13 @@ const WatchingScreen = ({route}) => {
             <Text style={styles.text}>---{title}---</Text>
           </Text>
           <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <HeartIcon
-              size="35"
-              color={isFavorite ? theme.background : 'white'}
-            />
+            <Icon name="history" size={40} color="#00AA13" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
       {loading ? (
         <Loading />
-      ) : watchingMovies.length > 0 ? (
+      ) : nowPlayingMovies.length > 0 ? (
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -90,23 +91,55 @@ const WatchingScreen = ({route}) => {
           contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
           className="space-y-3">
           <Text className="text-white font-semibold ml-1">
-            Results ({watchingMovies.length})
+            Results ({nowPlayingMovies.length})
           </Text>
           <View className="flex-row justify-between flex-wrap">
-            {watchingMovies.map((item, index) => {
+            {nowPlayingMovies.map((item, index): any => {
               return (
                 <TouchableWithoutFeedback
                   key={index}
                   onPress={() => navigation.navigate('Movies', item)}>
                   <View className="space-y-2 mb-4">
-                    <Image
+                    <ImageBackground
                       source={{
                         uri: image500(item.poster_path) || fallbackMoviePoster,
                       }}
-                      //   source={require('../assets/images/moviePoster1.png')}
-                      className="rounded-3xl"
-                      style={{width: width * 0.44, height: height * 0.3}}
-                    />
+                      style={{
+                        position: 'relative',
+                        width: width * 0.44,
+                        height: height * 0.3,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Image
+                        style={{
+                          position: 'absolute',
+                          width: 45,
+                          resizeMode: 'cover',
+                          height: 45,
+                          borderRadius: 100,
+                        }}
+                        source={require('../assets/images/pause.png')}
+                      />
+                      <View
+                        style={{
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          width: '100%',
+                          borderWidth: 3,
+                          borderColor: '#C2C2CB',
+                        }}></View>
+                      <View
+                        style={{
+                          borderColor: '#00AA13',
+                          position: 'absolute',
+                          left: 0,
+                          bottom: 0,
+                          width: Math.floor(Math.random() * 120),
+                          borderWidth: 3,
+                        }}></View>
+                    </ImageBackground>
                     <Text className="text-gray-300 ml-1">
                       {item.title.length > 22
                         ? item.title.slice(0, 22) + '...'

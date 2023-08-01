@@ -5,31 +5,30 @@ import {
   Text,
   Image,
   Dimensions,
-  ScrollView,
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 import {RootStackParams} from '@navigators';
+import {FlashList} from '@shopify/flash-list';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {FlashList} from '@shopify/flash-list';
 
 interface Props {
   title: string;
   hideSeeAll: boolean;
-  data: Array;
+  data: Array<String>; //
 }
 const WatchingList: React.FC<Props> = ({title, hideSeeAll, data}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
-    <View className="mb-8 space-y-4">
+    <View className="mb-8 space-y-4 w-full">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg">{title}</Text>
         {!hideSeeAll && (
@@ -43,71 +42,79 @@ const WatchingList: React.FC<Props> = ({title, hideSeeAll, data}) => {
           </TouchableOpacity>
         )}
       </View>
-      <View>
-        <ScrollView
+      <View
+        style={{
+          flex: 1,
+          minHeight: 2,
+          height: 'auto',
+          width: Dimensions.get('screen').width,
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+        }}>
+        <FlashList
+          data={data}
           horizontal
+          estimatedItemSize={20}
+          disableAutoLayout={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15, paddingVertical: 10}}>
-          {data.map((item, index) => {
-            return (
-              <TouchableWithoutFeedback
-                key={index}
-                onPress={() => navigation.push('Movies', item)}>
-                <View>
-                  <ImageBackground
-                    source={{
-                      uri: image500(item.poster_path) || fallbackMoviePoster,
-                    }}
-                    className=" space-y-1 mr-4  rounded-3xl"
+          renderItem={({item, index}: any) => (
+            <TouchableWithoutFeedback
+              key={index}
+              onPress={() => navigation.push('Movies', item)}>
+              <View>
+                <ImageBackground
+                  source={{
+                    uri: image500(item.poster_path) || fallbackMoviePoster,
+                  }}
+                  className=" space-y-1 mr-4  rounded-3xl"
+                  style={{
+                    position: 'relative',
+                    width: width * 0.33,
+                    height: height * 0.22,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}>
+                  <Image
                     style={{
-                      position: 'relative',
-                      width: width * 0.33,
-                      height: height * 0.22,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: 5,
-                    }}>
-                    <Image
-                      style={{
-                        position: 'absolute',
-                        width: 45,
-                        resizeMode: 'cover',
-                        height: 45,
-                        borderRadius: 100,
-                      }}
-                      source={require('../assets/images/pause.png')}
-                    />
-                    <View
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: '100%',
-                        borderWidth: 3,
-                        borderColor: '#C2C2CB',
-                      }}></View>
-                    <View
-                      style={{
-                        borderColor: '#00AA13',
-                        position: 'absolute',
-                        left: 0,
-                        bottom: 0,
-                        width: 120 * Math.random(1),
-                        borderWidth: 3,
-                      }}></View>
-                  </ImageBackground>
-                  <Text className="text-neutral-300 ml-1">
-                    {item.title.length > 14
-                      ? item.title.slice(0, 14) + '...'
-                      : item.title}
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-            );
-          })}
-        </ScrollView>
+                      position: 'absolute',
+                      width: 45,
+                      resizeMode: 'cover',
+                      height: 45,
+                      borderRadius: 100,
+                    }}
+                    source={require('../assets/images/pause.png')}
+                  />
+                  <View
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: '100%',
+                      borderWidth: 3,
+                      borderColor: '#C2C2CB',
+                    }}></View>
+                  <View
+                    style={{
+                      borderColor: '#00AA13',
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: Math.floor(Math.random() * 120),
+                      borderWidth: 3,
+                    }}></View>
+                </ImageBackground>
+                <Text className="text-neutral-300 ml-1">
+                  {item.title.length > 14
+                    ? item.title.slice(0, 14) + '...'
+                    : item.title}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          )}
+        />
       </View>
     </View>
   );
 };
-export default WatchingList;
+export default memo(WatchingList);

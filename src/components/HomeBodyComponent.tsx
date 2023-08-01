@@ -19,7 +19,7 @@ import {
   fetchTvChannelsMovies,
 } from '../Api/MoviesDb';
 import {HBOTrailers} from '@components';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, memo, useState} from 'react';
 import {YoutubeID, RolandGarros, TVChannels, Bundesliga} from '@constants';
 const HomeBodyComponent = () => {
   const [tv, setTv] = useState([]);
@@ -32,8 +32,9 @@ const HomeBodyComponent = () => {
   const [upComingMovies, setUpComingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [discoverMovies, setDiscoverMovies] = useState([]);
-  const [moviesTheaters, setHboMoviesTheaters] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [watchingMovies, setWatchingMovies] = useState([]);
+  const [moviesTheaters, setHboMoviesTheaters] = useState([]);
   const [isLoadingMovies, setIsLoadingMovies] = useState(true);
 
   useEffect(() => {
@@ -44,11 +45,12 @@ const HomeBodyComponent = () => {
     getSimilarMovies(603692);
     getSimilarMovies2(455476);
     getSimilarMovies3(579);
-    getSimilarMovies4(2787);
+    getSimilarMovies4(2707);
     getSimilarMovies5(8980);
-    getSimilarMovies6(667538);
+    getSimilarMovies6(665538);
     getSimilarMovies7(321662);
     getSimilarMovies8(557);
+    getSimilarMovies9(5127);
     getTvChannelsMovies();
   }, []);
   const getTrendingMovies = async () => {
@@ -79,6 +81,12 @@ const HomeBodyComponent = () => {
     const data = await fetchSimilarMovies(id);
     // console.log(data);
     if (data && data.results) setDiscoverMovies(data.results);
+    // setIsLoadingMovies(false);
+  };
+  const getSimilarMovies9 = async id => {
+    const data = await fetchSimilarMovies(id);
+    // console.log(data);
+    if (data && data.results) setWatchingMovies(data.results);
     // setIsLoadingMovies(false);
   };
   const getSimilarMovies7 = async id => {
@@ -161,80 +169,116 @@ const HomeBodyComponent = () => {
               data={topRatedMovies}
             />
           )}
-          {/* <MoviesList
-            title="Now Playing"
-            hideSeeAll={false}
-            data={nowPlayingMovies}
-          /> */}
-          <WatchingList
-            title="Watching"
-            hideSeeAll={false}
-            data={nowPlayingMovies}
-          />
-          <HBOTrailers
-            title="HBO Trailer"
-            hideSeeAll={false}
-            data={YoutubeID[0]}
-            firstItem={YoutubeID[0].length / 2}
-          />
-          <MoviesList title="Popular" hideSeeAll={false} data={listMovies} />
-          <HBOList
-            title="HBO Movies"
-            logo="GO"
-            hideSeeAll={false}
-            data={hboMovies}
-          />
-          <Discover title="Discover" hideSeeAll={false} data={discoverMovies} />
-          <MoviesList title="Social Channels" hideSeeAll={false} data={tv} />
-          <Tv
-            name="backdrop_path"
-            title="TV Channel"
-            hideSeeAll={false}
-            data={tvChannels}
-          />
-          <MoviesList
-            title="Movies Theater"
-            hideSeeAll={false}
-            data={moviesTheaters}
-          />
-          <MoviesList title="Disney" hideSeeAll={false} data={disneyMovies} />
-          <MoviesList
-            title="Movies For Kids"
-            hideSeeAll={false}
-            data={moviesForKids}
-          />
-          <HBOTrailers
-            title="Fomula 1"
-            firstItem={0}
-            hideSeeAll={false}
-            data={YoutubeID[3]}
-          />
-          <SportList
-            title="Bundesliga"
-            logo="Bundesliga"
-            hideSeeAll={false}
-            data={Bundesliga}
-            symbol="espn"
-          />
-          <SportList
-            title="Roland Garros 2023"
-            logo="Roland"
-            symbol="skySport"
-            hideSeeAll={false}
-            data={RolandGarros}
-          />
-          <SportList
-            title="TV Channels"
-            logo="bigSize"
-            symbol="null"
-            hideSeeAll={false}
-            data={TVChannels}
-          />
-          <TrendingMovies name="TV Shows" data={tvChannels} />
+          {nowPlayingMovies.length > 0 && (
+            <MoviesList
+              title="Now Playing"
+              hideSeeAll={false}
+              data={nowPlayingMovies}
+            />
+          )}
+          {watchingMovies.length > 0 && (
+            <WatchingList
+              title="Watching"
+              hideSeeAll={false}
+              data={watchingMovies}
+            />
+          )}
+          {YoutubeID[0].length > 0 && (
+            <HBOTrailers
+              title="HBO Trailer"
+              hideSeeAll={false}
+              data={YoutubeID[0]}
+              firstItem={YoutubeID[0].length / 2}
+            />
+          )}
+          {listMovies.length > 0 && (
+            <MoviesList title="Popular" hideSeeAll={false} data={listMovies} />
+          )}
+          {hboMovies.length > 0 && (
+            <HBOList
+              title="HBO Movies"
+              logo="GO"
+              hideSeeAll={false}
+              data={hboMovies}
+            />
+          )}
+          {discoverMovies.length > 0 && (
+            <Discover
+              title="Discover"
+              hideSeeAll={false}
+              data={discoverMovies}
+            />
+          )}
+          {tv.length > 0 && (
+            <MoviesList title="Social Channels" hideSeeAll={false} data={tv} />
+          )}
+          {tvChannels.length > 0 && (
+            <Tv
+              name="backdrop_path"
+              title="TV Channel"
+              hideSeeAll={false}
+              data={tvChannels}
+            />
+          )}
+          {moviesTheaters.length > 0 && (
+            <MoviesList
+              title="Movies Theater"
+              hideSeeAll={false}
+              data={moviesTheaters}
+            />
+          )}
+          {disneyMovies.length > 0 && (
+            <MoviesList title="Disney" hideSeeAll={false} data={disneyMovies} />
+          )}
+          {moviesForKids.length > 0 && (
+            <MoviesList
+              title="Movies For Kids"
+              hideSeeAll={false}
+              data={moviesForKids}
+            />
+          )}
+          {YoutubeID[3].length > 0 && (
+            <HBOTrailers
+              title="Fomula 1"
+              firstItem={0}
+              hideSeeAll={false}
+              data={YoutubeID[3]}
+            />
+          )}
+          {Bundesliga.length > 0 && (
+            <SportList
+              title="Bundesliga"
+              logo="Bundesliga"
+              hideSeeAll={false}
+              data={Bundesliga}
+              symbol="espn"
+            />
+          )}
+          {RolandGarros.length > 0 && (
+            <SportList
+              title="Roland Garros 2023"
+              logo="Roland"
+              symbol="skySport"
+              hideSeeAll={false}
+              data={RolandGarros}
+            />
+          )}
+          {TVChannels.length > 0 && (
+            <SportList
+              title="TV Channels"
+              logo="bigSize"
+              symbol="null"
+              hideSeeAll={false}
+              data={TVChannels}
+            />
+          )}
+          {tvChannels.length > 0 && (
+            <TrendingMovies name="TV Shows" data={tvChannels} />
+          )}
         </>
       )}
     </>
   );
 };
 
-export default HomeBodyComponent;
+export default memo(HomeBodyComponent);

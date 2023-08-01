@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 import {View, Text, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
@@ -88,4 +88,4 @@ const MovieCard = ({item, handleClick}) => {
     </TouchableWithoutFeedback>
   );
 };
-export default HBOTrailers;
+export default memo(HBOTrailers);

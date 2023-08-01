@@ -4,7 +4,7 @@ const av = new Animated.Value(0);
 av.addListener(() => {
   return;
 });
-import React from 'react';
+import React, {memo} from 'react';
 import {Display} from '@utils';
 import {Colors} from '@constants';
 import HBOScreen from './HBOScreen';
@@ -19,7 +19,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 //
 const Tab = createBottomTabNavigator();
-export default function BottomHomeScreen() {
+const BottomHomeScreen = () => {
   return (
     <Tab.Navigator
       screenListeners={{
@@ -92,4 +92,5 @@ export default function BottomHomeScreen() {
       />
     </Tab.Navigator>
   );
-}
+};
+export default memo(BottomHomeScreen);

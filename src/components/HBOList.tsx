@@ -2,24 +2,23 @@
 import {
   View,
   Text,
-  ScrollView,
   TouchableWithoutFeedback,
   ImageBackground,
   Image,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 import {FlashList} from '@shopify/flash-list';
 const {width, height} = Dimensions.get('window');
+import {useNavigation} from '@react-navigation/native';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 
-export default function HBOList({title, logo, hideSeeAll, data}) {
+const HBOList = ({title, logo, hideSeeAll, data}) => {
   const navigation = useNavigation();
   return (
-    <View className="mb-8 space-y-4">
+    <View className="mb-8 space-y-4 w-full">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg">{title}</Text>
         {!hideSeeAll && (
@@ -33,13 +32,22 @@ export default function HBOList({title, logo, hideSeeAll, data}) {
           </TouchableOpacity>
         )}
       </View>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal: 15, paddingVertical: 10}}>
-        {data.map((item, index) => {
-          return (
+      <View
+        style={{
+          flex: 1,
+          minHeight: 2,
+          height: 'auto',
+          width: Dimensions.get('screen').width,
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+        }}>
+        <FlashList
+          data={data}
+          horizontal={true}
+          estimatedItemSize={4}
+          disableAutoLayout={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}: any) => (
             <TouchableWithoutFeedback
               key={index}
               onPress={() => navigation.push('Movies', item)}>
@@ -85,9 +93,10 @@ export default function HBOList({title, logo, hideSeeAll, data}) {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-          );
-        })}
-      </ScrollView>
+          )}
+        />
+      </View>
     </View>
   );
-}
+};
+export default memo(HBOList);

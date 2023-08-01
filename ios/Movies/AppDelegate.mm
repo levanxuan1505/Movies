@@ -1,17 +1,26 @@
 #import "AppDelegate.h"
-#import <Firebase.h>
 #import <React/RCTBundleURLProvider.h>
+#import <Firebase.h>
+#import <RNGoogleSignin/RNGoogleSignin.h>
+#import <TwitterKit/TWTRKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit-swift.h>
+
 
 @implementation AppDelegate
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+  return [[Twitter sharedInstance] application:app openURL:url options:options];
 
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // Add me --- \/
   [FIRApp configure];
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                       didFinishLaunchingWithOptions:launchOptions];
   // Add me --- /
 
   self.moduleName = @"Movies";
-  // You can add your custom initial props in the dictionary below.
+  // You can add your custom initial props in the dictionary below
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
@@ -26,5 +35,6 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+
 
 @end

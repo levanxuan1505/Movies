@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
 LogBox.ignoreLogs(['Sending...']);
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 var {width} = Dimensions.get('window');
 import {ModalPoster} from '@components';
@@ -48,7 +48,9 @@ const HomeScreen = () => {
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
           </TouchableOpacity>
-          <Text className="text-white text-3xl font-bold">
+          <Text
+            style={{fontFamily: 'KaushanScript-Regular'}}
+            className="text-white text-3xl font-bold">
             <Text style={styles.text}>---VIE_</Text>
             <Text style={styles.yellowColor}>ON---</Text>
           </Text>
@@ -73,4 +75,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default memo(HomeScreen);

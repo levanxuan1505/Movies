@@ -4,24 +4,24 @@ import {
   Text,
   Image,
   Dimensions,
-  ScrollView,
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 import {RootStackParams} from '@navigators';
+import {FlashList} from '@shopify/flash-list';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-export default function HBODiscover({title, hideSeeAll, data}) {
+const HBODiscover = ({title, hideSeeAll, data}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   return (
-    <View className="mb-8 space-y-4">
+    <View className="mb-8 space-y-4 w-full">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg">{title}</Text>
         {!hideSeeAll && (
@@ -35,13 +35,22 @@ export default function HBODiscover({title, hideSeeAll, data}) {
           </TouchableOpacity>
         )}
       </View>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal: 15, paddingVertical: 10}}>
-        {data.map((item, index) => {
-          return (
+      <View
+        style={{
+          flex: 1,
+          minHeight: 2,
+          height: 'auto',
+          width: Dimensions.get('screen').width,
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+        }}>
+        <FlashList
+          data={data}
+          horizontal={true}
+          estimatedItemSize={20}
+          disableAutoLayout={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}: any) => (
             <TouchableWithoutFeedback
               key={index}
               onPress={() => navigation.push('Movies', item)}>
@@ -73,9 +82,10 @@ export default function HBODiscover({title, hideSeeAll, data}) {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-          );
-        })}
-      </ScrollView>
+          )}
+        />
+      </View>
     </View>
   );
-}
+};
+export default memo(HBODiscover);

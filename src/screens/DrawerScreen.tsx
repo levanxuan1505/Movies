@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import * as React from 'react';
+import React, {memo} from 'react';
 import {BottomHomeScreen} from '@screens';
 import CustomDrawerScreen from './CustomDrawerScreen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerScreen() {
+const DrawerScreen = () => {
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawerScreen {...props} />}
@@ -15,4 +15,5 @@ export default function DrawerScreen() {
       <Drawer.Screen name="DrawerScreen" component={BottomHomeScreen} />
     </Drawer.Navigator>
   );
-}
+};
+export default memo(DrawerScreen);

@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {Display} from '@utils';
 import {Colors} from '@constants';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import styles from '../css/HomeScreenStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {View, Modal, Image, Animated, TouchableOpacity} from 'react-native';
@@ -73,4 +73,4 @@ const ModalPoster = () => {
   );
 };
 
-export default ModalPoster;
+export default memo(ModalPoster);

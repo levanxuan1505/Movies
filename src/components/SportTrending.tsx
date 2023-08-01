@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {memo} from 'react';
 var {width, height} = Dimensions.get('window');
 import {View, Text, Dimensions, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -96,4 +96,4 @@ const MovieCard = ({item}) => {
     </TouchableOpacity>
   );
 };
-export default SportTrending;
+export default memo(SportTrending);

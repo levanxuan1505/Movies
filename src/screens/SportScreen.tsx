@@ -1,7 +1,7 @@
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 let {width} = Dimensions.get('window');
 import {SportsBodyComponent} from '@components';
@@ -38,7 +38,9 @@ const SportScreen = () => {
           className="flex-row justify-between items-center ">
           <BoltIcon size={30} strokeWidth={2} color="white" />
 
-          <Text className="text-white text-3xl font-bold">
+          <Text
+            style={{fontFamily: 'KaushanScript-Regular'}}
+            className="text-white text-3xl font-bold">
             <Text style={styles.text}>---SPO</Text>
             <Text style={styles.bluText}>RTS---</Text>
           </Text>
@@ -60,4 +62,4 @@ const SportScreen = () => {
   );
 };
 
-export default SportScreen;
+export default memo(SportScreen);

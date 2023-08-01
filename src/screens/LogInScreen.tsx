@@ -23,9 +23,26 @@ import {Button, ButtonSocial, Input, Loader} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthContext} from '../navigators/AuthProvider';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {Settings} from 'react-native-fbsdk-next';
+
+// Ask for consent first if necessary
+// Possibly only do this for iOS if no need to handle a GDPR-type flow
+Settings.initializeSDK();
 const {login}: any = useContext(AuthContext);
 const {user}: any = useContext(AuthContext);
+// import {
+//   GoogleAuthProvider,
+//   signInWithCredential,
+// } from '@react-native-firebase/auth';
 console.log(user);
+// import statusCodes along with GoogleSignin
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
+
+import {NativeModules} from 'react-native';
+const {RNTwitterSignIn} = NativeModules;
 
 export interface ISignUpData {
   email: string;
@@ -36,13 +53,18 @@ export interface Error {
   password: number;
 }
 const LogInScreen = () => {
+  // Somewhere in your code
+  GoogleSignin.configure({
+    webClientId:
+      '412747622947-gf880ruglqu8digrjj23evkm2v8jg1k4.apps.googleusercontent.com',
+  });
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const [inputs, setInputs] = useState<ISignUpData>({email: '', password: ''});
   const [errors, setErrors] = useState<Error>({});
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const validate = async () => {
     Keyboard.dismiss();
     let isValid = true;
@@ -68,37 +90,37 @@ const LogInScreen = () => {
     }
   };
 
-  const loginAccess = (email, password) => {
-    setTimeout(async () => {
-      let userData = await AsyncStorage.getItem('userData');
-      if (userData) {
-        userData = JSON.parse(userData);
-        if (
-          inputs.email === userData?.email &&
-          inputs.password === userData?.password
-        ) {
-          login(inputs.email, inputs.password);
-          // dispatch(changeName({userName: userData.fullname}));
-          navigation.replace('Drawer');
-          AsyncStorage.setItem(
-            'userData',
-            JSON.stringify({...userData, loggedIn: true}),
-          );
-        } else {
-          Alert.alert('Error', 'Invalid Detailssss');
-        }
-      } else {
-        Alert.alert('Error', 'User does not exist');
-      }
-      // if (login(email, password)) {
-      //   setLoading(false);
-      //   console.log(login(email, password));
-      //   login(inputs.email, inputs.password);
-      // } else {
-      //   Alert.alert('Error', 'User does not exist or wrong password');
-      // }
-    }, 3000);
-  };
+  // const loginAccess = (email, password) => {
+  //   setTimeout(async () => {
+  //     let userData = await AsyncStorage.getItem('userData');
+  //     if (userData) {
+  //       userData = JSON.parse(userData);
+  //       if (
+  //         inputs.email === userData?.email &&
+  //         inputs.password === userData?.password
+  //       ) {
+  //         login(inputs.email, inputs.password);
+  //         // dispatch(changeName({userName: userData.fullname}));
+  //         navigation.replace('Drawer');
+  //         AsyncStorage.setItem(
+  //           'userData',
+  //           JSON.stringify({...userData, loggedIn: true}),
+  //         );
+  //       } else {
+  //         Alert.alert('Error', 'Invalid Detailssss');
+  //       }
+  //     } else {
+  //       Alert.alert('Error', 'User does not exist');
+  //     }
+  //     // if (login(email, password)) {
+  //     //   setLoading(false);
+  //     //   console.log(login(email, password));
+  //     //   login(inputs.email, inputs.password);
+  //     // } else {
+  //     //   Alert.alert('Error', 'User does not exist or wrong password');
+  //     // }
+  //   }, 3000);
+  // };
 
   const handleOnchange = (text: string, input: string) => {
     setInputs(prevState => ({...prevState, [input]: text}));
@@ -107,6 +129,104 @@ const LogInScreen = () => {
   const handleError = (error: any, input: string) => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
+  async function onGoogleButtonPress() {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    // return auth().signInWithCredential(googleCredential);
+    const user_sign_in = auth().signInWithCredential(googleCredential);
+    user_sign_in.then(re => {
+      console.log(re);
+      navigation.navigate('Drawer');
+    });
+  }
+  async function onFacebookButtonPress() {
+    // Attempt login with permissions
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccessToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(facebookCredential);
+  }
+  async function onAppleButtonPress() {
+    // 1). start a apple sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+
+    // 2). if the request was successful, extract the token and nonce
+    const {identityToken, nonce} = appleAuthRequestResponse;
+
+    // can be null in some scenarios
+    if (identityToken) {
+      // 3). create a Firebase `AppleAuthProvider` credential
+      const appleCredential = firebase.auth.AppleAuthProvider.credential(
+        identityToken,
+        nonce,
+      );
+
+      // 4). use the created `AppleAuthProvider` credential to start a Firebase auth request,
+      //     in this example `signInWithCredential` is used, but you could also call `linkWithCredential`
+      //     to link the account to an existing user
+      const userCredential = await firebase
+        .auth()
+        .signInWithCredential(appleCredential);
+
+      // user is now signed in, any Firebase `onAuthStateChanged` listeners you have will trigger
+      console.warn(
+        `Firebase authenticated via Apple, UID: ${userCredential.user.uid}`,
+      );
+    } else {
+      // handle this - retry?
+    }
+  }
+  //google
+  async function onTwitterButtonPress() {
+    // Perform the login request
+    RNTwitterSignIn.init(
+      'VEBHtMFimOOOekrz7on5mqmHX',
+      'Jno6QVkGSWEYRie1cpNHKiMDlZs1yyEY5uVuDQBS5EuzBT1DbH',
+    ).then(() => console.log('Twitter SDK initialized'));
+    const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn();
+
+    // Create a Twitter credential with the tokens
+    const twitterCredential = auth.TwitterAuthProvider.credential(
+      authToken,
+      authTokenSecret,
+    );
+
+    // Sign-in the user with the credential
+    // return auth().signInWithCredential(twitterCredential);
+    const user_sign_in = auth().signInWithCredential(twitterCredential);
+    user_sign_in.then(re => {
+      console.log(re);
+    });
+  }
   return (
     <SafeAreaView className="flex-1 bg-neutral-800">
       <StatusBar barStyle="light-content" />
@@ -175,10 +295,26 @@ const LogInScreen = () => {
               // justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <ButtonSocial logo="google" title="Log In with Google" />
-            <ButtonSocial logo="apple" title="Log In with Apple ID" />
-            <ButtonSocial logo="facebook" title="Log In with Facebook" />
-            <ButtonSocial logo="twitter" title="Log In with Twitter" />
+            <ButtonSocial
+              onPress={() => onGoogleButtonPress()}
+              logo="google"
+              title="Log In with Google"
+            />
+            <ButtonSocial
+              onPress={() => onAppleButtonPress()}
+              logo="apple"
+              title="Log In with Apple ID"
+            />
+            <ButtonSocial
+              onPress={() => onFacebookButtonPress()}
+              logo="facebook"
+              title="Log In with Facebook"
+            />
+            <ButtonSocial
+              onPress={() => onTwitterButtonPress()}
+              logo="twitter"
+              title="Log In with Twitter"
+            />
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text

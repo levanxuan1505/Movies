@@ -14,14 +14,14 @@ import {debounce} from 'lodash';
 import {Loading} from '@components';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
-import React, {useCallback, useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {XMarkIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {fallbackMoviePoster, image500, searchMovies} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-export default function SearchScreen({route}) {
+const SearchScreen = ({route}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const data = route.params.name;
@@ -114,4 +114,5 @@ export default function SearchScreen({route}) {
       )}
     </SafeAreaView>
   );
-}
+};
+export default memo(SearchScreen);

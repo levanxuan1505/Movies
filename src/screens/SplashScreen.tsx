@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Dimensions, View} from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {memo, Dispatch, SetStateAction} from 'react';
 import LottieView from 'lottie-react-native';
 let {width, height} = Dimensions.get('window');
 interface SplashProps {
@@ -27,4 +27,4 @@ const SplashScreen = ({setIsLoading}: SplashProps) => {
   );
 };
 
-export default SplashScreen;
+export default memo(SplashScreen);

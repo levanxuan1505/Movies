@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {image500, fallbackMoviePoster} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {View, Text, Image, FlatList, Dimensions} from 'react-native';
+import {View, Text, Image, Dimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 //
-export default function Discover({title, hideSeeAll, data}) {
+const Discover = ({title, hideSeeAll, data}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   return (
@@ -28,10 +28,20 @@ export default function Discover({title, hideSeeAll, data}) {
           </TouchableOpacity>
         )}
       </View>
-      <View style={{flex: 1, paddingHorizontal: 15, paddingVertical: 10}}>
-        <FlatList
+      <View
+        style={{
+          flex: 1,
+          minHeight: 2,
+          height: 'auto',
+          width: Dimensions.get('screen').width,
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+        }}>
+        <FlashList
           data={data}
           horizontal={true}
+          estimatedItemSize={20}
+          disableAutoLayout={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}: any) => (
             <TouchableOpacity
@@ -61,4 +71,5 @@ export default function Discover({title, hideSeeAll, data}) {
       </View>
     </View>
   );
-}
+};
+export default memo(Discover);

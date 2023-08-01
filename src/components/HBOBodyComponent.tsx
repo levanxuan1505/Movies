@@ -9,7 +9,7 @@ import {
   HBOTrending,
 } from '@components';
 import {YoutubeID, VBA2023} from '@constants';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, memo, useState} from 'react';
 import {fetchSimilarMovies, fetchTvChannelsMovies} from '../Api/MoviesDb';
 
 //
@@ -140,76 +140,98 @@ const HBOBodyComponent = () => {
               data={topRatedMovies}
             />
           )}
-          <HBOList
-            title="HBO Max"
-            logo="MAX"
-            hideSeeAll={false}
-            data={HBOMax}
-          />
-          <HBOTrailers
-            title="HBO Trailer"
-            hideSeeAll={false}
-            data={YoutubeID[0]}
-            firstItem={YoutubeID[0].length / 2}
-          />
-          <HBOList
-            title="Now Playing"
-            logo="GO"
-            hideSeeAll={false}
-            data={nowPlayingMovies}
-          />
-          <HBOList
-            title="Popular"
-            logo="GO"
-            hideSeeAll={false}
-            data={popularMovies}
-          />
-          <HBODiscover
-            title="GO Discover"
-            hideSeeAll={false}
-            data={discoverMovies}
-          />
-          <HBOTrailers
-            title="Fast and Furious Series"
-            hideSeeAll={false}
-            data={YoutubeID[1]}
-            firstItem={0}
-          />
-          <HBOTrailers
-            title="Money Heist Series"
-            hideSeeAll={false}
-            data={YoutubeID[2]}
-            firstItem={0}
-          />
-          <HBOList
-            title="HBO Disney"
-            logo="GO"
-            hideSeeAll={false}
-            data={HBODisney}
-          />
-          <HBOList
-            title="Movies For Kids"
-            logo="GO"
-            hideSeeAll={false}
-            data={moviesForKids}
-          />
-          <SportList
-            title="VBA Max 2023"
-            logo="vba"
-            symbol="espn"
-            hideSeeAll={false}
-            data={VBA2023}
-          />
-          <Tv
-            name="backdrop_path"
-            title="HBO Shows"
-            hideSeeAll={false}
-            data={HBOShows}
-          />
+          {HBOMax.length > 0 && (
+            <HBOList
+              title="HBO Max"
+              logo="MAX"
+              hideSeeAll={false}
+              data={HBOMax}
+            />
+          )}
+          {YoutubeID[0].length > 0 && (
+            <HBOTrailers
+              title="HBO Trailer"
+              hideSeeAll={false}
+              data={YoutubeID[0]}
+              firstItem={YoutubeID[0].length / 2}
+            />
+          )}
+          {nowPlayingMovies.length > 0 && (
+            <HBOList
+              title="Now Playing"
+              logo="GO"
+              hideSeeAll={false}
+              data={nowPlayingMovies}
+            />
+          )}
+          {popularMovies.length > 0 && (
+            <HBOList
+              title="Popular"
+              logo="GO"
+              hideSeeAll={false}
+              data={popularMovies}
+            />
+          )}
+          {discoverMovies.length > 0 && (
+            <HBODiscover
+              title="GO Discover"
+              hideSeeAll={false}
+              data={discoverMovies}
+            />
+          )}
+          {YoutubeID[1].length > 0 && (
+            <HBOTrailers
+              title="Fast and Furious Series"
+              hideSeeAll={false}
+              data={YoutubeID[1]}
+              firstItem={0}
+            />
+          )}
+          {YoutubeID[2].length > 0 && (
+            <HBOTrailers
+              title="Money Heist Series"
+              hideSeeAll={false}
+              data={YoutubeID[2]}
+              firstItem={0}
+            />
+          )}
+          {HBODisney.length > 0 && (
+            <HBOList
+              title="HBO Disney"
+              logo="GO"
+              hideSeeAll={false}
+              data={HBODisney}
+            />
+          )}
+          {moviesForKids.length > 0 && (
+            <HBOList
+              title="Movies For Kids"
+              logo="GO"
+              hideSeeAll={false}
+              data={moviesForKids}
+            />
+          )}
+          {VBA2023.length > 0 && (
+            <SportList
+              title="VBA Max 2023"
+              logo="vba"
+              symbol="espn"
+              hideSeeAll={false}
+              data={VBA2023}
+            />
+          )}
+          {HBOShows.length > 0 && (
+            <Tv
+              name="backdrop_path"
+              title="HBO Shows"
+              hideSeeAll={false}
+              data={HBOShows}
+            />
+          )}
         </>
       )}
     </>
   );
 };
 
-export default HBOBodyComponent;
+export default memo(HBOBodyComponent);

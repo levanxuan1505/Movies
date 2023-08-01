@@ -1,7 +1,7 @@
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 var {width} = Dimensions.get('window');
 import {RootStackParams} from '@navigators';
@@ -40,7 +40,9 @@ const HBOScreen = () => {
           style={{width: width, paddingHorizontal: 20}}
           className="flex-row justify-between items-center ">
           <FilmIcon size={30} strokeWidth={2} color="white" />
-          <Text className="text-white text-3xl font-bold">
+          <Text
+            style={{fontFamily: 'KaushanScript-Regular'}}
+            className="text-white text-3xl font-bold">
             <Text style={styles.text}>---HBO_</Text>
             <Text style={styles.darkColor}>GO---</Text>
           </Text>
@@ -64,4 +66,4 @@ const HBOScreen = () => {
   );
 };
 
-export default HBOScreen;
+export default memo(HBOScreen);

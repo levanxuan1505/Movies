@@ -3,13 +3,12 @@ import {
   View,
   Text,
   Image,
-  FlatList,
   Dimensions,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 import {RootStackParams} from '@navigators';
-import React from 'react';
+import React, {memo} from 'react';
 import {styles} from '../theme';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
@@ -34,7 +33,7 @@ const SportList: React.FC<Props> = ({
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
-    <View className="mb-5 space-y-4">
+    <View className="mb-5 space-y-4 w-full">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-lg">{title}</Text>
         {!hideSeeAll && (
@@ -48,67 +47,78 @@ const SportList: React.FC<Props> = ({
           </TouchableOpacity>
         )}
       </View>
-
-      <FlatList
-        data={data}
-        horizontal={true}
-        contentContainerStyle={{paddingHorizontal: 15, paddingVertical: 10}}
-        renderItem={({item, index}) => (
-          <TouchableOpacity key={index}>
-            <View className="space-y-1 mr-4">
-              <ImageBackground
-                // source={require('../assets/images/moviePoster1.png')}
-                source={item.image}
-                style={{
-                  width: logo === 'bigSize' ? width * 0.5 : width * 0.31,
-                  height: logo === 'bigSize' ? height * 0.133 : height * 0.2,
-                }}>
-                <Image
-                  source={
-                    symbol === 'skySport'
-                      ? require('../assets/images/skySport.png')
-                      : symbol === 'espn'
-                      ? require('../assets/images/espn.png')
-                      : require('../assets/images/beinSport.png')
-                  }
-                  style={
-                    symbol === 'skySport'
-                      ? {
-                          position: 'absolute',
-                          left: 4,
-                          top: 4,
-                          width: width * 0.1,
-                          height: height * 0.009,
-                        }
-                      : symbol === 'espn'
-                      ? {
-                          position: 'absolute',
-                          top: 4,
-                          left: 4,
-                          width: width * 0.1,
-                          height: height * 0.009,
-                        }
-                      : symbol === 'beinSport'
-                      ? {
-                          position: 'absolute',
-                          top: 5,
-                          left: 4,
-                          width: width * 0.11,
-                          height: height * 0.009,
-                        }
-                      : {
-                          position: 'absolute',
-                          width: 0,
-                          height: 0,
-                        }
-                  }
-                />
-              </ImageBackground>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
+      <View
+        style={{
+          flex: 1,
+          minHeight: 2,
+          height: 'auto',
+          paddingVertical: 10,
+          paddingHorizontal: 15,
+          width: Dimensions.get('screen').width,
+        }}>
+        <FlashList
+          data={data}
+          horizontal={true}
+          estimatedItemSize={20}
+          disableAutoLayout={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}: any) => (
+            <TouchableOpacity key={index}>
+              <View className="space-y-1 mr-4">
+                <ImageBackground
+                  // source={require('../assets/images/moviePoster1.png')}
+                  source={item.image}
+                  style={{
+                    width: logo === 'bigSize' ? width * 0.5 : width * 0.31,
+                    height: logo === 'bigSize' ? height * 0.133 : height * 0.2,
+                  }}>
+                  <Image
+                    source={
+                      symbol === 'skySport'
+                        ? require('../assets/images/skySport.png')
+                        : symbol === 'espn'
+                        ? require('../assets/images/espn.png')
+                        : require('../assets/images/beinSport.png')
+                    }
+                    style={
+                      symbol === 'skySport'
+                        ? {
+                            position: 'absolute',
+                            left: 4,
+                            top: 4,
+                            width: width * 0.1,
+                            height: height * 0.009,
+                          }
+                        : symbol === 'espn'
+                        ? {
+                            position: 'absolute',
+                            top: 4,
+                            left: 4,
+                            width: width * 0.1,
+                            height: height * 0.009,
+                          }
+                        : symbol === 'beinSport'
+                        ? {
+                            position: 'absolute',
+                            top: 5,
+                            left: 4,
+                            width: width * 0.11,
+                            height: height * 0.009,
+                          }
+                        : {
+                            position: 'absolute',
+                            width: 0,
+                            height: 0,
+                          }
+                    }
+                  />
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     </View>
   );
 };
-export default SportList;
+export default memo(SportList);

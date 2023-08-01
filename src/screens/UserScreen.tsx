@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Image,
+  StyleSheet,
   ScrollView,
   Dimensions,
   RefreshControl,
@@ -14,15 +15,28 @@ import {Loading} from '@components';
 import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {fetchTrendingMovies} from '../Api/MoviesDb';
-import {HeartIcon} from 'react-native-heroicons/solid';
+import {UserCircleIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ChevronLeftIcon} from 'react-native-heroicons/outline';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {AuthContext} from '../navigators/AuthProvider';
+
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  KeyIcon,
+  CalendarDaysIcon,
+  BoltSlashIcon,
+} from 'react-native-heroicons/outline';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-
+const {user}: any = useContext(AuthContext);
+const userName = user?.displayName ? user.displayName : 'Anonymous';
+const userEmail = user?.email ? user.email : 'Anonymous';
 const UserScreen = ({route}) => {
   const title = route.params.title;
   const navigation =
@@ -30,7 +44,6 @@ const UserScreen = ({route}) => {
 
   const [loading, setLoading] = useState(false);
   const [isFavorite, setFavorite] = useState(false);
-  const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -39,15 +52,7 @@ const UserScreen = ({route}) => {
       setRefreshing(false);
     }, 500);
   }, []);
-  useEffect(() => {
-    getWatchingMovies();
-  });
-  const getWatchingMovies = async () => {
-    const data = await fetchTrendingMovies();
-    // console.log(data);
-    if (data && data.results) setWatchingMovies(data.results);
-    setLoading(false);
-  };
+
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
       <SafeAreaView
@@ -72,61 +77,153 @@ const UserScreen = ({route}) => {
             <Text style={styles.text}>---{title}---</Text>
           </Text>
           <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <HeartIcon
+            <UserCircleIcon
               size="35"
               color={isFavorite ? theme.background : 'white'}
             />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-      {loading ? (
-        <Loading />
-      ) : watchingMovies.length > 0 ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
-          className="space-y-3">
-          <Text className="text-white font-semibold ml-1">
-            Results ({watchingMovies.length})
-          </Text>
-          <View className="flex-row justify-between flex-wrap">
-            {watchingMovies.map((item, index) => {
-              return (
-                <TouchableWithoutFeedback
-                  key={index}
-                  onPress={() => navigation.navigate('Movies', item)}>
-                  <View className="space-y-2 mb-4">
-                    <Image
-                      source={{
-                        uri: image500(item.poster_path) || fallbackMoviePoster,
-                      }}
-                      //   source={require('../assets/images/moviePoster1.png')}
-                      className="rounded-3xl"
-                      style={{width: width * 0.44, height: height * 0.3}}
-                    />
-                    <Text className="text-gray-300 ml-1">
-                      {item.title.length > 22
-                        ? item.title.slice(0, 22) + '...'
-                        : item.title}
-                    </Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
+
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
+        className="space-y-3">
+        <View style={{paddingHorizontal: 5}} className="flex-column">
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+              position: 'relative',
+            }}>
+            <UserCircleIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+            <Text style={styless.text}>Name</Text>
+            <Text style={styless.text2}>{userName}</Text>
+            <ChevronRightIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
           </View>
-        </ScrollView>
-      ) : (
-        <View className="flex-row justify-center">
-          <Image
-            source={require('../assets/images/movieTime.png')}
-            className="h-96 w-96"
-          />
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            <EnvelopeIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+            <Text style={styless.text}>Email</Text>
+            <Text style={[styless.text2, {color: '#00AA13'}]}>{userEmail}</Text>
+            <ChevronRightIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            <PhoneIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+            <Text style={styless.text}>Phone</Text>
+            <Text style={styless.text2}>0975179546</Text>
+            <ChevronRightIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            <KeyIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+            <Text style={styless.text}>Password</Text>
+            <Text style={styless.text2}>**********</Text>
+            <ChevronRightIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            <CalendarDaysIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+            <Text style={styless.text}>Date of birth</Text>
+            <Text style={styless.text2}>15/05/2001</Text>
+            <ChevronRightIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            <BoltSlashIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+            <Text style={styless.text}>Gender</Text>
+            <Text style={styless.text2}>Male</Text>
+            <ChevronRightIcon
+              size="32"
+              color={isFavorite ? theme.background : 'white'}
+            />
+          </View>
         </View>
-      )}
+      </ScrollView>
     </View>
   );
 };
+const styless = StyleSheet.create({
+  text: {
+    color: '#ffff',
+    fontSize: 18,
+    fontWeight: '400',
+    position: 'absolute',
+    left: 40,
+  },
+  text2: {
+    color: '#ffff',
+    fontSize: 18,
+    fontWeight: '400',
+    position: 'absolute',
+    right: 30,
+  },
+});
 export default UserScreen;

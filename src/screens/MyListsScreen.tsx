@@ -68,10 +68,7 @@ const MyListsScreen = ({route}) => {
             <Text style={styles.text}>---{title}---</Text>
           </Text>
           <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <HeartIcon
-              size="35"
-              color={isFavorite ? theme.background : 'white'}
-            />
+            <HeartIcon size="35" color={theme.background} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>

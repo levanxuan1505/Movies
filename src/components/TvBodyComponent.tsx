@@ -17,12 +17,12 @@ import {
   Kplus,
   VBA2023,
   VLeague,
-  SerieA2023,
   TVChannels,
+  SerieA2023,
   SportsTVShows,
 } from '@constants';
 import {YoutubeID} from '@constants';
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 //
 const TvBodyComponent = () => {
   const [tv, setTv] = useState([]);
@@ -93,21 +93,25 @@ const TvBodyComponent = () => {
           {tvChannels.length > 0 && (
             <TrendingTV layout={'tinder'} name={'Trending'} data={tvChannels} />
           )}
-          <SportList
-            title="TV Channels"
-            logo="bigSize"
-            symbol="null"
-            hideSeeAll={false}
-            data={TVChannels}
-          />
+          {TVChannels.length > 0 && (
+            <SportList
+              title="TV Channels"
+              logo="bigSize"
+              symbol="null"
+              hideSeeAll={false}
+              data={TVChannels}
+            />
+          )}
 
-          <SportList
-            title="VTV"
-            logo="bigSize"
-            symbol="null"
-            hideSeeAll={false}
-            data={VTV}
-          />
+          {VTV.length > 0 && (
+            <SportList
+              title="VTV"
+              logo="bigSize"
+              symbol="null"
+              hideSeeAll={false}
+              data={VTV}
+            />
+          )}
 
           {topRatedMovies.length > 0 && (
             <HBOList
@@ -117,71 +121,93 @@ const TvBodyComponent = () => {
               data={topRatedMovies}
             />
           )}
-          <HBOList
-            title="HBO Max"
-            logo="MAX"
-            hideSeeAll={false}
-            data={discoverMovies}
-          />
-          <SportList
-            logo="bigSize"
-            title="K+"
-            symbol="null"
-            hideSeeAll={false}
-            data={Kplus}
-          />
-          <SportList
-            title="VBA 2023"
-            logo="vba"
-            symbol="null"
-            hideSeeAll={false}
-            data={VBA2023}
-          />
-          <SportList
-            title="V-League"
-            logo="bigSize"
-            symbol="skySport"
-            hideSeeAll={false}
-            data={VLeague}
-          />
-          <Discover title="Discover" hideSeeAll={false} data={listMovies} />
-          <HBOList
-            title="Disney"
-            logo="null"
-            hideSeeAll={false}
-            data={discoverMovies}
-          />
-          <HBOList
-            title="Movies For Kids"
-            logo="GO"
-            hideSeeAll={false}
-            data={nowPlayingMovies}
-          />
-          <SportList
-            title="Sport TV shows"
-            logo="bigSize"
-            hideSeeAll={false}
-            data={SportsTVShows}
-            symbol="null"
-          />
-          <SportList
-            title="Serie A 2023"
-            logo="bigSize"
-            symbol="espn"
-            hideSeeAll={false}
-            data={SerieA2023}
-          />
-          <HBOTrailers
-            title="Fomula 1"
-            firstItem={0}
-            hideSeeAll={false}
-            data={YoutubeID[3]}
-          />
-          <TrendingTV layout="tinder" name="TV Shows" data={tv} />
+          {discoverMovies.length > 0 && (
+            <HBOList
+              title="HBO Max"
+              logo="MAX"
+              hideSeeAll={false}
+              data={discoverMovies}
+            />
+          )}
+          {Kplus.length > 0 && (
+            <SportList
+              logo="bigSize"
+              title="K+"
+              symbol="null"
+              hideSeeAll={false}
+              data={Kplus}
+            />
+          )}
+          {VBA2023.length > 0 && (
+            <SportList
+              title="VBA 2023"
+              logo="vba"
+              symbol="null"
+              hideSeeAll={false}
+              data={VBA2023}
+            />
+          )}
+          {VLeague.length > 0 && (
+            <SportList
+              title="V-League"
+              logo="bigSize"
+              symbol="skySport"
+              hideSeeAll={false}
+              data={VLeague}
+            />
+          )}
+          {listMovies.length > 0 && (
+            <Discover title="Discover" hideSeeAll={false} data={listMovies} />
+          )}
+          {discoverMovies.length > 0 && (
+            <HBOList
+              title="Disney"
+              logo="null"
+              hideSeeAll={false}
+              data={discoverMovies}
+            />
+          )}
+          {nowPlayingMovies.length > 0 && (
+            <HBOList
+              title="Movies For Kids"
+              logo="GO"
+              hideSeeAll={false}
+              data={nowPlayingMovies}
+            />
+          )}
+          {SportsTVShows.length > 0 && (
+            <SportList
+              title="Sport TV shows"
+              logo="bigSize"
+              hideSeeAll={false}
+              data={SportsTVShows}
+              symbol="null"
+            />
+          )}
+          {SerieA2023.length > 0 && (
+            <SportList
+              title="Serie A 2023"
+              logo="bigSize"
+              symbol="espn"
+              hideSeeAll={false}
+              data={SerieA2023}
+            />
+          )}
+          {YoutubeID[3].length > 0 && (
+            <HBOTrailers
+              title="Fomula 1"
+              firstItem={0}
+              hideSeeAll={false}
+              data={YoutubeID[3]}
+            />
+          )}
+          {tv.length > 0 && (
+            <TrendingTV layout="tinder" name="TV Shows" data={tv} />
+          )}
         </>
       )}
     </>
   );
 };
 
-export default TvBodyComponent;
+export default memo(TvBodyComponent);

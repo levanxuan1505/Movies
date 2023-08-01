@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {memo} from 'react';
 import {
   Text,
   View,
@@ -17,7 +17,7 @@ const Loader = ({visible = false}) => {
         <View style={style.loader}>
           <ActivityIndicator size="large" color={Colors.DEFAULT_GREEN} />
           <Text
-            style={{marginLeft: 10, fontSize: 20, color: Colors.DEFAULT_GREEN}}>
+            style={{marginLeft: 10, fontSize: 22, color: Colors.DEFAULT_GREEN}}>
             Loading...
           </Text>
         </View>
@@ -43,4 +43,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default Loader;
+export default memo(Loader);

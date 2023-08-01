@@ -47,7 +47,6 @@ target 'Movies' do
   )
 
   target 'MoviesTests' do
-    
     inherit! :complete
     # Pods for testing
   end

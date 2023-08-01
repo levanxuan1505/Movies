@@ -34,7 +34,9 @@ export type RootStackParams = {
   Home;
   Actor;
   LogIn;
-  Movies;
+  Movies: {
+    item: Object;
+  };
   Drawer;
   Search;
   SeeAll;
@@ -43,7 +45,11 @@ export type RootStackParams = {
   Settings;
   Register;
   Watching;
-  SeeAllHBO;
+  SeeAllHBO: {
+    title: string;
+    data: Array;
+    firstItem: number;
+  };
   TermsOfUse;
   OnBoarding;
   Transaction;
