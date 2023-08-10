@@ -3,30 +3,25 @@
 import {
   View,
   Text,
-  TouchableOpacity,
-  RefreshControl,
   Image,
   ScrollView,
-  TouchableWithoutFeedback,
   Dimensions,
+  RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
-import {Loading} from '@components';
-import {styles, theme} from '../theme';
-const {width, height} = Dimensions.get('window');
-import React, {useEffect, useState} from 'react';
-import {fetchTrendingMovies} from '../Api/MoviesDb';
-import {HeartIcon} from 'react-native-heroicons/solid';
+import React from 'react';
+import {styles} from '../theme';
+import {StyleSheet} from 'react-native';
+const {width} = Dimensions.get('window');
+import {Colors, ManageDevice} from '@constants';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
-
+import {ChevronRightIcon} from 'react-native-heroicons/outline';
 const ManageDevicesScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
-  const [isFavorite, setFavorite] = useState(false);
-  const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -35,15 +30,7 @@ const ManageDevicesScreen = ({route}) => {
       setRefreshing(false);
     }, 500);
   }, []);
-  useEffect(() => {
-    getWatchingMovies();
-  });
-  const getWatchingMovies = async () => {
-    const data = await fetchTrendingMovies();
-    // console.log(data);
-    if (data && data.results) setWatchingMovies(data.results);
-    setLoading(false);
-  };
+
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
       <SafeAreaView
@@ -67,62 +54,172 @@ const ManageDevicesScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <HeartIcon
-              size="35"
-              color={isFavorite ? theme.background : 'white'}
-            />
-          </TouchableOpacity>
+          <Icon name="devices" size={28} color="#00AA13" />
         </View>
       </SafeAreaView>
-      {loading ? (
-        <Loading />
-      ) : watchingMovies.length > 0 ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
-          className="space-y-3">
-          <Text className="text-white font-semibold ml-1">
-            Results ({watchingMovies.length})
-          </Text>
-          <View className="flex-row justify-between flex-wrap">
-            {watchingMovies.map((item, index) => {
-              return (
-                <TouchableWithoutFeedback
-                  key={index}
-                  onPress={() => navigation.navigate('Movies', item)}>
-                  <View className="space-y-2 mb-4">
-                    <Image
-                      source={{
-                        uri: image500(item.poster_path) || fallbackMoviePoster,
-                      }}
-                      //   source={require('../assets/images/moviePoster1.png')}
-                      className="rounded-3xl"
-                      style={{width: width * 0.44, height: height * 0.3}}
-                    />
-                    <Text className="text-gray-300 ml-1">
-                      {item.title.length > 22
-                        ? item.title.slice(0, 22) + '...'
-                        : item.title}
-                    </Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
+      <ScrollView>
+        <View style={{marginTop: 100, paddingHorizontal: 20}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[2].image}
+            />
+            <Text style={styleManager.text}>Macbook Pro 2018</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
           </View>
-        </ScrollView>
-      ) : (
-        <View className="flex-row justify-center">
-          <Image
-            source={require('../assets/images/movieTime.png')}
-            className="h-96 w-96"
-          />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[0].image}
+            />
+            <Text style={styleManager.text}>Iphone 12 PRO MAX</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[0].image}
+            />
+            <Text style={styleManager.text}>Iphone 11 PRO MAX</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[3].image}
+            />
+            <Text style={styleManager.text}>Dell Express 2018</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[0].image}
+            />
+            <Text style={styleManager.text}>Iphone X </Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[1].image}
+            />
+            <Text style={styleManager.text}>SAMSUNG GALAXY S8</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[1].image}
+            />
+            <Text style={styleManager.text}>HUAWEI TAB S6</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[1].image}
+            />
+            <Text style={styleManager.text}>NOKIA A53</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[1].image}
+            />
+            <Text style={styleManager.text}>XIAOMI K30 5G</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+            <Image
+              style={{width: 30, height: 30}}
+              source={ManageDevice[3].image}
+            />
+            <Text style={styleManager.text}>MSI G14</Text>
+            <View style={{position: 'absolute', right: 0}}>
+              <ChevronRightIcon size="20" color={Colors.DEFAULT_WHITE} />
+            </View>
+          </View>
         </View>
-      )}
+      </ScrollView>
     </View>
   );
 };
+const styleManager = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    paddingLeft: 20,
+    paddingVertical: 18,
+    color: Colors.DEFAULT_WHITE,
+  },
+});
 export default ManageDevicesScreen;

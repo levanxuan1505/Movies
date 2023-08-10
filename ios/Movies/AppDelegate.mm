@@ -4,7 +4,7 @@
 #import <RNGoogleSignin/RNGoogleSignin.h>
 #import <TwitterKit/TWTRKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-swift.h>
-
+#import <AVFoundation/AVFoundation.h>
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
@@ -15,6 +15,7 @@
 {
   // Add me --- \/
   [FIRApp configure];
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];  // allow
   [[FBSDKApplicationDelegate sharedInstance] application:application
                        didFinishLaunchingWithOptions:launchOptions];
   // Add me --- /

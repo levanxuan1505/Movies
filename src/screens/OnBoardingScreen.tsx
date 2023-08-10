@@ -8,9 +8,10 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React, {memo, useState} from 'react';
+import {Colors} from '@constants';
 const {width} = Dimensions.get('window');
 import SplashScreen from './SplashScreen';
+import React, {memo, useState} from 'react';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 import Onboarding from 'react-native-onboarding-swiper';
@@ -37,7 +38,7 @@ const OnBoardingScreen = () => {
   };
   const DotButton = ({selected}) => {
     let backgroundColorDot;
-    backgroundColorDot = selected ? '#00AA13' : 'rgba(0,0,0,0.4)';
+    backgroundColorDot = selected ? Colors.DEFAULT_GREEN : 'rgba(0,0,0,0.4)';
     return (
       <View
         style={[
@@ -92,6 +93,7 @@ const OnBoardingScreen = () => {
         skipToPage={2}
         onDone={handleDone}
         bottomBarHeight={110}
+        initialNumToRender={0}
         DotComponent={DotButton}
         titleStyles={styles.title}
         bottomBarHighlight={false}
@@ -102,7 +104,9 @@ const OnBoardingScreen = () => {
         transitionAnimationDuration={1000}
         pages={[
           {
-            backgroundColor: '#CEE8E7',
+            title: 'Netflix',
+            subtitle: 'Watch Money Heist | Netflix Official Site',
+            backgroundColor: Colors.LIGHT_GREEN,
             image: (
               <View style={styles.lottie}>
                 <LottieView
@@ -112,11 +116,11 @@ const OnBoardingScreen = () => {
                 />
               </View>
             ),
-            title: 'Netflix',
-            subtitle: 'Watch Money Heist | Netflix Official Site',
           },
           {
-            backgroundColor: '#A3A3A3',
+            title: 'HBO_GO',
+            subtitle: 'Home to Groundbreaking Series, Movies, Comedies ...',
+            backgroundColor: Colors.DARK_FIVE,
             image: (
               <View style={styles.lottie}>
                 <LottieView
@@ -126,11 +130,11 @@ const OnBoardingScreen = () => {
                 />
               </View>
             ),
-            title: 'HBO_GO',
-            subtitle: 'Home to Groundbreaking Series, Movies, Comedies ...',
           },
           {
-            backgroundColor: '#FCE6CD',
+            title: 'Sports',
+            subtitle: 'F1 - The Official Home of Formula 1® Racing',
+            backgroundColor: Colors.DARK_FOUR,
             image: (
               <View style={styles.lottie}>
                 <LottieView
@@ -140,8 +144,6 @@ const OnBoardingScreen = () => {
                 />
               </View>
             ),
-            title: 'Sports',
-            subtitle: 'F1 - The Official Home of Formula 1® Racing',
           },
         ]}
       />
@@ -166,18 +168,18 @@ const styles = StyleSheet.create({
   },
   textButton: {
     fontSize: 20,
-    color: '#00AA13',
-    fontFamily: 'KaushanScript-Regular',
+    color: Colors.DEFAULT_GREEN,
+    fontFamily: 'Shrikhand-Regular',
   },
   title: {
     fontSize: 50,
-    color: '#24C869',
-    fontFamily: 'KaushanScript-Regular',
+    color: Colors.SECONDARY_GREEN,
+    fontFamily: 'Shrikhand-Regular',
   },
   subTitle: {
-    fontSize: 19,
-    color: '#FBA83C',
-    fontFamily: 'KaushanScript-Regular',
+    fontSize: 22,
+    color: Colors.SECONDARY_RED,
+    fontFamily: 'Rochester-Regular',
   },
   dotButton: {
     borderRadius: 10,

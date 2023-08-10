@@ -18,25 +18,18 @@ const {width} = Dimensions.get('window');
 import {RootStackParams} from '@navigators';
 import LottieView from 'lottie-react-native';
 import {changeName} from '../redux/userSlice';
+import {Settings} from 'react-native-fbsdk-next';
+import {AuthContext} from '../navigators/AuthProvider';
 import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonSocial, Input, Loader} from '@components';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AuthContext} from '../navigators/AuthProvider';
-import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import {Settings} from 'react-native-fbsdk-next';
 
 // Ask for consent first if necessary
 // Possibly only do this for iOS if no need to handle a GDPR-type flow
 Settings.initializeSDK();
-const {login}: any = useContext(AuthContext);
-const {user}: any = useContext(AuthContext);
-// import {
-//   GoogleAuthProvider,
-//   signInWithCredential,
-// } from '@react-native-firebase/auth';
-console.log(user);
-// import statusCodes along with GoogleSignin
+
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
@@ -53,7 +46,8 @@ export interface Error {
   password: number;
 }
 const LogInScreen = () => {
-  // Somewhere in your code
+  // const {user}: any = useContext(AuthContext);
+  const {login}: any = useContext(AuthContext);
   GoogleSignin.configure({
     webClientId:
       '412747622947-gf880ruglqu8digrjj23evkm2v8jg1k4.apps.googleusercontent.com',
@@ -71,56 +65,25 @@ const LogInScreen = () => {
     if (!inputs.email) {
       handleError('Please input email', 'email');
       isValid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
     }
     if (!inputs.password) {
       handleError('Please input password', 'password');
       isValid = false;
     }
     if (isValid) {
-      setLoading(true);
-      setTimeout(async () => {
-        login(inputs.email, inputs.password);
-        user === null
-          ? (Alert.alert('Error', 'Email or password is not exactly'),
-            setLoading(false))
-          : (console.log(login(inputs.email, inputs.password), 'inputNull'),
-            setLoading(false),
-            navigation.navigate('Home'));
-      }, 1000);
+      loginAccess(inputs.email, inputs.password);
     }
   };
 
-  // const loginAccess = (email, password) => {
-  //   setTimeout(async () => {
-  //     let userData = await AsyncStorage.getItem('userData');
-  //     if (userData) {
-  //       userData = JSON.parse(userData);
-  //       if (
-  //         inputs.email === userData?.email &&
-  //         inputs.password === userData?.password
-  //       ) {
-  //         login(inputs.email, inputs.password);
-  //         // dispatch(changeName({userName: userData.fullname}));
-  //         navigation.replace('Drawer');
-  //         AsyncStorage.setItem(
-  //           'userData',
-  //           JSON.stringify({...userData, loggedIn: true}),
-  //         );
-  //       } else {
-  //         Alert.alert('Error', 'Invalid Detailssss');
-  //       }
-  //     } else {
-  //       Alert.alert('Error', 'User does not exist');
-  //     }
-  //     // if (login(email, password)) {
-  //     //   setLoading(false);
-  //     //   console.log(login(email, password));
-  //     //   login(inputs.email, inputs.password);
-  //     // } else {
-  //     //   Alert.alert('Error', 'User does not exist or wrong password');
-  //     // }
-  //   }, 3000);
-  // };
+  const loginAccess = (email, password) => {
+    setTimeout(async () => {
+      setLoading(true);
+      login(email, password, navigation), setLoading(false);
+    }, 100);
+  };
 
   const handleOnchange = (text: string, input: string) => {
     setInputs(prevState => ({...prevState, [input]: text}));
@@ -240,9 +203,10 @@ const LogInScreen = () => {
           }}>
           <Text
             style={{
+              // fontWeight: 'bold',
               color: Colors.DEFAULT_GREEN,
               fontSize: Display.setWidth(8),
-              fontWeight: 'bold',
+              fontFamily: 'Shrikhand-Regular',
             }}>
             Log In
           </Text>
@@ -319,11 +283,11 @@ const LogInScreen = () => {
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text
               style={{
-                fontSize: 18,
+                fontSize: 16,
                 paddingTop: 10,
-                fontWeight: '700',
                 textAlign: 'center',
                 color: Colors.DEFAULT_YELLOW,
+                fontFamily: 'Shrikhand-Regular',
               }}>
               You don't have an account? Register here
             </Text>

@@ -2,16 +2,12 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/assets/fonts/KaushanScript-Regular.ttf",
-      "sha1": "8b203c70f9c8f5d437eb5a87a6c7df39fb2996b7"
+      "path": "src/assets/fonts/Rochester-Regular.ttf",
+      "sha1": "9e87ae4024af5d7b8e2a7514657aba9c1e00f1f1"
     },
     {
-      "path": "src/assets/fonts/Kaushan_Script/OFL.txt",
-      "sha1": "02cef530fbcaff8869d886c6133960dcc60f6eaf"
-    },
-    {
-      "path": "src/assets/fonts/Kaushan_Script.zip",
-      "sha1": "53201edf78a7e72e1cd1048ff0d9d611ffd2b57d"
+      "path": "src/assets/fonts/Shrikhand-Regular.ttf",
+      "sha1": "ee1a2ca14244d2173f066edb18eb96b6faf4c09f"
     }
   ]
 }

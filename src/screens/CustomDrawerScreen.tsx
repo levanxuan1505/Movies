@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {memo, useContext} from 'react';
 import {useSelector} from 'react-redux';
+import React, {memo, useContext} from 'react';
 import {RootStackParams} from '@navigators';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../navigators/AuthProvider';
 import Iconsss from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Iconssss from 'react-native-vector-icons/FontAwesome';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {AuthContext} from '../navigators/AuthProvider';
 const CustomDrawerScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -28,16 +28,16 @@ const CustomDrawerScreen = () => {
             style={[
               styles.viewContainer,
               {
-                width: '100%',
                 height: 70,
+                width: '100%',
                 paddingHorizontal: 0,
                 justifyContent: 'center',
                 backgroundColor: 'transparent',
               },
             ]}>
-            <Text style={{fontFamily: 'KaushanScript-Regular'}}>
+            <Text style={{fontFamily: 'Shrikhand-Regular'}}>
               <Text style={styles.textLarge}>--VIE_</Text>
-              <Text style={[styles.textLarge, {color: '#F53920'}]}>ON---</Text>
+              <Text style={[styles.textLarge, {color: '#F53920'}]}>ON--</Text>
             </Text>
           </View>
 
@@ -54,8 +54,8 @@ const CustomDrawerScreen = () => {
               <View>
                 <Image
                   style={{
-                    width: 45,
-                    height: 45,
+                    width: 42,
+                    height: 42,
                     borderRadius: 30,
                   }}
                   source={{uri: user.photoURL}}
@@ -65,12 +65,46 @@ const CustomDrawerScreen = () => {
                 style={[
                   styles.text,
                   {
+                    fontSize: 26,
                     color: '#00AA13',
                     fontWeight: '700',
-                    fontSize: 26,
                   },
                 ]}>
                 {user.displayName}
+              </Text>
+            </TouchableOpacity>
+          ) : user?.email ? (
+            <TouchableOpacity
+              style={[
+                styles.viewContainer,
+                {
+                  height: 55,
+                  backgroundColor: 'transparent',
+                  paddingHorizontal: 14,
+                },
+              ]}>
+              <View>
+                <Image
+                  style={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: 30,
+                  }}
+                  source={require('../assets/images/avatar.jpeg')}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    fontSize: 26,
+                    color: '#00AA13',
+                    fontWeight: '700',
+                  },
+                ]}>
+                {user?.email > 14
+                  ? user?.email.slice(0, 14) + '...'
+                  : user?.email}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -88,7 +122,12 @@ const CustomDrawerScreen = () => {
               <Text
                 style={[
                   styles.text,
-                  {color: '#00AA13', fontWeight: '800', fontSize: 26},
+                  {
+                    color: '#00AA13',
+                    fontWeight: '800',
+                    fontSize: 32,
+                    fontFamily: 'Shrikhand-Regular',
+                  },
                 ]}>
                 Log in
               </Text>
@@ -128,7 +167,9 @@ const CustomDrawerScreen = () => {
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() => navigation.navigate('LogInTV', {title: 'LogInTV'})}>
+            onPress={() =>
+              navigation.navigate('Animation', {title: 'LogInTV'})
+            }>
             <Iconssss name="tv" size={28} color="#00AA13" />
             <Text style={styles.text}>Log In SmartTV</Text>
           </TouchableOpacity>
@@ -203,28 +244,28 @@ const CustomDrawerScreen = () => {
 };
 const styles = StyleSheet.create({
   viewContainer: {
-    backgroundColor: '#121212',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    height: 50,
+    width: '90%',
+    borderRadius: 10,
+    position: 'relative',
+    marginVertical: 8.5,
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 8.5,
-    position: 'relative',
-    width: '90%',
-    height: 50,
-    borderRadius: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#121212',
+    justifyContent: 'space-between',
   },
   textLarge: {
-    fontSize: 42,
+    fontSize: 38,
     color: '#00AA13',
     fontWeight: '900',
   },
   text: {
-    fontSize: 22,
+    fontSize: 19,
     color: '#ffff',
-    fontWeight: '400',
+    paddingLeft: 65,
     position: 'absolute',
-    paddingLeft: 70,
+    fontFamily: 'Shrikhand-Regular',
   },
 });
 export default memo(CustomDrawerScreen);

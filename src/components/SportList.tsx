@@ -5,33 +5,35 @@ import {
   Image,
   Dimensions,
   ImageBackground,
+  VirtualizedList,
   TouchableOpacity,
 } from 'react-native';
-import {RootStackParams} from '@navigators';
-import React, {memo} from 'react';
 import {styles} from '../theme';
+import React, {memo} from 'react';
+import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {FlashList} from '@shopify/flash-list';
 
 interface Props {
   title: string;
   logo: string;
   symbol: string;
   hideSeeAll: boolean;
-  data: Array;
+  data: any;
 }
 const SportList: React.FC<Props> = ({
-  title,
   logo,
+  data,
+  title,
   symbol,
   hideSeeAll,
-  data,
 }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
+  const getItem = (data, index) => {
+    return data[index];
+  };
   return (
     <View className="mb-5 space-y-4 w-full">
       <View className="mx-4 flex-row justify-between items-center">
@@ -56,21 +58,22 @@ const SportList: React.FC<Props> = ({
           paddingHorizontal: 15,
           width: Dimensions.get('screen').width,
         }}>
-        <FlashList
+        <VirtualizedList
           data={data}
           horizontal={true}
-          estimatedItemSize={20}
-          disableAutoLayout={true}
+          getItem={getItem}
+          initialNumToRender={3}
+          keyExtractor={item => item.id}
+          getItemCount={data => data.length}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}: any) => (
-            <TouchableOpacity key={index}>
+          renderItem={({item}) => (
+            <TouchableOpacity>
               <View className="space-y-1 mr-4">
                 <ImageBackground
-                  // source={require('../assets/images/moviePoster1.png')}
                   source={item.image}
                   style={{
-                    width: logo === 'bigSize' ? width * 0.5 : width * 0.31,
-                    height: logo === 'bigSize' ? height * 0.133 : height * 0.2,
+                    width: logo === 'bigSize' ? width * 0.5 : width * 0.3,
+                    height: logo === 'bigSize' ? height * 0.133 : height * 0.21,
                   }}>
                   <Image
                     source={

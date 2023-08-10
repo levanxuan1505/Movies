@@ -28,13 +28,12 @@ export interface Data {
 }
 const LogInSmartTVScreen = ({route}) => {
   const title = route.params.title;
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
   const [isFavourite, setFavourite] = useState(false);
   const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(false);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -47,7 +46,6 @@ const LogInSmartTVScreen = ({route}) => {
   });
   const getWatchingMovies = async () => {
     const data = await fetchTrendingMovies();
-    // console.log(data);
     if (data && data.results) setWatchingMovies(data.results);
     setLoading(false);
   };
@@ -106,7 +104,6 @@ const LogInSmartTVScreen = ({route}) => {
                       source={{
                         uri: image500(item.poster_path) || fallbackMoviePoster,
                       }}
-                      //   source={require('../assets/images/moviePoster1.png')}
                       className="rounded-3xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />

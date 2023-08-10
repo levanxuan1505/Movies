@@ -41,7 +41,11 @@ const ButtonSocial = ({title, logo, onPress = () => {}}) => {
         />
       </View>
       <Text
-        style={{color: Colors.DEFAULT_WHITE, fontWeight: '600', fontSize: 14}}>
+        style={{
+          color: Colors.DEFAULT_WHITE,
+          fontFamily: 'Shrikhand-Regular',
+          fontSize: 13,
+        }}>
         {title}
       </Text>
     </TouchableOpacity>

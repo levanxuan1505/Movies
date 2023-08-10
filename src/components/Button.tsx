@@ -19,14 +19,14 @@ const Button = ({title, logo, onPress = () => {}}) => {
       }}>
       <Text
         style={{
-          color: Colors.DEFAULT_WHITE,
-          fontWeight: 'bold',
+          fontSize: 36,
           paddingRight: 5,
-          fontSize: 25,
+          color: Colors.DEFAULT_WHITE,
+          fontFamily: 'Shrikhand-Regular',
         }}>
         {title}
       </Text>
-      <View style={{width: 40, height: 40}}>
+      <View style={{width: 60, height: 60}}>
         <LottieView
           style={{}}
           source={

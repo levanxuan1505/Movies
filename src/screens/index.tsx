@@ -14,10 +14,13 @@ import SettingScreen from './SettingScreen';
 import WatchingScreen from './WatchingScreen';
 import RegisterScreen from './RegisterScreen';
 import SeeAllHBOScreen from './SeeAllHBOScreen';
+import VideoFullScreen from './VideoFullScreen';
+import AnimationScreen from './AnimationScreen';
 import BottomHomeScreen from './BottomHomeScreen';
 import TelevisionScreen from './TelevisionScreen';
 import TermsOfUseScreen from './TermsOfUseScreen';
 import OnBoardingScreen from './OnBoardingScreen';
+import MoviesOphimScreen from './MoviesOphimScreen';
 import TransactionScreen from './TransactionScreen';
 import LogInSmartTVScreen from './LogInSmartTVScreen';
 import PrivacyPolicyScreen from './PrivacyPolicyScreen';
@@ -39,11 +42,14 @@ export {
   MyListsScreen,
   RegisterScreen,
   WatchingScreen,
+  VideoFullScreen,
   SeeAllHBOScreen,
+  AnimationScreen,
   OnBoardingScreen,
   TelevisionScreen,
   BottomHomeScreen,
   TermsOfUseScreen,
+  MoviesOphimScreen,
   TransactionScreen,
   LogInSmartTVScreen,
   ManageDevicesScreen,

@@ -1,235 +1,277 @@
 /* eslint-disable curly */
 import {
-  Tv,
-  HBOList,
-  Loading,
   SportList,
-  HBOTrailers,
   HBODiscover,
   HBOTrending,
+  VideoTrailer,
+  HBOListOphim,
+  MoviesListOphim,
+  ListCarouselHome,
 } from '@components';
-import {YoutubeID, VBA2023} from '@constants';
-import React, {useEffect, memo, useState} from 'react';
-import {fetchSimilarMovies, fetchTvChannelsMovies} from '../Api/MoviesDb';
-
-//
-
+import React, {memo} from 'react';
+import {VBA2023} from '@constants';
+import HBOListTest from './HBOListTest';
 //
 const HBOBodyComponent = () => {
-  const [upComingMovies, setUpComingMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [HBOMax, setHBOMax] = useState([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [HBODisney, setHBODisney] = useState([]);
-  const [moviesForKids, setMoviesForKids] = useState([]);
-  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
-  const [HBOShows, setHBOShows] = useState([]);
-  const [discoverMovies, setDiscoverMovies] = useState([]);
-
-  useEffect(() => {
-    getTopRatedMovies(9980);
-    getUpcomingMovies(575264);
-    getHBOMax(296);
-    getNowPlayingMovies(2787);
-    getPopularMovies(13338);
-    getHBoDisneyMovies(277);
-    getMoviesForKids(436270);
-    getHBOShows();
-    getGODiscover(43399);
-  }, []);
-  //
-  const getTopRatedMovies = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setTopRatedMovies(data.results);
-    }
-  };
-  const getUpcomingMovies = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setUpComingMovies(data.results);
-    }
-  };
-  //
-  const getHBOMax = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setHBOMax(data.results);
-    }
-  };
-  //
-  const getNowPlayingMovies = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setNowPlayingMovies(data.results);
-    }
-  };
-  //
-  //
-  //
-  const getPopularMovies = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setPopularMovies(data.results);
-    }
-  };
-  //
-  const getHBoDisneyMovies = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setHBODisney(data.results);
-    }
-  };
-  //
-  const getMoviesForKids = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setMoviesForKids(data.results);
-    }
-  };
-  //
-  const getHBOShows = async () => {
-    const data = await fetchTvChannelsMovies();
-    // console.log(data);
-    if (data && data.results) setHBOShows(data.results);
-    setIsLoadingMovies(false);
-  };
-
-  const getGODiscover = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setDiscoverMovies(data.results);
-    }
-  };
-
   return (
     <>
-      {isLoadingMovies ? (
-        <>
-          <Loading />
-        </>
-      ) : (
-        <>
-          {/* trending */}
-          {discoverMovies.length > 0 && (
-            <HBOTrending name="Trending" data={discoverMovies} />
-          )}
+      <HBOTrending />
+      <HBOListOphim title="HBO Movies" logo="GO" hideSeeAll={false} page={24} />
 
-          {upComingMovies.length > 0 && (
-            <HBOList
-              title="HBO Movies"
-              logo="GO"
-              hideSeeAll={false}
-              data={upComingMovies}
-            />
-          )}
-          {topRatedMovies.length > 0 && (
-            <HBOList
-              title="HBO Top Rated"
-              logo="GO"
-              hideSeeAll={false}
-              data={topRatedMovies}
-            />
-          )}
-          {HBOMax.length > 0 && (
-            <HBOList
-              title="HBO Max"
-              logo="MAX"
-              hideSeeAll={false}
-              data={HBOMax}
-            />
-          )}
-          {YoutubeID[0].length > 0 && (
-            <HBOTrailers
-              title="HBO Trailer"
-              hideSeeAll={false}
-              data={YoutubeID[0]}
-              firstItem={YoutubeID[0].length / 2}
-            />
-          )}
-          {nowPlayingMovies.length > 0 && (
-            <HBOList
-              title="Now Playing"
-              logo="GO"
-              hideSeeAll={false}
-              data={nowPlayingMovies}
-            />
-          )}
-          {popularMovies.length > 0 && (
-            <HBOList
-              title="Popular"
-              logo="GO"
-              hideSeeAll={false}
-              data={popularMovies}
-            />
-          )}
-          {discoverMovies.length > 0 && (
-            <HBODiscover
-              title="GO Discover"
-              hideSeeAll={false}
-              data={discoverMovies}
-            />
-          )}
-          {YoutubeID[1].length > 0 && (
-            <HBOTrailers
-              title="Fast and Furious Series"
-              hideSeeAll={false}
-              data={YoutubeID[1]}
-              firstItem={0}
-            />
-          )}
-          {YoutubeID[2].length > 0 && (
-            <HBOTrailers
-              title="Money Heist Series"
-              hideSeeAll={false}
-              data={YoutubeID[2]}
-              firstItem={0}
-            />
-          )}
-          {HBODisney.length > 0 && (
-            <HBOList
-              title="HBO Disney"
-              logo="GO"
-              hideSeeAll={false}
-              data={HBODisney}
-            />
-          )}
-          {moviesForKids.length > 0 && (
-            <HBOList
-              title="Movies For Kids"
-              logo="GO"
-              hideSeeAll={false}
-              data={moviesForKids}
-            />
-          )}
-          {VBA2023.length > 0 && (
-            <SportList
-              title="VBA Max 2023"
-              logo="vba"
-              symbol="espn"
-              hideSeeAll={false}
-              data={VBA2023}
-            />
-          )}
-          {HBOShows.length > 0 && (
-            <Tv
-              name="backdrop_path"
-              title="HBO Shows"
-              hideSeeAll={false}
-              data={HBOShows}
-            />
-          )}
-        </>
+      <HBOListTest
+        logo="GO"
+        idApi={575264}
+        hideSeeAll={false}
+        title="HBO Top Rated"
+      />
+      <HBOListOphim title="HBO Ophim" logo="GO" hideSeeAll={false} page={5} />
+
+      <HBOListTest title="HBO Max" logo="MAX" idApi={2787} hideSeeAll={false} />
+
+      <HBOListTest
+        logo="GO"
+        idApi={277}
+        hideSeeAll={false}
+        title="Now Playing"
+      />
+
+      <HBOListOphim title="Popular" logo="GO" hideSeeAll={false} page={59} />
+
+      <HBODiscover title="Discover" logo="GO" hideSeeAll={false} page={109} />
+
+      <HBOListOphim
+        page={89}
+        logo={'GO'}
+        hideSeeAll={false}
+        title="HBO Disney"
+      />
+
+      <HBOListTest
+        logo="GO"
+        idApi={436270}
+        hideSeeAll={false}
+        title="Movies For Kids"
+      />
+      <HBOListOphim title="Max Ophim" hideSeeAll={false} logo={'GO'} page={9} />
+
+      <HBOListTest
+        idApi={27899}
+        logo="FoxMovies"
+        title="Fox Movies"
+        hideSeeAll={false}
+      />
+      <ListCarouselHome index={0} />
+
+      <HBOListTest title="HITS" logo="AXN" idApi={43462} hideSeeAll={false} />
+
+      <HBOListTest
+        logo="GO"
+        idApi={2247}
+        hideSeeAll={false}
+        title="Cinema Worlds"
+      />
+      {VBA2023.length > 0 && (
+        <SportList
+          logo="vba"
+          symbol="espn"
+          data={VBA2023}
+          hideSeeAll={false}
+          title="VBA Max 2023"
+        />
       )}
+
+      <HBOListOphim
+        page={88}
+        logo={'GO'}
+        hideSeeAll={false}
+        title="Fast & Furious 9"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={433980}
+        hideSeeAll={false}
+        title="Game Of Thrones"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={48960}
+        hideSeeAll={false}
+        title="Harry Potter"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={42160}
+        hideSeeAll={false}
+        title="Anecdotes About Bloodsuckers"
+      />
+      <HBOListOphim title="KBS Ophim" logo="KBS" hideSeeAll={false} page={20} />
+
+      <HBOListTest
+        title="AXN HD"
+        logo="AXN"
+        idApi={433310}
+        hideSeeAll={false}
+      />
+
+      <HBOListOphim title="CN HD" page={77} logo="GO" hideSeeAll={false} />
+      <VideoTrailer />
+
+      <HBOListOphim
+        title="KBS Worlds"
+        logo="KBS"
+        hideSeeAll={false}
+        page={27}
+      />
+
+      <HBOListOphim
+        logo="KBS"
+        page={72}
+        hideSeeAll={false}
+        title="Psychological Cinema"
+      />
+
+      <HBOListTest
+        logo="GO"
+        idApi={1081}
+        hideSeeAll={false}
+        title="Psychological Cinema"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={37}
+        hideSeeAll={false}
+        title="Children And Families"
+      />
+
+      <HBOListTest
+        logo="GO"
+        idApi={9830}
+        hideSeeAll={false}
+        title="HBO GO Series"
+      />
+      <MoviesListOphim title="AXN Ophim" hideSeeAll={false} page={25} />
+
+      <HBOListOphim
+        logo="GO"
+        page={66}
+        hideSeeAll={false}
+        title="HBO GO Cinema"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={56}
+        hideSeeAll={false}
+        title="The Flash 2023"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={55}
+        hideSeeAll={false}
+        title="The Green Arrow 2023"
+      />
+      <ListCarouselHome index={2} />
+
+      <HBOListTest
+        logo="GO"
+        idApi={930}
+        hideSeeAll={false}
+        title="Fierce Battlefield"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={75}
+        hideSeeAll={false}
+        title="Crime Hunting"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={85}
+        hideSeeAll={false}
+        title="Action Movies"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={185}
+        hideSeeAll={false}
+        title="Hollywood Blockbuster"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={44129}
+        title="Super DC"
+        hideSeeAll={false}
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={71120}
+        hideSeeAll={false}
+        title="Fall In Love"
+      />
+      <ListCarouselHome index={0} />
+      <HBOListTest
+        logo="GO"
+        idApi={402}
+        title="HBO Series"
+        hideSeeAll={false}
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={5630}
+        hideSeeAll={false}
+        title="Thailand Martial"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={11855}
+        hideSeeAll={false}
+        title="International Programs"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={220}
+        hideSeeAll={false}
+        title="Asian Dramas"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={821}
+        hideSeeAll={false}
+        title="American Cinema"
+      />
+      <HBOListTest
+        logo="GO"
+        idApi={831}
+        hideSeeAll={false}
+        title="Japan Cinema"
+      />
+      <ListCarouselHome index={1} />
+
+      <HBOListTest
+        logo="GO"
+        idApi={9389}
+        hideSeeAll={false}
+        title="Action Psychology"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={175}
+        hideSeeAll={false}
+        title="Movie Action Adventure"
+      />
+
+      <HBOListOphim
+        logo="GO"
+        page={145}
+        hideSeeAll={false}
+        title="Sport Stories"
+      />
     </>
   );
 };

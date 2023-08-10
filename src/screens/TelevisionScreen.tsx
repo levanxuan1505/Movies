@@ -2,13 +2,13 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 
-import React, {memo} from 'react';
 import {styles} from '../theme';
+import React, {memo} from 'react';
 let {width} = Dimensions.get('window');
 import {TvBodyComponent} from '@components';
 import {RootStackParams} from '@navigators';
+import {FlashList} from '@shopify/flash-list';
 import {useNavigation} from '@react-navigation/native';
-import {ScrollView} from 'react-native-virtualized-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {View, Text, RefreshControl, Dimensions} from 'react-native';
@@ -25,15 +25,16 @@ const TelevisionScreen = () => {
   }, []);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const data = [{key: '1'}];
 
   return (
-    <View className="flex-1 bg-neutral-800 ">
+    <View className="flex-1 bg-neutral-900 ">
       <SafeAreaView
         style={{
-          backgroundColor: 'rgba(38, 38, 38, 0.7)',
+          // backgroundColor: 'rgba(38, 38, 38, 0.7)',
           position: 'absolute',
-          paddingBottom: -25,
-          paddingTop: -8,
+          paddingBottom: -35,
+          paddingTop: -14,
           zIndex: 1,
         }}
         className="{ios} ? -mb-2 : -mb-3 ">
@@ -41,13 +42,34 @@ const TelevisionScreen = () => {
           style={{width: width, paddingHorizontal: 20}}
           className="flex-row justify-between items-center ">
           <TvIcon size={30} strokeWidth={2} color="white" />
-
-          <Text
-            style={{fontFamily: 'KaushanScript-Regular'}}
-            className="text-white text-3xl font-bold">
-            <Text style={styles.text}>---TELEVI</Text>
-            <Text style={styles.secondaryText}>SIONS---</Text>
-          </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text
+              style={[
+                styles.text,
+                {
+                  fontSize: 32,
+                  fontFamily: 'Shrikhand-Regular',
+                  textShadowRadius: 10,
+                  textShadowColor: 'rgba(0, 0, 0, 0.95)',
+                  textShadowOffset: {width: -1, height: 1},
+                },
+              ]}>
+              ---T
+            </Text>
+            <Text
+              style={[
+                styles.secondaryText,
+                {
+                  fontSize: 32,
+                  fontFamily: 'Shrikhand-Regular',
+                  textShadowRadius: 10,
+                  textShadowColor: 'rgba(0, 0, 0, 0.95)',
+                  textShadowOffset: {width: -1, height: 1},
+                },
+              ]}>
+              V---
+            </Text>
+          </View>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Search', {name: 'TV, Shows...'})
@@ -56,7 +78,7 @@ const TelevisionScreen = () => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-      <ScrollView
+      {/* <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -66,7 +88,18 @@ const TelevisionScreen = () => {
           paddingTop: 100,
         }}>
         <TvBodyComponent />
-      </ScrollView>
+      </ScrollView> */}
+      <FlashList
+        data={data}
+        estimatedItemSize={1}
+        removeClippedSubviews={true}
+        keyExtractor={item => item.key}
+        showsVerticalScrollIndicator={false}
+        renderItem={() => <TvBodyComponent />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
     </View>
   );
 };

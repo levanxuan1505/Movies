@@ -2,6 +2,7 @@
 import {Dimensions, View} from 'react-native';
 import React, {memo, Dispatch, SetStateAction} from 'react';
 import LottieView from 'lottie-react-native';
+import {Colors} from '@constants';
 let {width, height} = Dimensions.get('window');
 interface SplashProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +16,7 @@ const SplashScreen = ({setIsLoading}: SplashProps) => {
         height: height,
         width: width,
         margin: 0,
-        backgroundColor: '#CEE8E7',
+        backgroundColor: Colors.LIGHT_GREEN,
       }}>
       <LottieView
         source={require('../assets/OnboardingAnimations/splash.json')}

@@ -14,19 +14,19 @@ import {debounce} from 'lodash';
 import {Loading} from '@components';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
-import React, {memo, useCallback, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import React, {memo, useCallback, useState} from 'react';
 import {XMarkIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {fallbackMoviePoster, image500, searchMovies} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {fallbackMoviePoster, image500, searchMovies} from '../Api/MoviesDb';
 
 const SearchScreen = ({route}) => {
+  const data = route.params.name;
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const data = route.params.name;
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState([]);
 
   const handleSearch = search => {
     if (search && search.length > 0) {
@@ -79,7 +79,7 @@ const SearchScreen = ({route}) => {
             Results ({results.length})
           </Text>
           <View className="flex-row justify-between flex-wrap">
-            {results.map((item, index) => {
+            {results.map((item, index): any => {
               return (
                 <TouchableWithoutFeedback
                   key={index}
@@ -89,7 +89,6 @@ const SearchScreen = ({route}) => {
                       source={{
                         uri: image500(item.poster_path) || fallbackMoviePoster,
                       }}
-                      // source={require('../assets/images/moviePoster2.png')}
                       className="rounded-3xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />

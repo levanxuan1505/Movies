@@ -12,20 +12,18 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
+import {styles} from '../theme';
 import {Loading} from '@components';
-import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import React, {useEffect, useState} from 'react';
-import {fetchUpcomingMovies} from '../Api/MoviesDb';
-import {useNavigation} from '@react-navigation/native';
-import {HeartIcon} from 'react-native-heroicons/solid';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {fetchNowPlayingMovies} from '../Api/MoviesDb';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const WatchingScreen = ({route}) => {
   const title = route.params.title;
@@ -41,9 +39,7 @@ const WatchingScreen = ({route}) => {
   }, []);
   const getNowPlayingMovies = async () => {
     const data = await fetchNowPlayingMovies();
-    // console.log(data);
     if (data && data.results) setNowPlayingMovies(data.results);
-    // setIsLoadingMovies(false);
   };
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

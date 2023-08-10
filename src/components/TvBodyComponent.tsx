@@ -1,213 +1,136 @@
 /* eslint-disable curly */
 import {
-  Loading,
-  HBOList,
-  Discover,
+  TVList,
   SportList,
-  HBOTrailers,
   TrendingTV,
+  TVTrending,
+  MoviesList,
+  MoviesListOphim,
+  ListCarouselHome,
 } from '@components';
-import {
-  fetchSimilarMovies,
-  fetchTopRatedMovies,
-  fetchTvChannelsMovies,
-} from '../Api/MoviesDb';
 import {
   VTV,
   Kplus,
   VBA2023,
   VLeague,
-  TVChannels,
   SerieA2023,
+  TVChannels,
   SportsTVShows,
 } from '@constants';
-import {YoutubeID} from '@constants';
-import React, {memo, useEffect, useState} from 'react';
-//
+import React, {memo} from 'react';
 const TvBodyComponent = () => {
-  const [tv, setTv] = useState([]);
-  const [listMovies, setListMovies] = useState([]);
-  const [tvChannels, setTvChannels] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [discoverMovies, setDiscoverMovies] = useState([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
-  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
-
-  //   Call API
-  useEffect(() => {
-    getTopRatedMovies();
-    getTvChannelsMovies();
-    getSimilarMovies(199);
-    getSimilarMovies2(199);
-    getSimilarMovies3(447277);
-    getSimilarMovies4(280);
-  }, []);
-
-  const getTopRatedMovies = async () => {
-    const data = await fetchTopRatedMovies();
-    // console.log(data);
-    if (data && data.results) setTopRatedMovies(data.results);
-    // setIsLoadingMovies(false);
-  };
-
-  const getSimilarMovies = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setListMovies(data.results);
-    }
-  };
-  const getSimilarMovies2 = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setDiscoverMovies(data.results);
-    }
-  };
-  const getSimilarMovies3 = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log('got similar movies');
-    if (data && data.results) {
-      setNowPlayingMovies(data.results);
-    }
-  };
-  const getSimilarMovies4 = async id => {
-    const data = await fetchSimilarMovies(id);
-    // console.log(data);
-    if (data && data.results) setTv(data.results);
-    // setIsLoadingMovies(false);
-  };
-  const getTvChannelsMovies = async () => {
-    const data = await fetchTvChannelsMovies();
-    // console.log(data);
-    if (data && data.results) setTvChannels(data.results);
-    setIsLoadingMovies(false);
-  };
   return (
     <>
-      {isLoadingMovies ? (
-        <Loading />
-      ) : (
-        <>
-          {/* trending */}
-          {tvChannels.length > 0 && (
-            <TrendingTV layout={'tinder'} name={'Trending'} data={tvChannels} />
-          )}
-          {TVChannels.length > 0 && (
-            <SportList
-              title="TV Channels"
-              logo="bigSize"
-              symbol="null"
-              hideSeeAll={false}
-              data={TVChannels}
-            />
-          )}
-
-          {VTV.length > 0 && (
-            <SportList
-              title="VTV"
-              logo="bigSize"
-              symbol="null"
-              hideSeeAll={false}
-              data={VTV}
-            />
-          )}
-
-          {topRatedMovies.length > 0 && (
-            <HBOList
-              title="HBO Top Rated"
-              logo="GO"
-              hideSeeAll={false}
-              data={topRatedMovies}
-            />
-          )}
-          {discoverMovies.length > 0 && (
-            <HBOList
-              title="HBO Max"
-              logo="MAX"
-              hideSeeAll={false}
-              data={discoverMovies}
-            />
-          )}
-          {Kplus.length > 0 && (
-            <SportList
-              logo="bigSize"
-              title="K+"
-              symbol="null"
-              hideSeeAll={false}
-              data={Kplus}
-            />
-          )}
-          {VBA2023.length > 0 && (
-            <SportList
-              title="VBA 2023"
-              logo="vba"
-              symbol="null"
-              hideSeeAll={false}
-              data={VBA2023}
-            />
-          )}
-          {VLeague.length > 0 && (
-            <SportList
-              title="V-League"
-              logo="bigSize"
-              symbol="skySport"
-              hideSeeAll={false}
-              data={VLeague}
-            />
-          )}
-          {listMovies.length > 0 && (
-            <Discover title="Discover" hideSeeAll={false} data={listMovies} />
-          )}
-          {discoverMovies.length > 0 && (
-            <HBOList
-              title="Disney"
-              logo="null"
-              hideSeeAll={false}
-              data={discoverMovies}
-            />
-          )}
-          {nowPlayingMovies.length > 0 && (
-            <HBOList
-              title="Movies For Kids"
-              logo="GO"
-              hideSeeAll={false}
-              data={nowPlayingMovies}
-            />
-          )}
-          {SportsTVShows.length > 0 && (
-            <SportList
-              title="Sport TV shows"
-              logo="bigSize"
-              hideSeeAll={false}
-              data={SportsTVShows}
-              symbol="null"
-            />
-          )}
-          {SerieA2023.length > 0 && (
-            <SportList
-              title="Serie A 2023"
-              logo="bigSize"
-              symbol="espn"
-              hideSeeAll={false}
-              data={SerieA2023}
-            />
-          )}
-          {YoutubeID[3].length > 0 && (
-            <HBOTrailers
-              title="Fomula 1"
-              firstItem={0}
-              hideSeeAll={false}
-              data={YoutubeID[3]}
-            />
-          )}
-          {tv.length > 0 && (
-            <TrendingTV layout="tinder" name="TV Shows" data={tv} />
-          )}
-        </>
+      <TVTrending />
+      {TVChannels.length > 0 && (
+        <SportList
+          title="TV Channels"
+          logo="bigSize"
+          symbol="null"
+          hideSeeAll={false}
+          data={TVChannels}
+        />
       )}
+
+      {VTV.length > 0 && (
+        <SportList
+          title="VTV"
+          logo="bigSize"
+          symbol="null"
+          hideSeeAll={false}
+          data={VTV}
+        />
+      )}
+      <MoviesListOphim title="Ophim TV" hideSeeAll={false} page={11} />
+
+      {Kplus.length > 0 && (
+        <SportList
+          logo="bigSize"
+          title="K+"
+          symbol="null"
+          hideSeeAll={false}
+          data={Kplus}
+        />
+      )}
+      {VBA2023.length > 0 && (
+        <SportList
+          title="VBA 2023"
+          logo="vba"
+          symbol="null"
+          hideSeeAll={false}
+          data={VBA2023}
+        />
+      )}
+      <MoviesListOphim title="Ophim Originals" hideSeeAll={false} page={12} />
+
+      {VLeague.length > 0 && (
+        <SportList
+          title="V-League"
+          logo="bigSize"
+          symbol="skySport"
+          hideSeeAll={false}
+          data={VLeague}
+        />
+      )}
+      <ListCarouselHome index={1} />
+
+      <MoviesList title="VTV" hideSeeAll={false} idApi={5527} />
+
+      <MoviesListOphim title="TV For Kids" hideSeeAll={false} page={18} />
+
+      <MoviesList title="TCL TV" hideSeeAll={false} idApi={5522} />
+
+      <MoviesListOphim title=" Sony TV" hideSeeAll={false} page={20} />
+
+      <MoviesList title="SamSung TV" hideSeeAll={false} idApi={422} />
+
+      <MoviesListOphim title="SCTV TV" hideSeeAll={false} page={22} />
+
+      <MoviesList title="VieON TV" hideSeeAll={false} idApi={1422} />
+
+      <MoviesListOphim title="HTV TV" hideSeeAll={false} page={25} />
+
+      <MoviesList title="Game TV" hideSeeAll={false} idApi={1282} />
+
+      <MoviesListOphim title="LOL TV" hideSeeAll={false} page={27} />
+
+      <MoviesList title="VETV" hideSeeAll={false} idApi={1282} />
+
+      <MoviesListOphim title="Affrica TV" hideSeeAll={false} page={29} />
+
+      <MoviesList title="Feed TV" hideSeeAll={false} idApi={1281} />
+
+      <ListCarouselHome index={2} />
+
+      <MoviesListOphim title="VTV Cab" hideSeeAll={false} page={31} />
+
+      <MoviesList title="TV360" hideSeeAll={false} idApi={1781} />
+
+      <MoviesListOphim title="Vie Channels TV" hideSeeAll={false} page={33} />
+
+      {SportsTVShows.length > 0 && (
+        <SportList
+          title="Sport TV shows"
+          logo="bigSize"
+          hideSeeAll={false}
+          data={SportsTVShows}
+          symbol="null"
+        />
+      )}
+      <MoviesListOphim title="Ophim TV" hideSeeAll={false} page={13} />
+      {SerieA2023.length > 0 && (
+        <SportList
+          title="Serie A 2023"
+          logo="bigSize"
+          symbol="espn"
+          hideSeeAll={false}
+          data={SerieA2023}
+        />
+      )}
+
+      <TVList title="Lucky Show" name="HO" hideSeeAll={false} idApi={391} />
+      <TrendingTV layout="tinder" name="TV Shows" idApi={2222} />
     </>
   );
 };
-
 export default memo(TvBodyComponent);

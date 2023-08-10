@@ -14,7 +14,7 @@ import {
 import {Loading} from '@components';
 import React, {useState} from 'react';
 import {styles, theme} from '../theme';
-import YouTube from 'react-native-youtube';
+// import YouTube from 'react-native-youtube';
 const {width, height} = Dimensions.get('window');
 import Carousel from 'react-native-snap-carousel';
 import {useNavigation} from '@react-navigation/native';
@@ -41,7 +41,7 @@ const SeeAllHBOScreen = ({route}) => {
       <View
         className="flex-row justify-center flex-wrap"
         style={{paddingVertical: 10}}>
-        <YouTube
+        {/* <YouTube
           videoId={item.youtubeID} // The YouTube video ID
           play={false} // control playback of video with true/false
           fullscreen // control whether the video should play in fullscreen or inline
@@ -55,7 +55,7 @@ const SeeAllHBOScreen = ({route}) => {
             width: width * 0.85,
             height: height * 0.23,
           }}
-        />
+        /> */}
         <Text
           className="text-white font-semibold ml-1"
           style={{

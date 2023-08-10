@@ -8,21 +8,20 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import {
+  image500,
+  fetchPersonDetails,
+  fallbackPersonImage,
+} from '../Api/MoviesDb';
 import {styles} from '../theme';
 import {RootStackParams} from '@navigators';
-import {MoviesList, Loading} from '@components';
+import {ActorMoviesList, Loading} from '@components';
 import React, {memo, useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  image500,
-  fetchPersonMovies,
-  fetchPersonDetails,
-  fallbackPersonImage,
-} from '../Api/MoviesDb';
 
 const ios = Platform.OS === 'ios';
 const verticalMargin = ios ? '' : ' my-3';
@@ -30,17 +29,15 @@ let {width, height} = Dimensions.get('window');
 
 const Actor = () => {
   const {params: item} = useRoute();
+  const [person, setPerson] = useState({});
+  const [loading, setLoading] = useState(false);
   const [isFavorite, toggleFavorite] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const [person, setPerson] = useState({});
-  const [personMovies, setPersonMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     getPersonDetails(item.id);
-    getPersonMovies(item.id);
   }, [item]);
 
   const getPersonDetails = async id => {
@@ -50,18 +47,11 @@ const Actor = () => {
       setPerson(data);
     }
   };
-  const getPersonMovies = async id => {
-    const data = await fetchPersonMovies(id);
-    if (data && data.cast) {
-      setPersonMovies(data.cast);
-    }
-  };
 
   return (
     <ScrollView
       className="flex-1 bg-neutral-900"
       contentContainerStyle={{paddingBottom: 20}}>
-      {/* back button */}
       <SafeAreaView
         className={
           'flex-row justify-between items-center mx-4 z-10 ' + verticalMargin
@@ -78,7 +68,6 @@ const Actor = () => {
         </TouchableOpacity>
       </SafeAreaView>
 
-      {/* person details */}
       {loading ? (
         <Loading />
       ) : (
@@ -93,7 +82,6 @@ const Actor = () => {
             }}>
             <View className="items-center rounded-full overflow-hidden h-72 w-72 border-neutral-500 border-2">
               <Image
-                // source={require('../assets/images/castImage1.png')}
                 source={{
                   uri: image500(person?.profile_path) || fallbackPersonImage,
                 }}
@@ -141,8 +129,8 @@ const Actor = () => {
               {person?.biography ? person.biography : 'N/A'}
             </Text>
           </View>
-          {person?.id && personMovies.length > 0 && (
-            <MoviesList title="Movies" hideSeeAll={true} data={personMovies} />
+          {person?.id && (
+            <ActorMoviesList title="Movies" hideSeeAll={true} idApi={item.id} />
           )}
         </View>
       )}

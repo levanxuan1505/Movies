@@ -18,8 +18,8 @@ import {RootStackParams} from '@navigators';
 import LottieView from 'lottie-react-native';
 import {Button, Loader, Input} from '@components';
 import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthContext} from '../navigators/AuthProvider';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 const {register} = useContext(AuthContext);
 export interface Error {
   email: string;
@@ -30,7 +30,6 @@ export interface Error {
 const RegisterScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
   const [inputs, setInputs] = React.useState({
     email: '',
     fullname: '',
@@ -82,17 +81,18 @@ const RegisterScreen = () => {
     }
 
     if (isValid) {
-      registerAccess();
+      registerAccess(inputs.email, inputs.password);
+      // register(inputs.email, inputs.password);
     }
   };
 
-  const registerAccess = () => {
+  const registerAccess = (email, password) => {
     setLoading(true);
     setTimeout(() => {
       try {
         setLoading(false);
-        AsyncStorage.setItem('userData', JSON.stringify(inputs));
-        register(inputs.email, inputs.password);
+        // AsyncStorage.setItem('userData', JSON.stringify(inputs));
+        register(email, password);
         navigation.navigate('LogIn');
       } catch (error) {
         Alert.alert('Error', 'Something went wrong');
@@ -117,9 +117,10 @@ const RegisterScreen = () => {
         }}>
         <Text
           style={{
+            fontWeight: 'bold',
             color: Colors.DEFAULT_GREEN,
             fontSize: Display.setWidth(8),
-            fontWeight: 'bold',
+            fontFamily: 'Shrikhand-Regular',
           }}>
           Register
         </Text>
@@ -185,8 +186,9 @@ const RegisterScreen = () => {
                 color: Colors.DEFAULT_YELLOW,
                 fontWeight: '700',
                 textAlign: 'center',
-                fontSize: 18,
+                fontSize: 16,
                 paddingTop: 10,
+                fontFamily: 'Shrikhand-Regular',
               }}>
               You have an account? Log In
             </Text>

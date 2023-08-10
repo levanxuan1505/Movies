@@ -3,30 +3,21 @@
 import {
   View,
   Text,
-  Image,
   ScrollView,
   Dimensions,
-  RefreshControl,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from 'react-native';
-import {Loading} from '@components';
 import {styles, theme} from '../theme';
 const {width, height} = Dimensions.get('window');
-import React, {useEffect, useState} from 'react';
-import {fetchTrendingMovies} from '../Api/MoviesDb';
-import {HeartIcon} from 'react-native-heroicons/solid';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 const TermsOfUseScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
-  const [isFavorite, setFavorite] = useState(false);
-  const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -35,15 +26,7 @@ const TermsOfUseScreen = ({route}) => {
       setRefreshing(false);
     }, 500);
   }, []);
-  useEffect(() => {
-    getWatchingMovies();
-  });
-  const getWatchingMovies = async () => {
-    const data = await fetchTrendingMovies();
-    // console.log(data);
-    if (data && data.results) setWatchingMovies(data.results);
-    setLoading(false);
-  };
+
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
       <SafeAreaView
@@ -67,61 +50,68 @@ const TermsOfUseScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <HeartIcon
-              size="35"
-              color={isFavorite ? theme.background : 'white'}
-            />
-          </TouchableOpacity>
+          <Icons name="paper-plane-o" size={28} color="#00AA13" />
         </View>
       </SafeAreaView>
-      {loading ? (
-        <Loading />
-      ) : watchingMovies.length > 0 ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
-          className="space-y-3">
-          <Text className="text-white font-semibold ml-1">
-            Results ({watchingMovies.length})
+      <ScrollView>
+        <View style={{marginTop: 100, marginBottom: 20, paddingHorizontal: 20}}>
+          <Text style={{fontSize: 14, color: 'white'}}>
+            Khi chúng tôi cung cấp bất kỳ dịch vụ tương tác, chúng tôi sẽ cung
+            cấp thông tin rõ ràng để bạn biết về loại dịch vụ được cung cấp, nếu
+            nó được kiểm duyệt và hình thức kiểm duyệt được sử dụng, nếu có. Nếu
+            bạn muốn khiếu nại về một bình luận được đăng trên trang web của
+            chúng tôi hoặc bạn nghĩ rằng một bình luận đã được đăng là vi phạm
+            chính sách sử dụng này xin vui lòng thông báo cho chúng tôi bằng
+            cách sử dụng nút "tố giác" trên trang web của chúng tôi hoặc liên hệ
+            với chúng tôi qua hello@student.com, chúng tôi sẽ xem xét sau đó.
+            Xin lưu ý rằng tố giác bình luận không có nghĩa các bình luận bị tố
+            giác sẽ được gỡ bỏ. Chúng tôi không chịu trách nhiệm giám sát hoặc
+            kiểm tra bất kỳ dịch vụ tương tác mà chúng tôi cung cấp trên trang
+            web của chúng tôi, và (ngoại trừ đối với người sử dụng ở Pháp, nơi
+            chúng tôi có thể chỉ phải chịu trách nhiệm như quy định trong luật
+            ủy thác trong lĩnh vực kinh tế kỹ thuật số ngày 6 tháng 6 năm 2004)
+            chúng tôi rõ ràng loại trừ trách nhiệm pháp lý của chúng tôi cho bất
+            kỳ tổn thất hoặc thiệt hại phát sinh từ việc sử dụng bất kỳ dịch vụ
+            tương tác bởi người dùng trong sự vi phạm các tiêu chuẩn nội dung ,
+            cho dù các dịch vụ được kiểm duyệt hay không. Khi chúng tôi phải
+            kiểm duyệt một dịch vụ tương tác, chúng tôi thường cung cấp một
+            phương tiện liên lạc với người điều tiết, nếu một mối quan tâm hoặc
+            khó khăn nào đó nảy sinh.
           </Text>
-          <View className="flex-row justify-between flex-wrap">
-            {watchingMovies.map((item, index) => {
-              return (
-                <TouchableWithoutFeedback
-                  key={index}
-                  onPress={() => navigation.navigate('Movies', item)}>
-                  <View className="space-y-2 mb-4">
-                    <Image
-                      source={{
-                        uri: image500(item.poster_path) || fallbackMoviePoster,
-                      }}
-                      //   source={require('../assets/images/moviePoster1.png')}
-                      className="rounded-3xl"
-                      style={{width: width * 0.44, height: height * 0.3}}
-                    />
-                    <Text className="text-gray-300 ml-1">
-                      {item.title.length > 22
-                        ? item.title.slice(0, 22) + '...'
-                        : item.title}
-                    </Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
-          </View>
-        </ScrollView>
-      ) : (
-        <View className="flex-row justify-center">
-          <Image
-            source={require('../assets/images/movieTime.png')}
-            className="h-96 w-96"
-          />
+          <Text style={{fontSize: 16, color: 'white', paddingVertical: 10}}>
+            * Tiêu chuẩn nội dung
+          </Text>
+          <Text style={{fontSize: 14, color: 'white'}}>
+            Các tiêu chuẩn nội dung này áp dụng cho bất kỳ và tất cả tài liệu mà
+            bạn đóng góp vào trang web của chúng tôi ("sự đống góp") bao gồm các
+            bài đánh giá và câu hỏi được gửi cho chúng tôi. Các tiêu chuẩn và
+            các yêu cầu sau đây được áp dụng cho việc sử dụng và đóng góp của
+            bạn cho trang web của chúng tôi. Đóng góp của bạn phải: có thông tin
+            chính xác (nơi thông tin nhận định về sự kiện, bằng chứng); được
+            cung cấp một cách chân thực (nơi thông tin cho biết về ý kiến); và
+            tuân thủ theo pháp luật được áp dụng tại bất cứ nước nào nơi mà
+            thông tin được đăng lên Sự đóng góp của bạn phải không: chứa bất kỳ
+            thông tin nói xấu về người khác hoặc khiêu dâm, kích động, hận thù
+            hay xúc phạm; tuyên truyền tài liệu khiêu dâm, bạo lực, phân biệt
+            đối xử dựa trên chủng tộc, giới tính, tôn giáo, quốc tịch, khuyết
+            tật, định hướng giới tính hay tuổi tác; vi phạm bất kỳ bản quyền,
+            quyền sở hữu cơ sở dữ liệu hoặc nhãn hiệu thương mại hoặc các quyền
+            lợi khác của bất kỳ người nào; có khả năng đánh lừa mọi người, kể cả
+            sử dụng thông tin đóng góp của bạn để mạo danh bất kỳ người nào,
+            hoặc xuyên tạc, giả danh hay mạo danh cộng tác với bất kỳ người nào;
+            được thực hiện khi vi phạm bất kỳ nghĩa vụ pháp lý đối với bên thứ
+            ba, chẳng hạn như vi phạm một hợp đồng hoặc một sự tín nhiệm; tuyên
+            truyền bất kỳ hoạt động bất hợp pháp, hoặc ủng hộ, thúc đẩy hoặc hỗ
+            trợ bất kỳ hành động phi pháp chẳng hạn như (bằng cách ví dụ) vi
+            phạm bản quyền hoặc lạm dụng máy tính; đe dọa, lạm dụng hoặc xâm
+            nhập sự riêng tư của người khác, hoặc gây khó chịu, bất tiện hoặc
+            gây lo lắng không cần thiết hoặc có khả năng quấy rối, làm khó chịu,
+            xấu hổ, xúc phạm hoặc làm phiền người khác; hoặc tạo ấn tượng rằng
+            thông tin là bắt nguồn từ chúng tôi, nhưng thật sự lại không đúng
+            như vậy.
+          </Text>
         </View>
-      )}
+      </ScrollView>
     </View>
   );
 };

@@ -3,46 +3,62 @@ import Cast from './Cast';
 import Input from './Input';
 import Loader from './Loader';
 import Button from './Button';
+import TVList from './TVList';
 import Loading from './Loading';
-import HBOList from './HBOList';
+import Trending from './Trending';
 import Discover from './Discover';
 import SportList from './SportList';
 import TrendingTV from './TrendingTV';
-import MoviesList from './MoviesList';
+import TVTrending from './TVTrending';
 import ModalPoster from './ModalPoster';
-import HBOTrending from './HBOTrending';
+import MoviesList from './MoviesList';
 import HBODiscover from './HBODiscover';
-import HBOTrailers from './HBOTrailers';
+import HBOListTest from './HBOListTest';
+import HBOTrending from './HBOTrending';
 import WatchingList from './WatchingList';
+import HBOListOphim from './HBOListOphim';
+import VideoTrailer from './VideoTrailer';
 import ButtonSocial from './ButtonSocial';
 import SportTrending from './SportTrending';
-import TrendingMovies from './TrendingMovies';
+import VideoComponent from './VideoComponent';
 import TvBodyComponent from './TvBodyComponent';
+import ActorMoviesList from './ActorMoviesList';
+import MoviesListOphim from './MoviesListOphim';
+import ListCarouselHome from './ListCarouselHome';
 import HBOBodyComponent from './HBOBodyComponent';
+import SimilarMoviesList from './SimilarMoviesList';
 import HomeBodyComponent from './HomeBodyComponent';
 import SportsBodyComponent from './SportsBodyComponent';
 export {
   Tv,
   Cast,
   Input,
+  TVList,
   Loader,
   Button,
-  HBOList,
+  Trending,
   Loading,
   Discover,
   SportList,
   MoviesList,
   TrendingTV,
-  HBODiscover,
   HBOTrending,
-  HBOTrailers,
+  TVTrending,
+  HBODiscover,
+  HBOListTest,
   ModalPoster,
   WatchingList,
+  HBOListOphim,
   ButtonSocial,
   SportTrending,
-  TrendingMovies,
+  VideoTrailer,
+  VideoComponent,
+  MoviesListOphim,
+  ActorMoviesList,
   TvBodyComponent,
   HBOBodyComponent,
+  ListCarouselHome,
+  SimilarMoviesList,
   HomeBodyComponent,
   SportsBodyComponent,
 };

@@ -9,19 +9,15 @@ import {
   Dimensions,
   RefreshControl,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from 'react-native';
-import {Loading} from '@components';
 import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
-import React, {useEffect, useContext, useState} from 'react';
-import {fetchTrendingMovies} from '../Api/MoviesDb';
-import {UserCircleIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {AuthContext} from '../navigators/AuthProvider';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useContext, useState} from 'react';
+import {UserCircleIcon} from 'react-native-heroicons/solid';
 
 import {
   ChevronLeftIcon,
@@ -32,13 +28,13 @@ import {
   CalendarDaysIcon,
   BoltSlashIcon,
 } from 'react-native-heroicons/outline';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-const {user}: any = useContext(AuthContext);
-const userName = user?.displayName ? user.displayName : 'Anonymous';
-const userEmail = user?.email ? user.email : 'Anonymous';
+
 const UserScreen = ({route}) => {
   const title = route.params.title;
+  const {user}: any = useContext(AuthContext);
+  const userName = user?.displayName ? user.displayName : 'Anonymous';
+  const userEmail = user?.email ? user.email : 'Anonymous';
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -76,12 +72,7 @@ const UserScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <UserCircleIcon
-              size="35"
-              color={isFavorite ? theme.background : 'white'}
-            />
-          </TouchableOpacity>
+          <UserCircleIcon size="35" color={theme.background} />
         </View>
       </SafeAreaView>
 
@@ -101,10 +92,23 @@ const UserScreen = ({route}) => {
               paddingVertical: 5,
               position: 'relative',
             }}>
-            <UserCircleIcon
-              size="32"
-              color={isFavorite ? theme.background : 'white'}
-            />
+            {user?.displayName ? (
+              <View>
+                <Image
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 30,
+                  }}
+                  source={{uri: user.photoURL}}
+                />
+              </View>
+            ) : (
+              <UserCircleIcon
+                size="32"
+                color={isFavorite ? theme.background : 'white'}
+              />
+            )}
             <Text style={styless.text}>Name</Text>
             <Text style={styless.text2}>{userName}</Text>
             <ChevronRightIcon

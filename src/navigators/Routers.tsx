@@ -15,10 +15,13 @@ import {
   MyListsScreen,
   WatchingScreen,
   RegisterScreen,
+  AnimationScreen,
   SeeAllHBOScreen,
+  VideoFullScreen,
   TermsOfUseScreen,
   OnBoardingScreen,
   TransactionScreen,
+  MoviesOphimScreen,
   LogInSmartTVScreen,
   ManageDevicesScreen,
   PrivacyPolicyScreen,
@@ -45,14 +48,17 @@ export type RootStackParams = {
   Settings;
   Register;
   Watching;
+  Animation;
   SeeAllHBO: {
     title: string;
-    data: Array;
+    data: any;
     firstItem: number;
   };
+  VideoFull;
   TermsOfUse;
   OnBoarding;
   Transaction;
+  MoviesOphim;
   ManageDevices;
   PrivacyPolicy;
   SeeAllCoreAPIS;
@@ -92,10 +98,13 @@ const Routes = () => {
         <Stack.Screen name="Settings" component={SettingScreen} />
         <Stack.Screen name="Watching" component={WatchingScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Animation" component={AnimationScreen} />
         <Stack.Screen name="SeeAllHBO" component={SeeAllHBOScreen} />
         <Stack.Screen name="LogInTV" component={LogInSmartTVScreen} />
         <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
+        <Stack.Screen name="VideoFull" component={VideoFullScreen} />
         <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} />
+        <Stack.Screen name="MoviesOphim" component={MoviesOphimScreen} />
         <Stack.Screen name="Transaction" component={TransactionScreen} />
         <Stack.Screen name="ManageDevices" component={ManageDevicesScreen} />
         <Stack.Screen name="SeeAllCoreAPIS" component={SeeAllCoreAPIScreen} />

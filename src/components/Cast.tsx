@@ -1,19 +1,64 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import React, {memo} from 'react';
-import {FlashList} from '@shopify/flash-list';
-import {image185, fallbackPersonImage} from '../Api/MoviesDb';
 import {
   View,
   Text,
   Image,
-  ScrollView,
   Dimensions,
+  VirtualizedList,
   TouchableOpacity,
 } from 'react-native';
-
-const Cast = ({cast, navigation}) => {
-  console.log(cast);
-  return !cast ? (
+import React, {memo, useEffect, useState} from 'react';
+const getItem = (cast, index) => {
+  return cast[index];
+};
+import {
+  image500,
+  fetchMovieCredits,
+  fallbackPersonImage,
+} from '../Api/MoviesDb';
+interface Props {
+  idCast: any;
+  navigation: any;
+}
+const Cast: React.FC<Props> = ({idCast, navigation}) => {
+  const [cast, setCast] = useState([]);
+  useEffect(() => {
+    getMovieCredits(idCast);
+  }, [idCast]);
+  const getMovieCredits = async id => {
+    const data = await fetchMovieCredits(id);
+    if (data && data.cast) {
+      setCast(data.cast);
+    }
+  };
+  const Actor = ({person}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Actor', person)}
+        className="mr-4 items-center">
+        <View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500">
+          <Image
+            className="rounded-2xl h-24 w-20"
+            source={{
+              uri: image500(person?.profile_path) || fallbackPersonImage,
+            }}
+          />
+        </View>
+        <Text className="text-white text-xs mt-1">
+          {person?.character.length > 10
+            ? person.character.slice(0, 10) + '...'
+            : person?.character}
+        </Text>
+        <Text className="text-neutral-400 text-xs">
+          {person?.original_name.length > 10
+            ? person.original_name.slice(0, 10) + '...'
+            : person?.original_name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+  return (
     <View className="my-6 w-full">
       <Text className="text-white text-lg mx-4 mb-5">Top Cast</Text>
       <View
@@ -25,81 +70,19 @@ const Cast = ({cast, navigation}) => {
           paddingHorizontal: 15,
           width: Dimensions.get('screen').width,
         }}>
-        <FlashList
+        <VirtualizedList
           data={cast}
           horizontal={true}
-          estimatedItemSize={7}
-          disableAutoLayout={true}
+          getItem={getItem}
+          initialNumToRender={3}
+          keyExtractor={person => person.id}
+          getItemCount={cast => cast.length}
           showsHorizontalScrollIndicator={false}
-          renderItem={({person, index}: any) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => navigation.navigate('Actor', person)}
-              className="mr-4 items-center">
-              <View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500">
-                <Image
-                  className="rounded-2xl h-24 w-20"
-                  // source={require('../assets/images/castImage1.png')}
-                  source={{
-                    uri: image185(person?.profile_path) || fallbackPersonImage,
-                  }}
-                />
-              </View>
-
-              <Text className="text-white text-xs mt-1">
-                {person?.character.length > 10
-                  ? person.character.slice(0, 10) + '...'
-                  : person?.character}
-              </Text>
-              <Text className="text-neutral-400 text-xs">
-                {person?.original_name.length > 10
-                  ? person.original_name.slice(0, 10) + '...'
-                  : person?.original_name}
-              </Text>
-            </TouchableOpacity>
-          )}
+          renderItem={({item}) => {
+            return <Actor person={item} />;
+          }}
         />
       </View>
-    </View>
-  ) : (
-    <View className="my-6 w-full">
-      <Text className="text-white text-lg mx-4 mb-5">Top Cast</Text>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal: 15}}>
-        {cast &&
-          cast.map((person, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                onPress={() => navigation.navigate('Actor', person)}
-                className="mr-4 items-center">
-                <View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500">
-                  <Image
-                    className="rounded-2xl h-24 w-20"
-                    // source={require('../assets/images/castImage1.png')}
-                    source={{
-                      uri:
-                        image185(person?.profile_path) || fallbackPersonImage,
-                    }}
-                  />
-                </View>
-
-                <Text className="text-white text-xs mt-1">
-                  {person?.character.length > 10
-                    ? person.character.slice(0, 10) + '...'
-                    : person?.character}
-                </Text>
-                <Text className="text-neutral-400 text-xs">
-                  {person?.original_name.length > 10
-                    ? person.original_name.slice(0, 10) + '...'
-                    : person?.original_name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-      </ScrollView>
     </View>
   );
 };
