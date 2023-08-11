@@ -17,7 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 import React, {memo, useCallback, useEffect, useState} from 'react';
 
-const HBOList = ({title, logo, hideSeeAll, idApi}) => {
+const HBOListTest = ({title, logo, hideSeeAll, idApi}) => {
   const navigation = useNavigation();
   const [data, setListMovies] = useState([]);
   const getListMovies = useCallback(async id => {
@@ -164,4 +164,4 @@ const HBOList = ({title, logo, hideSeeAll, idApi}) => {
     )
   );
 };
-export default memo(HBOList);
+export default memo(HBOListTest);

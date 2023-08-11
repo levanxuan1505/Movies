@@ -1,204 +1,334 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable curly */
-import {
-  Trending,
-  Discover,
-  SportList,
-  MoviesList,
-  HBODiscover,
-  HBOListTest,
-  VideoTrailer,
-  WatchingList,
-  HBOListOphim,
-  MoviesListOphim,
-  ListCarouselHome,
-} from '@components';
+
+import React, {memo, Suspense} from 'react';
 import {
   Bundesliga,
   TVChannels,
   RolandGarros,
   InternationalFriendly,
 } from '@constants';
-import React, {memo} from 'react';
+
+const Trending = React.lazy(() => import('../components/Trending'));
+const MoviesListOphim = React.lazy(
+  () => import('../components/MoviesListOphim'),
+);
+const Discover = React.lazy(() => import('../components/Discover'));
+const SportList = React.lazy(() => import('../components/SportList'));
+const MoviesList = React.lazy(() => import('../components/MoviesList'));
+const HBOListTest = React.lazy(() => import('../components/HBOListTest'));
+const VideoTrailer = React.lazy(() => import('../components/VideoTrailer'));
+const WatchingList = React.lazy(() => import('../components/WatchingList'));
+const ListCarouselHome = React.lazy(
+  () => import('../components/ListCarouselHome'),
+);
+const HBOListOphim = React.lazy(() => import('../components/HBOListOphim'));
+const HBODiscover = React.lazy(() => import('../components/HBODiscover'));
 
 const HomeBodyComponent = () => {
   return (
     <>
-      <Trending />
+      <Suspense>
+        <Trending />
+      </Suspense>
 
-      <MoviesList title="UpComing" hideSeeAll={false} idApi={613099} />
+      <Suspense>
+        <MoviesList title="UpComing" hideSeeAll={false} idApi={613099} />
+      </Suspense>
 
-      <MoviesListOphim title="Ophim UpComing" hideSeeAll={false} page={55} />
+      <Suspense>
+        <MoviesListOphim title="Ophim UpComing" hideSeeAll={false} page={55} />
+      </Suspense>
 
-      <MoviesList title="Top Rated" hideSeeAll={false} idApi={9730} />
+      <Suspense>
+        <MoviesList title="Top Rated" hideSeeAll={false} idApi={9730} />
+      </Suspense>
 
-      <MoviesList title="Now Playing" hideSeeAll={false} idApi={988265} />
+      <Suspense>
+        <MoviesList title="Now Playing" hideSeeAll={false} idApi={988265} />
+      </Suspense>
 
-      <WatchingList title="Watching" hideSeeAll={false} idApi={4108} />
+      <Suspense>
+        <WatchingList title="Watching" hideSeeAll={false} idApi={4108} />
+      </Suspense>
 
-      <ListCarouselHome index={0} />
+      <Suspense>
+        <ListCarouselHome index={0} />
+      </Suspense>
 
-      <MoviesList title="Popular" hideSeeAll={false} idApi={12} />
+      <Suspense>
+        <MoviesList title="Popular" hideSeeAll={false} idApi={12} />
+      </Suspense>
 
-      <HBOListOphim title="HBO Ophim" logo="GO" hideSeeAll={false} page={17} />
+      <Suspense>
+        <HBOListOphim
+          title="HBO Ophim"
+          logo="GO"
+          hideSeeAll={false}
+          page={17}
+        />
+      </Suspense>
 
-      <MoviesList title="Maybe You Love" hideSeeAll={false} idApi={332} />
+      <Suspense>
+        <MoviesList title="Maybe You Love" hideSeeAll={false} idApi={332} />
+      </Suspense>
 
-      <MoviesListOphim
-        page={21}
-        hideSeeAll={false}
-        title="Because You Watched Titanic"
-      />
-
-      <MoviesListOphim title="Ophim Top Rated" hideSeeAll={false} page={22} />
+      <Suspense>
+        <MoviesListOphim
+          page={21}
+          hideSeeAll={false}
+          title="Because You Watched Titanic"
+        />
+      </Suspense>
+      <Suspense>
+        <MoviesListOphim title="Ophim Top Rated" hideSeeAll={false} page={22} />
+      </Suspense>
 
       <MoviesList title="Just For You" hideSeeAll={false} idApi={92} />
+      <Suspense>
+        <MoviesListOphim
+          title="Good Film Today"
+          hideSeeAll={false}
+          page={333}
+        />
+      </Suspense>
 
-      <MoviesListOphim title="Good Film Today" hideSeeAll={false} page={333} />
+      <Suspense>
+        <VideoTrailer />
+      </Suspense>
 
-      <VideoTrailer />
+      <Suspense>
+        <MoviesListOphim
+          title="Fantasy Adventure Movies"
+          hideSeeAll={false}
+          page={33}
+        />
+      </Suspense>
 
-      <MoviesListOphim
-        title="Fantasy Adventure Movies"
-        hideSeeAll={false}
-        page={33}
-      />
+      <Suspense>
+        <MoviesList title="New Movies" hideSeeAll={false} idApi={392} />
+      </Suspense>
 
-      <MoviesList title="New Movies" hideSeeAll={false} idApi={392} />
+      <Suspense>
+        <MoviesListOphim title="Ophim UpComing" hideSeeAll={false} page={3} />
+      </Suspense>
 
-      <MoviesListOphim title="Ophim UpComing" hideSeeAll={false} page={3} />
+      <Suspense>
+        <MoviesList title="Sport Today" hideSeeAll={false} idApi={9992} />
+      </Suspense>
 
-      <MoviesList title="Sport Today" hideSeeAll={false} idApi={9992} />
+      <Suspense>
+        <MoviesList title="Social Channels" hideSeeAll={false} idApi={258255} />
+      </Suspense>
 
-      <MoviesList title="Social Channels" hideSeeAll={false} idApi={258255} />
+      <Suspense>
+        <ListCarouselHome index={1} />
+      </Suspense>
 
-      <ListCarouselHome index={1} />
+      <Suspense>
+        <HBOListOphim
+          page={25}
+          title="AXN Ophim"
+          hideSeeAll={false}
+          logo="AXN"
+        />
+      </Suspense>
 
-      <HBOListOphim page={25} title="AXN Ophim" hideSeeAll={false} logo="AXN" />
+      <Suspense>
+        <MoviesList title="Movies Theater" hideSeeAll={false} idApi={5518} />
+      </Suspense>
 
-      <MoviesList title="Movies Theater" hideSeeAll={false} idApi={5518} />
+      <Suspense>
+        <Discover page={41} title="Discover" hideSeeAll={false} logo="AXN" />
+      </Suspense>
 
-      <Discover page={41} title="Discover" hideSeeAll={false} logo="AXN" />
+      <Suspense>
+        <MoviesList title="Disney" hideSeeAll={false} idApi={620249} />
+      </Suspense>
 
-      <MoviesList title="Disney" hideSeeAll={false} idApi={620249} />
+      <Suspense>
+        <MoviesList title="Movies For Kids" hideSeeAll={false} idApi={8867} />
+      </Suspense>
 
-      <MoviesList title="Movies For Kids" hideSeeAll={false} idApi={8867} />
+      <Suspense>
+        <MoviesListOphim title="Ophim Award" hideSeeAll={false} page={4} />
+      </Suspense>
 
-      <MoviesListOphim title="Ophim Award" hideSeeAll={false} page={4} />
+      <Suspense>
+        <HBODiscover title="Discover" page={188} hideSeeAll={false} logo="GO" />
+      </Suspense>
 
-      <HBODiscover title="Discover" page={188} hideSeeAll={false} logo="GO" />
+      <Suspense>
+        <SportList
+          symbol="null"
+          hideSeeAll={false}
+          logo="InternationalFriendly"
+          data={InternationalFriendly}
+          title="International Friendly"
+        />
+      </Suspense>
 
-      <SportList
-        symbol="null"
-        hideSeeAll={false}
-        logo="InternationalFriendly"
-        data={InternationalFriendly}
-        title="International Friendly"
-      />
+      <Suspense>
+        <MoviesList title="TV Shows" hideSeeAll={false} idApi={4497} />
+      </Suspense>
 
-      <MoviesList title="TV Shows" hideSeeAll={false} idApi={4497} />
+      <Suspense>
+        <MoviesList
+          title="The World Around Us"
+          hideSeeAll={false}
+          idApi={1397}
+        />
+      </Suspense>
 
-      <MoviesList title="The World Around Us" hideSeeAll={false} idApi={1397} />
+      <Suspense>
+        <MoviesList title="Special Anime" hideSeeAll={false} idApi={12497} />
+      </Suspense>
 
-      <MoviesList title="Special Anime" hideSeeAll={false} idApi={12497} />
+      <Suspense>
+        <HBOListOphim
+          logo="MAX"
+          page={101}
+          hideSeeAll={false}
+          title="Hot Movies You Might Like"
+        />
+      </Suspense>
 
-      <HBOListOphim
-        logo="MAX"
-        page={101}
-        hideSeeAll={false}
-        title="Hot Movies You Might Like"
-      />
+      <Suspense>
+        <SportList
+          symbol="espn"
+          logo="Bundesliga"
+          title="Bundesliga"
+          data={Bundesliga}
+          hideSeeAll={false}
+        />
+      </Suspense>
 
-      <SportList
-        symbol="espn"
-        logo="Bundesliga"
-        title="Bundesliga"
-        data={Bundesliga}
-        hideSeeAll={false}
-      />
+      <Suspense>
+        <HBOListOphim
+          title="Max Ophim"
+          logo="MAX"
+          hideSeeAll={false}
+          page={9}
+        />
+      </Suspense>
 
-      <HBOListOphim title="Max Ophim" logo="MAX" hideSeeAll={false} page={9} />
+      <Suspense>
+        <HBOListTest
+          title="HBO Movies"
+          logo="GO"
+          hideSeeAll={false}
+          idApi={33}
+        />
+      </Suspense>
 
-      <HBOListTest title="HBO Movies" logo="GO" hideSeeAll={false} idApi={33} />
+      <Suspense>
+        <SportList
+          logo="Roland"
+          symbol="skySport"
+          hideSeeAll={false}
+          data={RolandGarros}
+          title="Roland Garros 2023"
+        />
+      </Suspense>
 
-      <SportList
-        logo="Roland"
-        symbol="skySport"
-        hideSeeAll={false}
-        data={RolandGarros}
-        title="Roland Garros 2023"
-      />
+      <Suspense>
+        <ListCarouselHome index={2} />
+      </Suspense>
 
-      <ListCarouselHome index={2} />
+      <Suspense>
+        <SportList
+          symbol="null"
+          logo="bigSize"
+          data={TVChannels}
+          hideSeeAll={false}
+          title="TV Channels"
+        />
+      </Suspense>
 
-      <SportList
-        symbol="null"
-        logo="bigSize"
-        data={TVChannels}
-        hideSeeAll={false}
-        title="TV Channels"
-      />
+      <Suspense>
+        <HBOListTest
+          logo="AXN"
+          idApi={433310}
+          title="AXN HD"
+          hideSeeAll={false}
+        />
+      </Suspense>
 
-      <HBOListTest
-        logo="AXN"
-        idApi={433310}
-        title="AXN HD"
-        hideSeeAll={false}
-      />
+      <Suspense>
+        <MoviesList title="Family Psychology" idApi={512} hideSeeAll={false} />
+      </Suspense>
 
-      <MoviesList title="Family Psychology" idApi={512} hideSeeAll={false} />
+      <Suspense>
+        <HBOListTest
+          logo="GO"
+          idApi={41110}
+          hideSeeAll={false}
+          title="Top 10 VieOn"
+        />
+      </Suspense>
 
-      <HBOListTest
-        logo="GO"
-        idApi={41110}
-        hideSeeAll={false}
-        title="Top 10 VieOn"
-      />
+      <Suspense>
+        <HBOListOphim
+          logo="MAX"
+          page={11}
+          hideSeeAll={false}
+          title="Food Movies"
+        />
+      </Suspense>
 
-      <HBOListOphim
-        logo="MAX"
-        page={11}
-        hideSeeAll={false}
-        title="Food Movies"
-      />
+      <Suspense>
+        <HBOListTest
+          logo="GO"
+          idApi={4202}
+          hideSeeAll={false}
+          title="HBO Series"
+        />
+      </Suspense>
 
-      <HBOListTest
-        logo="GO"
-        idApi={4202}
-        hideSeeAll={false}
-        title="HBO Series"
-      />
+      <Suspense>
+        <HBOListTest logo="GO" idApi={31330} hideSeeAll={false} title="UFC" />
+      </Suspense>
 
-      <HBOListTest
-        logo="GO"
-        idApi={31330}
-        hideSeeAll={false}
-        title="Thailand Martial"
-      />
+      <Suspense>
+        <HBOListTest
+          logo="GO"
+          idApi={32110}
+          hideSeeAll={false}
+          title="Thailand Martial"
+        />
+      </Suspense>
 
-      <HBOListTest
-        logo="GO"
-        idApi={11845}
-        hideSeeAll={false}
-        title="International Programs"
-      />
+      <Suspense>
+        <HBOListTest
+          logo="GO"
+          idApi={11845}
+          hideSeeAll={false}
+          title="International Programs"
+        />
+      </Suspense>
 
-      <HBOListOphim
-        logo="GO"
-        page={85}
-        hideSeeAll={false}
-        title="American Dramas"
-      />
+      <Suspense>
+        <HBOListOphim
+          logo="GO"
+          page={85}
+          hideSeeAll={false}
+          title="American Dramas"
+        />
+      </Suspense>
 
-      <HBOListOphim
-        logo="GO"
-        page={81}
-        hideSeeAll={false}
-        title="Asian Dramas"
-      />
+      <Suspense>
+        <HBOListOphim
+          logo="GO"
+          page={81}
+          hideSeeAll={false}
+          title="Asian Dramas"
+        />
+      </Suspense>
 
-      <MoviesListOphim title="VieOn Originals" hideSeeAll={false} page={31} />
+      <Suspense>
+        <MoviesListOphim title="VieOn Originals" hideSeeAll={false} page={31} />
+      </Suspense>
     </>
   );
 };

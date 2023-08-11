@@ -90,7 +90,7 @@ const HomeScreen = () => {
         }
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10, paddingTop: 0}}>
-        <HBOBodyComponent />
+        <HomeBodyComponent />
       </ScrollView> */}
 
       <FlashList

@@ -14,5 +14,9 @@ const ListCarousel = [
     {id: '8', image: require('../assets/listCarousel/8.jpg')},
     {id: '9', image: require('../assets/listCarousel/9.jpg')},
   ],
+  [
+    {id: '10', image: require('../assets/listCarousel/10.jpg')},
+    {id: '11', image: require('../assets/listCarousel/11.jpg')},
+  ],
 ];
 export default ListCarousel;

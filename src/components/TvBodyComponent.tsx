@@ -1,14 +1,5 @@
 /* eslint-disable curly */
 import {
-  TVList,
-  SportList,
-  TrendingTV,
-  TVTrending,
-  MoviesList,
-  MoviesListOphim,
-  ListCarouselHome,
-} from '@components';
-import {
   VTV,
   Kplus,
   VBA2023,
@@ -17,119 +8,199 @@ import {
   TVChannels,
   SportsTVShows,
 } from '@constants';
-import React, {memo} from 'react';
+import React, {memo, Suspense} from 'react';
+
+const TVList = React.lazy(() => import('../components/TVList'));
+const SportList = React.lazy(() => import('../components/SportList'));
+const TrendingTV = React.lazy(() => import('../components/TrendingTV'));
+const TVTrending = React.lazy(() => import('../components/TVTrending'));
+const MoviesList = React.lazy(() => import('../components/MoviesList'));
+const MoviesListOphim = React.lazy(
+  () => import('../components/MoviesListOphim'),
+);
+const ListCarouselHome = React.lazy(
+  () => import('../components/ListCarouselHome'),
+);
+
 const TvBodyComponent = () => {
   return (
     <>
-      <TVTrending />
-      {TVChannels.length > 0 && (
-        <SportList
-          title="TV Channels"
-          logo="bigSize"
-          symbol="null"
-          hideSeeAll={false}
-          data={TVChannels}
-        />
-      )}
+      <Suspense>
+        <TVTrending />
+      </Suspense>
 
-      {VTV.length > 0 && (
-        <SportList
-          title="VTV"
-          logo="bigSize"
-          symbol="null"
-          hideSeeAll={false}
-          data={VTV}
-        />
-      )}
-      <MoviesListOphim title="Ophim TV" hideSeeAll={false} page={11} />
+      <Suspense>
+        {TVChannels.length > 0 && (
+          <SportList
+            title="TV Channels"
+            logo="bigSize"
+            symbol="null"
+            hideSeeAll={false}
+            data={TVChannels}
+          />
+        )}
+      </Suspense>
 
-      {Kplus.length > 0 && (
-        <SportList
-          logo="bigSize"
-          title="K+"
-          symbol="null"
-          hideSeeAll={false}
-          data={Kplus}
-        />
-      )}
-      {VBA2023.length > 0 && (
-        <SportList
-          title="VBA 2023"
-          logo="vba"
-          symbol="null"
-          hideSeeAll={false}
-          data={VBA2023}
-        />
-      )}
-      <MoviesListOphim title="Ophim Originals" hideSeeAll={false} page={12} />
+      <Suspense>
+        {VTV.length > 0 && (
+          <SportList
+            title="VTV"
+            logo="bigSize"
+            symbol="null"
+            hideSeeAll={false}
+            data={VTV}
+          />
+        )}
+      </Suspense>
 
-      {VLeague.length > 0 && (
-        <SportList
-          title="V-League"
-          logo="bigSize"
-          symbol="skySport"
-          hideSeeAll={false}
-          data={VLeague}
-        />
-      )}
-      <ListCarouselHome index={1} />
+      <Suspense>
+        <MoviesListOphim title="Ophim TV" hideSeeAll={false} page={11} />
+      </Suspense>
 
-      <MoviesList title="VTV" hideSeeAll={false} idApi={5527} />
+      <Suspense>
+        {Kplus.length > 0 && (
+          <SportList
+            logo="bigSize"
+            title="K+"
+            symbol="null"
+            hideSeeAll={false}
+            data={Kplus}
+          />
+        )}
+      </Suspense>
 
-      <MoviesListOphim title="TV For Kids" hideSeeAll={false} page={18} />
+      <Suspense>
+        {VBA2023.length > 0 && (
+          <SportList
+            title="VBA 2023"
+            logo="vba"
+            symbol="null"
+            hideSeeAll={false}
+            data={VBA2023}
+          />
+        )}
+      </Suspense>
 
-      <MoviesList title="TCL TV" hideSeeAll={false} idApi={5522} />
+      <Suspense>
+        <MoviesListOphim title="Ophim Originals" hideSeeAll={false} page={12} />
+      </Suspense>
 
-      <MoviesListOphim title=" Sony TV" hideSeeAll={false} page={20} />
+      <Suspense>
+        {VLeague.length > 0 && (
+          <SportList
+            title="V-League"
+            logo="bigSize"
+            symbol="skySport"
+            hideSeeAll={false}
+            data={VLeague}
+          />
+        )}
+      </Suspense>
 
-      <MoviesList title="SamSung TV" hideSeeAll={false} idApi={422} />
+      <Suspense>
+        <ListCarouselHome index={1} />
+      </Suspense>
 
-      <MoviesListOphim title="SCTV TV" hideSeeAll={false} page={22} />
+      <Suspense>
+        <MoviesList title="VTV" hideSeeAll={false} idApi={5527} />
+      </Suspense>
 
-      <MoviesList title="VieON TV" hideSeeAll={false} idApi={1422} />
+      <Suspense>
+        <MoviesListOphim title="TV For Kids" hideSeeAll={false} page={18} />
+      </Suspense>
 
-      <MoviesListOphim title="HTV TV" hideSeeAll={false} page={25} />
+      <Suspense>
+        <MoviesList title="TCL TV" hideSeeAll={false} idApi={5522} />
+      </Suspense>
 
-      <MoviesList title="Game TV" hideSeeAll={false} idApi={1282} />
+      <Suspense>
+        <MoviesListOphim title=" Sony TV" hideSeeAll={false} page={20} />
+      </Suspense>
 
-      <MoviesListOphim title="LOL TV" hideSeeAll={false} page={27} />
+      <Suspense>
+        <MoviesList title="SamSung TV" hideSeeAll={false} idApi={422} />
+      </Suspense>
 
-      <MoviesList title="VETV" hideSeeAll={false} idApi={1282} />
+      <Suspense>
+        <MoviesListOphim title="SCTV TV" hideSeeAll={false} page={22} />
+      </Suspense>
 
-      <MoviesListOphim title="Affrica TV" hideSeeAll={false} page={29} />
+      <Suspense>
+        <MoviesList title="VieON TV" hideSeeAll={false} idApi={1422} />
+      </Suspense>
 
-      <MoviesList title="Feed TV" hideSeeAll={false} idApi={1281} />
+      <Suspense>
+        <MoviesListOphim title="HTV TV" hideSeeAll={false} page={25} />
+      </Suspense>
 
-      <ListCarouselHome index={2} />
+      <Suspense>
+        <MoviesList title="Game TV" hideSeeAll={false} idApi={1282} />
+      </Suspense>
 
-      <MoviesListOphim title="VTV Cab" hideSeeAll={false} page={31} />
+      <Suspense>
+        <MoviesListOphim title="LOL TV" hideSeeAll={false} page={27} />
+      </Suspense>
 
-      <MoviesList title="TV360" hideSeeAll={false} idApi={1781} />
+      <Suspense>
+        <MoviesList title="VETV" hideSeeAll={false} idApi={1282} />
+      </Suspense>
 
-      <MoviesListOphim title="Vie Channels TV" hideSeeAll={false} page={33} />
+      <Suspense>
+        <MoviesListOphim title="Affrica TV" hideSeeAll={false} page={29} />
+      </Suspense>
 
-      {SportsTVShows.length > 0 && (
-        <SportList
-          title="Sport TV shows"
-          logo="bigSize"
-          hideSeeAll={false}
-          data={SportsTVShows}
-          symbol="null"
-        />
-      )}
-      <MoviesListOphim title="Ophim TV" hideSeeAll={false} page={13} />
-      {SerieA2023.length > 0 && (
-        <SportList
-          title="Serie A 2023"
-          logo="bigSize"
-          symbol="espn"
-          hideSeeAll={false}
-          data={SerieA2023}
-        />
-      )}
+      <Suspense>
+        <MoviesList title="Feed TV" hideSeeAll={false} idApi={1281} />
+      </Suspense>
 
-      <TVList title="Lucky Show" name="HO" hideSeeAll={false} idApi={391} />
-      <TrendingTV layout="tinder" name="TV Shows" idApi={2222} />
+      <Suspense>
+        <ListCarouselHome index={2} />
+      </Suspense>
+
+      <Suspense>
+        <MoviesListOphim title="VTV Cab" hideSeeAll={false} page={31} />
+      </Suspense>
+
+      <Suspense>
+        <MoviesList title="TV360" hideSeeAll={false} idApi={1781} />
+      </Suspense>
+
+      <Suspense>
+        <MoviesListOphim title="Vie Channels TV" hideSeeAll={false} page={33} />
+      </Suspense>
+
+      <Suspense>
+        {SportsTVShows.length > 0 && (
+          <SportList
+            title="Sport TV shows"
+            logo="bigSize"
+            hideSeeAll={false}
+            data={SportsTVShows}
+            symbol="null"
+          />
+        )}
+      </Suspense>
+
+      <Suspense>
+        <MoviesListOphim title="Ophim TV" hideSeeAll={false} page={13} />
+        {SerieA2023.length > 0 && (
+          <SportList
+            title="Serie A 2023"
+            logo="bigSize"
+            symbol="espn"
+            hideSeeAll={false}
+            data={SerieA2023}
+          />
+        )}
+      </Suspense>
+
+      <Suspense>
+        <TVList title="Lucky Show" name="HO" hideSeeAll={false} idApi={391} />
+      </Suspense>
+
+      <Suspense>
+        <TrendingTV layout="tinder" name="TV Shows" idApi={2222} />
+      </Suspense>
     </>
   );
 };
