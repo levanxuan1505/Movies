@@ -7,13 +7,13 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {styles, theme} from '../theme';
-const {width, height} = Dimensions.get('window');
-import React, {useState} from 'react';
+import {styles} from '../theme';
+const {width} = Dimensions.get('window');
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import Icons from 'react-native-vector-icons/FontAwesome';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import Icons from 'react-native-vector-icons/FontAwesome';
 
 const TermsOfUseScreen = ({route}) => {
   const title = route.params.title;

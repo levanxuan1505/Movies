@@ -1,6 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Text,
@@ -13,14 +11,15 @@ import {
 } from 'react-native';
 import {Display} from '@utils';
 import {Colors} from '@constants';
+import React, {useContext} from 'react';
 const {width} = Dimensions.get('window');
 import {RootStackParams} from '@navigators';
 import LottieView from 'lottie-react-native';
 import {Button, Loader, Input} from '@components';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../navigators/AuthProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-const {register} = useContext(AuthContext);
 export interface Error {
   email: string;
   password: string;
@@ -28,6 +27,7 @@ export interface Error {
   phone: number;
 }
 const RegisterScreen = () => {
+  const register = useContext(AuthContext);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [inputs, setInputs] = React.useState({

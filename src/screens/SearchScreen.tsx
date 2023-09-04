@@ -15,7 +15,7 @@ import {Loading} from '@components';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
-import React, {memo, useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {XMarkIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -48,7 +48,7 @@ const SearchScreen = ({route}) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleTextDebounce = useCallback(debounce(handleSearch, 200), []);
+  const handleTextDebounce = debounce(handleSearch, 200);
 
   return (
     <SafeAreaView className="bg-neutral-800 flex-1">
@@ -114,4 +114,4 @@ const SearchScreen = ({route}) => {
     </SafeAreaView>
   );
 };
-export default memo(SearchScreen);
+export default SearchScreen;

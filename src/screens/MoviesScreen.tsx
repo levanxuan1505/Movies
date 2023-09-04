@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import {
-  image500,
+  image342,
   fetchMovieDetails,
   fallbackMoviePoster,
 } from '../Api/MoviesDb';
@@ -9,7 +9,7 @@ import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 var {width, height} = Dimensions.get('window');
 import {Cast, SimilarMoviesList} from '@components';
-import React, {memo, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {ScrollView} from 'react-native-virtualized-view';
 import LinearGradient from 'react-native-linear-gradient';
@@ -63,8 +63,8 @@ const MoviesScreen = () => {
             <Image
               source={{
                 uri:
-                  image500(movie.poster_path) ||
-                  image500(item.logo_path) ||
+                  image342(movie.poster_path) ||
+                  image342(item.logo_path) ||
                   fallbackMoviePoster,
               }}
               style={{width, height: height * 0.55}}
@@ -134,4 +134,4 @@ const MoviesScreen = () => {
   );
 };
 
-export default memo(MoviesScreen);
+export default MoviesScreen;

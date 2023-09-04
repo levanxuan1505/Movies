@@ -210,4 +210,4 @@ const VideoComponent = ({idVideo}) => {
   ) : null;
 };
 
-export default memo(VideoComponent);
+export default VideoComponent;

@@ -28,4 +28,4 @@ const SplashScreen = ({setIsLoading}: SplashProps) => {
   );
 };
 
-export default memo(SplashScreen);
+export default SplashScreen;

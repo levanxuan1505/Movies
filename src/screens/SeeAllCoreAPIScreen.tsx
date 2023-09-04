@@ -19,7 +19,6 @@ import {HeartIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const SeeAllCoreAPIScreen = ({route}) => {

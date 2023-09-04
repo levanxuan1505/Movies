@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {memo} from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -43,4 +43,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default memo(Loader);
+export default Loader;

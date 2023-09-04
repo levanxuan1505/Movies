@@ -2,7 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import Video from 'react-native-video';
-import React, {useRef, memo, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 const VideoTrailer = () => {
   const [clicked, setClicked] = useState(false);
@@ -19,13 +19,14 @@ const VideoTrailer = () => {
   };
 
   return (
-    <View style={{flex: 1, marginBottom: 50}}>
+    <View style={{flex: 1, marginBottom: 20}}>
       <Text
         style={{
-          paddingHorizontal: 16,
+          paddingHorizontal: 8,
           color: 'white',
-          fontSize: 18,
-          paddingBottom: 20,
+          fontSize: 15,
+          paddingBottom: 15,
+          fontFamily: 'Shrikhand-Regular',
         }}>
         VieOn Suggests
       </Text>
@@ -70,7 +71,7 @@ const VideoTrailer = () => {
 
           // Callback when video cannot be loaded
           muted={mute}
-          style={{width: '100%', height: 225}}
+          style={{width: '100%', height: 231}}
           resizeMode="contain"
         />
         {clicked && (
@@ -81,7 +82,7 @@ const VideoTrailer = () => {
             }}
             style={{
               top: 5,
-              right: 20,
+              left: 20,
               padding: 10,
               position: 'absolute',
             }}>
@@ -92,8 +93,8 @@ const VideoTrailer = () => {
                   : require('../assets/images/mute.png')
               }
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 tintColor: 'white',
               }}
             />
@@ -104,4 +105,4 @@ const VideoTrailer = () => {
   );
 };
 
-export default memo(VideoTrailer);
+export default VideoTrailer;

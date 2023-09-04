@@ -186,4 +186,4 @@ const MoviesOphimScreen = () => {
   );
 };
 
-export default memo(MoviesOphimScreen);
+export default MoviesOphimScreen;

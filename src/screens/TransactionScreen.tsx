@@ -73,7 +73,7 @@ const TransactionScreen = ({route}) => {
                 height: width * 0.56,
                 borderRadius: 10,
               }}
-              source={require('../assets/images/NFC.jpg')}
+              source={require('../assets/images/NFC.png')}
             />
           </View>
           <View style={{width: width, height: width}}>

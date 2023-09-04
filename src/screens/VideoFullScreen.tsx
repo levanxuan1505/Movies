@@ -116,8 +116,8 @@ const VideoFullScreen = ({route}) => {
                       : require('../assets/images/pauseButton.png')
                   }
                   style={{
-                    width: 60,
-                    height: 60,
+                    width: 65,
+                    height: 65,
                     tintColor: 'white',
                     marginLeft: height / 5,
                   }}

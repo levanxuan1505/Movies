@@ -41,4 +41,4 @@ const Button = ({title, logo, onPress = () => {}}) => {
     </TouchableOpacity>
   );
 };
-export default memo(Button);
+export default Button;

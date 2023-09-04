@@ -6,7 +6,19 @@ module.exports = {
     // './<custom directory>/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Primary: ['Shrikhand-Regular'],
+        Secondary: ['Rochester-Regular.ttf'],
+      },
+      colors: {
+        darkColor: '#000',
+        redColor: '#F53920',
+        blueColor: '#53A0F4',
+        greenColor: '#00AA13',
+        yellowColor: '#FBA83C',
+      },
+    },
   },
   plugins: [],
 };

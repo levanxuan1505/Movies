@@ -21,7 +21,7 @@ import {fetchNowPlayingMovies} from '../Api/MoviesDb';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
+import {fallbackMoviePoster, image342} from '../Api/MoviesDb';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
@@ -41,12 +41,12 @@ const WatchingScreen = ({route}) => {
     const data = await fetchNowPlayingMovies();
     if (data && data.results) setNowPlayingMovies(data.results);
   };
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
-  }, []);
+  };
 
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
@@ -98,7 +98,7 @@ const WatchingScreen = ({route}) => {
                   <View className="space-y-2 mb-4">
                     <ImageBackground
                       source={{
-                        uri: image500(item.poster_path) || fallbackMoviePoster,
+                        uri: image342(item.poster_path) || fallbackMoviePoster,
                       }}
                       style={{
                         position: 'relative',
@@ -110,12 +110,13 @@ const WatchingScreen = ({route}) => {
                       <Image
                         style={{
                           position: 'absolute',
-                          width: 45,
+                          width: 55,
                           resizeMode: 'cover',
-                          height: 45,
+                          height: 55,
                           borderRadius: 100,
+                          tintColor: 'white',
                         }}
-                        source={require('../assets/images/pause.png')}
+                        source={require('../assets/images/playButton.png')}
                       />
                       <View
                         style={{

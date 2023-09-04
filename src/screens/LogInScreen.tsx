@@ -1,10 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
-  Alert,
   Keyboard,
   StatusBar,
   Dimensions,
@@ -19,6 +17,7 @@ import {RootStackParams} from '@navigators';
 import LottieView from 'lottie-react-native';
 import {changeName} from '../redux/userSlice';
 import {Settings} from 'react-native-fbsdk-next';
+import React, {useState, useContext} from 'react';
 import {AuthContext} from '../navigators/AuthProvider';
 import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonSocial, Input, Loader} from '@components';
@@ -195,15 +194,9 @@ const LogInScreen = () => {
       <StatusBar barStyle="light-content" />
       <Loader visible={loading} />
       <View style={{paddingTop: Display.setWidth(0), paddingHorizontal: 20}}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}>
+        <View className="justify-center items-center flex-row">
           <Text
             style={{
-              // fontWeight: 'bold',
               color: Colors.DEFAULT_GREEN,
               fontSize: Display.setWidth(8),
               fontFamily: 'Shrikhand-Regular',
@@ -282,10 +275,8 @@ const LogInScreen = () => {
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text
+              className="pt-[16px] text-[16px] text-center"
               style={{
-                fontSize: 16,
-                paddingTop: 10,
-                textAlign: 'center',
                 color: Colors.DEFAULT_YELLOW,
                 fontFamily: 'Shrikhand-Regular',
               }}>

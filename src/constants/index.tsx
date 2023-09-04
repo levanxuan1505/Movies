@@ -14,11 +14,11 @@ import BottomImage from './BottomImage';
 import ManageDevice from './ManageDevice';
 import ListCarousel from './ListCarousel';
 import SportsTVShows from './SportsTVShows';
+import premierleague from './premierleague';
 import RolandGarros from './RolandGarros2023';
 import UpcomingSports from './UpComingSports';
 import SportTrendingList from './SportTrendingList';
 import InternationalFriendly from './InternationalFriendly';
-
 export {
   VTV,
   Kplus,
@@ -35,6 +35,7 @@ export {
   ListCarousel,
   RolandGarros,
   ManageDevice,
+  premierleague,
   SportsTVShows,
   UpcomingSports,
   SportTrendingList,

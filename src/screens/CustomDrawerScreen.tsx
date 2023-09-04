@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useSelector} from 'react-redux';
-import React, {memo, useContext} from 'react';
+import React, {useContext} from 'react';
 import {RootStackParams} from '@navigators';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
@@ -28,13 +28,10 @@ const CustomDrawerScreen = () => {
             style={[
               styles.viewContainer,
               {
-                height: 70,
-                width: '100%',
-                paddingHorizontal: 0,
-                justifyContent: 'center',
                 backgroundColor: 'transparent',
               },
-            ]}>
+            ]}
+            className="h-[70px] w-full px-0 justify-center">
             <Text style={{fontFamily: 'Shrikhand-Regular'}}>
               <Text style={styles.textLarge}>--VIE_</Text>
               <Text style={[styles.textLarge, {color: '#F53920'}]}>ON--</Text>
@@ -46,30 +43,17 @@ const CustomDrawerScreen = () => {
               style={[
                 styles.viewContainer,
                 {
-                  height: 55,
                   backgroundColor: 'transparent',
-                  paddingHorizontal: 14,
                 },
-              ]}>
+              ]}
+              className="h-[55px] px-[14px]">
               <View>
                 <Image
-                  style={{
-                    width: 42,
-                    height: 42,
-                    borderRadius: 30,
-                  }}
+                  className="w-[42px] h-[42px] rounded-[30px]"
                   source={{uri: user.photoURL}}
                 />
               </View>
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    fontSize: 26,
-                    color: '#00AA13',
-                    fontWeight: '700',
-                  },
-                ]}>
+              <Text className="text-[26px] color-greenColor font-[700] font-Primary absolute pl-[65px] ">
                 {user.displayName}
               </Text>
             </TouchableOpacity>
@@ -78,30 +62,17 @@ const CustomDrawerScreen = () => {
               style={[
                 styles.viewContainer,
                 {
-                  height: 55,
                   backgroundColor: 'transparent',
-                  paddingHorizontal: 14,
                 },
-              ]}>
+              ]}
+              className="h-[55px] px-[14px]">
               <View>
                 <Image
-                  style={{
-                    width: 42,
-                    height: 42,
-                    borderRadius: 30,
-                  }}
-                  source={require('../assets/images/avatar.jpeg')}
+                  className="w-[42px] h-[42px] rounded-[30px]"
+                  source={require('../assets/images/avatar.png')}
                 />
               </View>
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    fontSize: 26,
-                    color: '#00AA13',
-                    fontWeight: '700',
-                  },
-                ]}>
+              <Text className="font-[26px] color-Primary font-[700]">
                 {user?.email > 14
                   ? user?.email.slice(0, 14) + '...'
                   : user?.email}
@@ -119,16 +90,7 @@ const CustomDrawerScreen = () => {
                 },
               ]}>
               <Iconssss name="user-circle" size={40} color="#00AA13" />
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    color: '#00AA13',
-                    fontWeight: '800',
-                    fontSize: 32,
-                    fontFamily: 'Shrikhand-Regular',
-                  },
-                ]}>
+              <Text className="font-Primary font-[800] text-[32px] color-greenColor absolute pl-[65px]">
                 Log in
               </Text>
             </TouchableOpacity>
@@ -268,4 +230,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Shrikhand-Regular',
   },
 });
-export default memo(CustomDrawerScreen);
+export default CustomDrawerScreen;

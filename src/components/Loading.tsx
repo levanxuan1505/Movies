@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {theme} from '../theme';
 import {View, Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
@@ -17,4 +17,4 @@ const Loading = () => {
     </View>
   );
 };
-export default memo(Loading);
+export default Loading;

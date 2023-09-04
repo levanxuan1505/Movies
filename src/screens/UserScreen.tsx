@@ -11,30 +11,30 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {styles, theme} from '../theme';
+const {width} = Dimensions.get('window');
 import {RootStackParams} from '@navigators';
-const {width, height} = Dimensions.get('window');
+import React, {useContext, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../navigators/AuthProvider';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import React, {useContext, useState} from 'react';
 import {UserCircleIcon} from 'react-native-heroicons/solid';
 
 import {
+  KeyIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  BoltSlashIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  KeyIcon,
   CalendarDaysIcon,
-  BoltSlashIcon,
 } from 'react-native-heroicons/outline';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const UserScreen = ({route}) => {
-  const title = route.params.title;
+  const title = route?.params?.title;
   const {user}: any = useContext(AuthContext);
-  const userName = user?.displayName ? user.displayName : 'Anonymous';
-  const userEmail = user?.email ? user.email : 'Anonymous';
+  const userName = user?.displayName ? user?.displayName : 'Anonymous';
+  const userEmail = user?.email || 'Anonymous';
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

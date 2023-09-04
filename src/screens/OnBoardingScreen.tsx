@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Colors} from '@constants';
+import {Freeze} from 'react-freeze';
+import React, {useState} from 'react';
 const {width} = Dimensions.get('window');
 import SplashScreen from './SplashScreen';
-import React, {memo, useState} from 'react';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 import Onboarding from 'react-native-onboarding-swiper';
+
 const OnBoardingScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
@@ -23,11 +25,14 @@ const OnBoardingScreen = () => {
   };
   const DoneButton = ({...props}) => {
     return (
-      <TouchableOpacity style={styles.doneButton} {...props}>
-        <Text style={[styles.textButton, {paddingRight: 10}]}>Home</Text>
-        <View style={{width: 35, height: 35}}>
+      <TouchableOpacity
+        className="py-[16px] flex-row items-center px-[20] bg-white"
+        {...props}>
+        <Text className="pr-[10px] text-[20px] color-greenColor font-Primary">
+          Home
+        </Text>
+        <View className="w-[35px] h-[35px]">
           <LottieView
-            style={{}}
             source={require('../assets/OnboardingAnimations/4.json')}
             autoPlay
             loop
@@ -54,122 +59,107 @@ const OnBoardingScreen = () => {
   const NextButton = ({...props}) => {
     return (
       <TouchableOpacity
-        style={[
-          styles.doneButton,
-          {
-            paddingHorizontal: 40,
-            paddingVertical: 18,
-            borderTopLeftRadius: 10,
-            borderBottomLeftRadius: 10,
-          },
-        ]}
+        className="py-[18px] flex-row item-center px-[40] bg-white"
+        style={styles.next}
         {...props}>
-        <Text style={styles.textButton}>Next</Text>
+        <Text className=" text-[20px] color-greenColor font-Primary">Next</Text>
       </TouchableOpacity>
     );
   };
   const SkipButton = ({...props}) => {
     return (
       <TouchableOpacity
-        style={[
-          styles.doneButton,
-          {
-            paddingHorizontal: 40,
-            paddingVertical: 18,
-            borderTopRightRadius: 10,
-            borderBottomRightRadius: 10,
-          },
-        ]}
+        className="py-[18px] flex-row item-center px-[40] bg-white"
+        style={styles.skip}
         {...props}>
-        <Text style={styles.textButton}>Skip</Text>
+        <Text className="text-[20px] color-greenColor font-Primary">Skip</Text>
       </TouchableOpacity>
     );
   };
-  return isLoading ? (
-    <SplashScreen setIsLoading={setIsLoading} />
-  ) : (
-    <View style={styles.container}>
-      <Onboarding
-        skipToPage={2}
-        onDone={handleDone}
-        bottomBarHeight={110}
-        initialNumToRender={0}
-        DotComponent={DotButton}
-        titleStyles={styles.title}
-        bottomBarHighlight={false}
-        SkipButtonComponent={SkipButton}
-        DoneButtonComponent={DoneButton}
-        NextButtonComponent={NextButton}
-        subTitleStyles={styles.subTitle}
-        transitionAnimationDuration={1000}
-        pages={[
-          {
-            title: 'Netflix',
-            subtitle: 'Watch Money Heist | Netflix Official Site',
-            backgroundColor: Colors.LIGHT_GREEN,
-            image: (
-              <View style={styles.lottie}>
-                <LottieView
-                  source={require('../assets/OnboardingAnimations/1.json')}
-                  autoPlay
-                  loop
-                />
-              </View>
-            ),
-          },
-          {
-            title: 'HBO_GO',
-            subtitle: 'Home to Groundbreaking Series, Movies, Comedies ...',
-            backgroundColor: Colors.DARK_FIVE,
-            image: (
-              <View style={styles.lottie}>
-                <LottieView
-                  source={require('../assets/OnboardingAnimations/2.json')}
-                  autoPlay
-                  loop
-                />
-              </View>
-            ),
-          },
-          {
-            title: 'Sports',
-            subtitle: 'F1 - The Official Home of Formula 1® Racing',
-            backgroundColor: Colors.DARK_FOUR,
-            image: (
-              <View style={styles.lottie}>
-                <LottieView
-                  source={require('../assets/OnboardingAnimations/3.json')}
-                  autoPlay
-                  loop
-                />
-              </View>
-            ),
-          },
-        ]}
-      />
-    </View>
+  return (
+    <Freeze freeze={false}>
+      {isLoading ? (
+        <SplashScreen setIsLoading={setIsLoading} />
+      ) : (
+        <View style={styles.container}>
+          <Onboarding
+            skipToPage={2}
+            onDone={handleDone}
+            bottomBarHeight={110}
+            initialNumToRender={0}
+            DotComponent={DotButton}
+            titleStyles={styles.title}
+            bottomBarHighlight={false}
+            SkipButtonComponent={SkipButton}
+            DoneButtonComponent={DoneButton}
+            NextButtonComponent={NextButton}
+            subTitleStyles={styles.subTitle}
+            transitionAnimationDuration={1000}
+            pages={[
+              {
+                title: 'Netflix',
+                subtitle: 'Watch Money Heist | Netflix Official Site',
+                backgroundColor: Colors.LIGHT_GREEN,
+                image: (
+                  <View style={styles.lottie}>
+                    <LottieView
+                      source={require('../assets/OnboardingAnimations/1.json')}
+                      autoPlay
+                      loop
+                    />
+                  </View>
+                ),
+              },
+              {
+                title: 'HBO_GO',
+                subtitle: 'Home to Groundbreaking Series, Movies, Comedies ...',
+                backgroundColor: Colors.DARK_FIVE,
+                image: (
+                  <View style={styles.lottie}>
+                    <LottieView
+                      source={require('../assets/OnboardingAnimations/2.json')}
+                      autoPlay
+                      loop
+                    />
+                  </View>
+                ),
+              },
+              {
+                title: 'Sports',
+                subtitle: 'F1 - The Official Home of Formula 1® Racing',
+                backgroundColor: Colors.DARK_FOUR,
+                image: (
+                  <View style={styles.lottie}>
+                    <LottieView
+                      source={require('../assets/OnboardingAnimations/3.json')}
+                      autoPlay
+                      loop
+                    />
+                  </View>
+                ),
+              },
+            ]}
+          />
+        </View>
+      )}
+    </Freeze>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   lottie: {
     width: width,
     height: width * 0.9,
   },
-  doneButton: {
-    paddingVertical: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    backgroundColor: 'white',
+  skip: {
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
   },
-  textButton: {
-    fontSize: 20,
-    color: Colors.DEFAULT_GREEN,
-    fontFamily: 'Shrikhand-Regular',
+  next: {
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   title: {
     fontSize: 50,
@@ -186,4 +176,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
 });
-export default memo(OnBoardingScreen);
+export default OnBoardingScreen;

@@ -1,32 +1,38 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable curly */
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, lazy, Suspense, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  UserScreen,
-  ActorScreen,
-  LogInScreen,
-  MoviesScreen,
-  SearchScreen,
-  SeeAllScreen,
-  DrawerScreen,
-  SettingScreen,
-  MyListsScreen,
-  WatchingScreen,
-  RegisterScreen,
-  AnimationScreen,
-  SeeAllHBOScreen,
-  VideoFullScreen,
-  TermsOfUseScreen,
-  OnBoardingScreen,
-  TransactionScreen,
-  MoviesOphimScreen,
-  LogInSmartTVScreen,
-  ManageDevicesScreen,
-  PrivacyPolicyScreen,
-  SeeAllCoreAPIScreen,
-} from '@screens';
+
+const UserScreen = lazy(() => import('../screens/UserScreen'));
+const ActorScreen = lazy(() => import('../screens/ActorScreen'));
+const LogInScreen = lazy(() => import('../screens/LogInScreen'));
+const MoviesScreen = lazy(() => import('../screens/MoviesScreen'));
+const SearchScreen = lazy(() => import('../screens/SearchScreen'));
+const SeeAllScreen = lazy(() => import('../screens/SeeAllScreen'));
+const SettingScreen = lazy(() => import('../screens/SettingScreen'));
+const MyListsScreen = lazy(() => import('../screens/MyListsScreen'));
+const DrawerScreen = lazy(() => import('../screens/DrawerScreen'));
+const WatchingScreen = lazy(() => import('../screens/WatchingScreen'));
+const RegisterScreen = lazy(() => import('../screens/RegisterScreen'));
+const AnimationScreen = lazy(() => import('../screens/AnimationScreen'));
+const SeeAllHBOScreen = lazy(() => import('../screens/SeeAllHBOScreen'));
+const VideoFullScreen = lazy(() => import('../screens/VideoFullScreen'));
+const TermsOfUseScreen = lazy(() => import('../screens/TermsOfUseScreen'));
+const OnBoardingScreen = lazy(() => import('../screens/OnBoardingScreen'));
+const TransactionScreen = lazy(() => import('../screens/TransactionScreen'));
+const MoviesOphimScreen = lazy(() => import('../screens/MoviesOphimScreen'));
+const LogInSmartTVScreen = lazy(() => import('../screens/LogInSmartTVScreen'));
+const ManageDevicesScreen = lazy(
+  () => import('../screens/ManageDevicesScreen'),
+);
+const PrivacyPolicyScreen = lazy(
+  () => import('../screens/PrivacyPolicyScreen'),
+);
+const SeeAllCoreAPIScreen = lazy(
+  () => import('../screens/SeeAllCoreAPIScreen'),
+);
 
 import auth from '@react-native-firebase/auth';
 import {AuthContext} from './AuthProvider';
@@ -87,29 +93,180 @@ const Routes = () => {
       <Stack.Navigator
         initialRouteName="OnBoarding"
         screenOptions={{headerShown: false}}>
-        <Stack.Screen name="User" component={UserScreen} />
-        <Stack.Screen name="Actor" component={ActorScreen} />
-        <Stack.Screen name="LogIn" component={LogInScreen} />
-        <Stack.Screen name="Movies" component={MoviesScreen} />
-        <Stack.Screen name="Drawer" component={DrawerScreen} />
-        <Stack.Screen name="Search" component={SearchScreen} />
-        <Stack.Screen name="SeeAll" component={SeeAllScreen} />
-        <Stack.Screen name="MyList" component={MyListsScreen} />
-        <Stack.Screen name="Settings" component={SettingScreen} />
-        <Stack.Screen name="Watching" component={WatchingScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Animation" component={AnimationScreen} />
-        <Stack.Screen name="SeeAllHBO" component={SeeAllHBOScreen} />
-        <Stack.Screen name="LogInTV" component={LogInSmartTVScreen} />
-        <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
-        <Stack.Screen name="VideoFull" component={VideoFullScreen} />
-        <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} />
-        <Stack.Screen name="MoviesOphim" component={MoviesOphimScreen} />
-        <Stack.Screen name="Transaction" component={TransactionScreen} />
-        <Stack.Screen name="ManageDevices" component={ManageDevicesScreen} />
-        <Stack.Screen name="SeeAllCoreAPIS" component={SeeAllCoreAPIScreen} />
-        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
-        {/* <Stack.Screen name="BottomHome" component={BottomHomeScreen} /> */}
+        <Stack.Screen name="User">
+          {props => (
+            <Suspense>
+              <UserScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Actor">
+          {props => (
+            <Suspense>
+              <ActorScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="LogIn">
+          {props => (
+            <Suspense>
+              <LogInScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Movies">
+          {props => (
+            <Suspense>
+              <MoviesScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="SeeAll">
+          {props => (
+            <Suspense>
+              <SeeAllScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Search">
+          {props => (
+            <Suspense>
+              <SearchScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Settings">
+          {props => (
+            <Suspense>
+              <SettingScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="MyList">
+          {props => (
+            <Suspense>
+              <MyListsScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Drawer">
+          {props => (
+            <Suspense>
+              <DrawerScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Watching">
+          {props => (
+            <Suspense>
+              <WatchingScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Register">
+          {props => (
+            <Suspense>
+              <RegisterScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Animation">
+          {props => (
+            <Suspense>
+              <AnimationScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="SeeAllHBO">
+          {props => (
+            <Suspense>
+              <SeeAllHBOScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="VideoFull">
+          {props => (
+            <Suspense>
+              <VideoFullScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="TermsOfUse">
+          {props => (
+            <Suspense>
+              <TermsOfUseScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="OnBoarding">
+          {props => (
+            <Suspense>
+              <OnBoardingScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Transaction">
+          {props => (
+            <Suspense>
+              <TransactionScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="MoviesOphim">
+          {props => (
+            <Suspense>
+              <MoviesOphimScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="LogInTV">
+          {props => (
+            <Suspense>
+              <LogInSmartTVScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="ManageDevices">
+          {props => (
+            <Suspense>
+              <ManageDevicesScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="PrivacyPolicy">
+          {props => (
+            <Suspense>
+              <PrivacyPolicyScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="SeeAllCoreAPIS">
+          {props => (
+            <Suspense>
+              <SeeAllCoreAPIScreen {...props} />
+            </Suspense>
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
