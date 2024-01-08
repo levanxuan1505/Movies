@@ -11,18 +11,15 @@ import {
 } from 'react-native';
 import {Display} from '@utils';
 import {Colors} from '@constants';
-import {useDispatch} from 'react-redux';
 const {width} = Dimensions.get('window');
 import {RootStackParams} from '@navigators';
 import LottieView from 'lottie-react-native';
-import {changeName} from '../redux/userSlice';
 import {Settings} from 'react-native-fbsdk-next';
 import React, {useState, useContext} from 'react';
 import {AuthContext} from '../navigators/AuthProvider';
 import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonSocial, Input, Loader} from '@components';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 // Ask for consent first if necessary
@@ -30,7 +27,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 Settings.initializeSDK();
 
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 import {NativeModules} from 'react-native';

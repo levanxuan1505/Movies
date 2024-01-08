@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {memo} from 'react';
+import React from 'react';
 import {Colors} from '../constants';
 import LottieView from 'lottie-react-native';
 import {TouchableOpacity, Text, View} from 'react-native';

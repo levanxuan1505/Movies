@@ -6,13 +6,12 @@ import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {fallbackMoviePoster} from '../../Api/MoviesDb';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, Image, Dimensions} from 'react-native';
+import {View, Text, Image, Dimensions, VirtualizedList} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {fetchSimilarMovies, image185} from '../../Api/MoviesDb';
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import FastImage from 'react-native-fast-image';
-import {FlashList} from '@shopify/flash-list';
 
 interface Props {
   idApi: number;
@@ -33,99 +32,101 @@ const HBODiscover: React.FC<Props> = ({title, hideSeeAll, idApi, logo}) => {
   useEffect(() => {
     getListMovies(idApi);
   }, [idApi]);
-
+  const getItem = (data, index) => {
+    return data[index];
+  };
   const Movies = ({item}) => {
     return (
-      <TouchableOpacity
-        onPress={() => navigation.push('MoviesOphim', item.slug)}>
-        <View className="space-y-1 mr-1">
-          <FastImage
-            defaultSource={require('../../assets/images/Progress.png')}
-            source={{
-              uri: image185(item.poster_path) || fallbackMoviePoster,
-              headers: {Authorization: 'someAuthToken'},
-              priority: FastImage.priority.low,
-              cache: FastImage.cacheControl.immutable,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-            style={{
-              width: width * 0.65,
-              height: height * 0.16,
-              position: 'relative',
-            }}>
-            <Image
-              source={
-                logo === 'GO'
-                  ? require('../../assets/images/logoHBO.png')
-                  : logo === 'MAX'
-                  ? require('../../assets/images/hboMaxlogo.png')
-                  : logo === 'AXN'
-                  ? require('../../assets/images/axn.png')
-                  : logo === 'FoxMovies'
-                  ? require('../../assets/images/foxmovie.png')
-                  : logo === 'KBS'
-                  ? require('../../assets/images/kbs.png')
-                  : require('../../assets/images/hits.png')
-              }
-              style={
-                logo === 'GO'
-                  ? {
-                      position: 'absolute',
-                      left: 0,
-                      top: -9,
-                      width: width * 0.13,
-                      height: height * 0.04,
-                    }
-                  : logo === 'MAX'
-                  ? {
-                      position: 'absolute',
-                      top: 7,
-                      left: 7,
-                      width: width * 0.12,
-                      height: height * 0.009,
-                    }
-                  : logo === 'AXN'
-                  ? {
-                      position: 'absolute',
-                      top: 7,
-                      left: 7,
-                      width: width * 0.11,
-                      height: height * 0.008,
-                    }
-                  : logo === 'FoxMovies'
-                  ? {
-                      position: 'absolute',
-                      top: 5,
-                      left: 0,
-                      width: width * 0.17,
-                      height: height * 0.01,
-                    }
-                  : logo === 'KBS'
-                  ? {
-                      position: 'absolute',
-                      top: 5,
-                      left: 3,
-                      width: width * 0.16,
-                      height: height * 0.01,
-                    }
-                  : {
-                      position: 'absolute',
-                      top: 5,
-                      left: 3,
-                      width: width * 0.17,
-                      height: height * 0.005,
-                    }
-              }
-            />
-          </FastImage>
-          <Text
-            style={{width: width * 0.6}}
-            numberOfLines={1}
-            className="text-neutral-300 ml-1">
-            {item.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Suspense>
+        <TouchableOpacity
+          onPress={() => navigation.push('MoviesOphim', item.slug)}>
+          <View className="space-y-1 mr-1">
+            <FastImage
+              defaultSource={require('../../assets/images/Progress.png')}
+              source={{
+                uri: image185(item.poster_path) || fallbackMoviePoster,
+                headers: {Authorization: 'someAuthToken'},
+                priority: FastImage.priority.low,
+                cache: FastImage.cacheControl.immutable,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+              style={{
+                width: width * 0.65,
+                height: height * 0.16,
+                position: 'relative',
+              }}>
+              <Image
+                source={
+                  logo === 'GO'
+                    ? require('../../assets/images/logoHBO.png')
+                    : logo === 'MAX'
+                    ? require('../../assets/images/hboMaxlogo.png')
+                    : logo === 'AXN'
+                    ? require('../../assets/images/axn.png')
+                    : logo === 'FoxMovies'
+                    ? require('../../assets/images/foxmovie.png')
+                    : require('../../assets/images/kbs.png')
+                }
+                style={
+                  logo === 'GO'
+                    ? {
+                        position: 'absolute',
+                        left: 0,
+                        top: -9,
+                        width: width * 0.13,
+                        height: height * 0.04,
+                      }
+                    : logo === 'MAX'
+                    ? {
+                        position: 'absolute',
+                        top: 7,
+                        left: 7,
+                        width: width * 0.12,
+                        height: height * 0.009,
+                      }
+                    : logo === 'AXN'
+                    ? {
+                        position: 'absolute',
+                        top: 7,
+                        left: 7,
+                        width: width * 0.11,
+                        height: height * 0.008,
+                      }
+                    : logo === 'FoxMovies'
+                    ? {
+                        position: 'absolute',
+                        top: 5,
+                        left: 0,
+                        width: width * 0.17,
+                        height: height * 0.01,
+                      }
+                    : logo === 'KBS'
+                    ? {
+                        position: 'absolute',
+                        top: 5,
+                        left: 3,
+                        width: width * 0.16,
+                        height: height * 0.01,
+                      }
+                    : {
+                        position: 'absolute',
+                        top: 5,
+                        left: 3,
+                        width: width * 0.17,
+                        height: height * 0.005,
+                      }
+                }
+              />
+            </FastImage>
+            <Text
+              style={{width: width * 0.6}}
+              numberOfLines={1}
+              className="text-neutral-300 ml-1">
+              {item.title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Suspense>
     );
   };
   return (
@@ -155,24 +156,16 @@ const HBODiscover: React.FC<Props> = ({title, hideSeeAll, idApi, logo}) => {
           </TouchableOpacity>
         )}
       </View>
-      <View
-        style={{
-          flex: 1,
-          minHeight: 2,
-          height: 'auto',
-          width: Dimensions.get('screen').width,
-          paddingHorizontal: 8,
-        }}>
+      <View className="px-[8px]">
         {data && data.length > 0 && (
-          <FlashList
+          <VirtualizedList
             data={data}
             horizontal={true}
-            estimatedItemSize={15}
+            getItem={getItem}
+            initialNumToRender={3}
+            disableVirtualization={true}
             keyExtractor={item => item.id}
-            estimatedListSize={{
-              height: 120,
-              width: Dimensions.get('screen').width,
-            }}
+            getItemCount={data => data.length}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}: any) => <Movies item={item} />}
           />

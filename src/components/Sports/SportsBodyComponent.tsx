@@ -21,8 +21,7 @@ const HomeListTest = React.lazy(() => import('../Home/HomeListTest'));
 const SportList = React.lazy(() => import('./SportList'));
 const SportListOphim = React.lazy(() => import('./SportListOphim'));
 const ListCarouselHome = React.lazy(() => import('../Home/ListCarouselHome'));
-const HBOListOphim = React.lazy(() => import('../HBO/HBOListOphim'));
-
+const HBOListOphim = React.lazy(() => import('../HBO/HBOBodyComponent'));
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>;
   item: {
@@ -96,6 +95,7 @@ const SportsBodyComponent: React.FC<ListItemProps> = memo(
         : item?.title === 'Premier League'
         ? premierleague
         : InternationalFriendly;
+
     return (
       <>
         <Animated.View style={[rStyle]}>

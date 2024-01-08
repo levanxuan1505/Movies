@@ -23,7 +23,6 @@ import {
   FlingGestureHandler,
 } from 'react-native-gesture-handler';
 import React from 'react';
-import Loading from '../Loading';
 const {width} = Dimensions.get('screen');
 import {image185} from '../../Api/MoviesDb';
 import FastImage from 'react-native-fast-image';
@@ -33,7 +32,6 @@ const SPACING = 10;
 const ITEM_WIDTH = width * 0.62;
 const ITEM_HEIGHT = ITEM_WIDTH * 1.45;
 const VISIBLE_ITEMS = 3;
-
 const OverflowItems = ({data, scrollXAnimated}) => {
   const inputRange = [-1, 0, 1];
   const translateY = scrollXAnimated.interpolate({
@@ -61,6 +59,9 @@ const OverflowItems = ({data, scrollXAnimated}) => {
 
 const TVTrending = () => {
   const [data, setData] = React.useState([]);
+  React.useEffect(() => {
+    setTimeout(() => {}, 1000);
+  }, []);
   //   Call API
   React.useEffect(() => {
     getTvChannelsMovies();
@@ -94,9 +95,7 @@ const TVTrending = () => {
     }).start();
   });
 
-  return !data ? (
-    <Loading />
-  ) : (
+  return (
     <FlingGestureHandler
       key="left"
       direction={Directions.LEFT}
@@ -182,8 +181,7 @@ const TVTrending = () => {
                     source={{
                       uri: image185(item.poster_path) || fallbackMoviePoster,
                       headers: {Authorization: 'someAuthToken'},
-                      priority: FastImage.priority.normal,
-                      cache: FastImage.cacheControl.immutable,
+                      priority: FastImage.priority.high,
                     }}
                     resizeMode={FastImage.resizeMode.cover}
                     style={{
@@ -240,4 +238,4 @@ const styles = StyleSheet.create({
     height: OVERFLOW_HEIGHT - 18,
   },
 });
-export default React.memo(TVTrending);
+export default TVTrending;

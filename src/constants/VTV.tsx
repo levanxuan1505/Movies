@@ -9,15 +9,5 @@ const VTV = [
   {id: '8', image: require('../assets/vtv/8.png')},
   {id: '9', image: require('../assets/vtv/9.png')},
   {id: '10', image: require('../assets/vtv/10.png')},
-  {id: '11', image: require('../assets/vtv/11.png')},
-  {id: '12', image: require('../assets/vtv/12.png')},
-  {id: '13', image: require('../assets/vtv/13.png')},
-  {id: '14', image: require('../assets/vtv/14.png')},
-  {id: '15', image: require('../assets/vtv/15.png')},
-  {id: '16', image: require('../assets/vtv/16.png')},
-  {id: '17', image: require('../assets/vtv/17.png')},
-  {id: '18', image: require('../assets/vtv/18.png')},
-  {id: '19', image: require('../assets/vtv/19.png')},
-  {id: '20', image: require('../assets/vtv/20.png')},
 ];
 export default VTV;

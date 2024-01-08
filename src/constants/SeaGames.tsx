@@ -9,13 +9,5 @@ const SeaGames = [
   {id: '8', image: require('../assets/seaGames/8.png')},
   {id: '9', image: require('../assets/seaGames/9.png')},
   {id: '10', image: require('../assets/seaGames/10.png')},
-  {id: '11', image: require('../assets/seaGames/11.png')},
-  {id: '12', image: require('../assets/seaGames/12.png')},
-  {id: '13', image: require('../assets/seaGames/13.png')},
-  {id: '14', image: require('../assets/seaGames/14.png')},
-  {id: '15', image: require('../assets/seaGames/15.png')},
-  {id: '16', image: require('../assets/seaGames/16.png')},
-  {id: '17', image: require('../assets/seaGames/17.png')},
-  {id: '18', image: require('../assets/seaGames/18.png')},
 ];
 export default SeaGames;

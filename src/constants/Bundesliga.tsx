@@ -9,13 +9,5 @@ const Bundesliga = [
   {id: '8', image: require('../assets/bundesliga/8.jpg')},
   {id: '9', image: require('../assets/bundesliga/9.jpg')},
   {id: '10', image: require('../assets/bundesliga/10.jpg')},
-  {id: '11', image: require('../assets/bundesliga/11.jpg')},
-  {id: '12', image: require('../assets/bundesliga/12.jpg')},
-  {id: '13', image: require('../assets/bundesliga/13.jpg')},
-  {id: '14', image: require('../assets/bundesliga/14.jpg')},
-  {id: '15', image: require('../assets/bundesliga/15.jpg')},
-  {id: '16', image: require('../assets/bundesliga/16.jpg')},
-  {id: '17', image: require('../assets/bundesliga/17.jpg')},
-  {id: '18', image: require('../assets/bundesliga/18.jpg')},
 ];
 export default Bundesliga;

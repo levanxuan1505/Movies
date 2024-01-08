@@ -5,14 +5,13 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  ActivityIndicator,
   StyleSheet,
+  VirtualizedList,
 } from 'react-native';
 import {RootStackParams} from '@navigators';
-import {FlashList} from '@shopify/flash-list';
 import FastImage from 'react-native-fast-image';
 const {width, height} = Dimensions.get('window');
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {fetchSimilarMovies} from '../../Api/MoviesDb';
 import {useNavigation} from '@react-navigation/native';
 import {image185, fallbackMoviePoster} from '../../Api/MoviesDb';
@@ -23,68 +22,68 @@ const TvList = ({title, hideSeeAll, idApi}) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   //   Call API
   const [tv, setTv] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const getSimilarMovies = async id => {
-    setLoading(true);
-
     const data = await fetchSimilarMovies(id);
     if (data && data.results) {
-      setLoading(false);
       setTv(data.results);
     }
   };
   useEffect(() => {
     getSimilarMovies(idApi);
   }, [idApi]);
+  const getItem = (data, index) => {
+    return data[index];
+  };
   const Tv = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => navigation.push('Movies', item)}>
-        <View className="space-y-1 mr-1">
-          <FastImage
-            defaultSource={require('../../assets/images/Progress.png')}
-            source={{
-              uri: image185(item.poster_path) || fallbackMoviePoster,
-              headers: {Authorization: 'someAuthToken'},
-              priority: FastImage.priority.normal,
-              cache: FastImage.cacheControl.immutable,
-            }}
-            style={styles.Image}
-            resizeMode={FastImage.resizeMode.center}
-          />
-          <Text numberOfLines={1} className="text-neutral-300 ml-1 w-24">
-            {item.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Suspense>
+        <TouchableOpacity onPress={() => navigation.push('Movies', item)}>
+          <View className="space-y-1 mr-1">
+            <FastImage
+              defaultSource={require('../../assets/images/Progress.png')}
+              source={{
+                uri: image185(item.poster_path) || fallbackMoviePoster,
+                headers: {Authorization: 'someAuthToken'},
+                priority: FastImage.priority.high,
+              }}
+              style={styles.Image}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+            <Text numberOfLines={1} className="text-neutral-300 ml-1 w-24">
+              {item.title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Suspense>
     );
   };
-  return loading ? (
-    <ActivityIndicator size="large" />
-  ) : (
+  return (
     <View className="mb-3 space-y-1 w-full">
       <View className="mx-2 flex-row justify-between items-center">
         <Text className="text-white font-Primary text-[15px]">{title}</Text>
 
         {!hideSeeAll && (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('SeeAll', {title: title, data: tv})
+            }>
             <Text className="text-lg font-Primary text-[15px] color-greenColor">
               See All
             </Text>
           </TouchableOpacity>
         )}
       </View>
-      <View>
+      <View className="px-[8px]">
         {tv && tv.length > 0 && (
-          <FlashList
-            data={tv}
+          <VirtualizedList
+            data={tv.slice(0, 12)}
             horizontal={true}
-            estimatedItemSize={15}
+            getItem={getItem}
+            initialNumToRender={4}
+            disableVirtualization={true}
             keyExtractor={item => item.id}
-            estimatedListSize={{
-              height: 120,
-              width: Dimensions.get('screen').width,
-            }}
+            getItemCount={data => data.length}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}: any) => <Tv item={item} />}
           />

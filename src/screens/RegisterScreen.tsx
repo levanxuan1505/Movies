@@ -18,7 +18,6 @@ import LottieView from 'lottie-react-native';
 import {Button, Loader, Input} from '@components';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../navigators/AuthProvider';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export interface Error {
   email: string;

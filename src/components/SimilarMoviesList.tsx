@@ -12,8 +12,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {View, Text, Dimensions} from 'react-native';
-import {FlashList} from '@shopify/flash-list';
+import {View, Text, Dimensions, VirtualizedList} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 interface Props {
@@ -21,6 +20,9 @@ interface Props {
   hideSeeAll: boolean;
   idApi: number;
 }
+const getItem = (data, index) => {
+  return data[index];
+};
 const SimilarMoviesList: React.FC<Props> = ({title, hideSeeAll, idApi}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -75,29 +77,18 @@ const SimilarMoviesList: React.FC<Props> = ({title, hideSeeAll, idApi}) => {
           </TouchableOpacity>
         )}
       </View>
-      <View
-        style={{
-          flex: 1,
-          minHeight: 2,
-          height: 'auto',
-          paddingVertical: 10,
-          paddingHorizontal: 15,
-          width: Dimensions.get('screen').width,
-        }}>
+      <View className="px-[8px]">
         {similarMovies && similarMovies.length > 0 && (
-          <FlashList
+          <VirtualizedList
             data={similarMovies}
             horizontal={true}
-            estimatedItemSize={15}
-            estimatedListSize={{
-              height: 120,
-              width: Dimensions.get('screen').width,
-            }}
+            getItem={getItem}
+            initialNumToRender={4}
+            disableVirtualization={true}
             keyExtractor={item => item.id}
+            getItemCount={data => data.length}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => {
-              return <Movies item={item} />;
-            }}
+            renderItem={({item}: any) => <Movies item={item} />}
           />
         )}
       </View>

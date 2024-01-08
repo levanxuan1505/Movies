@@ -9,13 +9,5 @@ const RolandGarros = [
   {id: '8', image: require('../assets/rolandGarros/8.png')},
   {id: '9', image: require('../assets/rolandGarros/9.png')},
   {id: '10', image: require('../assets/rolandGarros/10.png')},
-  {id: '11', image: require('../assets/rolandGarros/11.png')},
-  {id: '12', image: require('../assets/rolandGarros/12.png')},
-  {id: '13', image: require('../assets/rolandGarros/13.png')},
-  {id: '14', image: require('../assets/rolandGarros/14.png')},
-  {id: '15', image: require('../assets/rolandGarros/15.png')},
-  {id: '16', image: require('../assets/rolandGarros/16.png')},
-  {id: '17', image: require('../assets/rolandGarros/17.png')},
-  {id: '18', image: require('../assets/rolandGarros/18.png')},
 ];
 export default RolandGarros;

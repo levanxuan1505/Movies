@@ -1,8 +1,8 @@
 /* eslint-disable no-sequences */
 import {Alert} from 'react-native';
+export const AuthContext = createContext({});
 import auth from '@react-native-firebase/auth';
 import React, {createContext, useState} from 'react';
-export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
@@ -15,8 +15,6 @@ export const AuthProvider = ({children}) => {
           auth()
             ?.signInWithEmailAndPassword(email, password)
             ?.then(() => {
-              // console.log('User account signed in!'),
-              // Alert.alert('Successful', 'Successfully signed in');
               navigation.navigate('Drawer');
             })
             .catch(error => {
@@ -25,9 +23,7 @@ export const AuthProvider = ({children}) => {
                   'Error',
                   'The password is invalid or the user does not have a password!',
                 );
-                // console.log(
                 //   'The password is invalid or the user does not have a password!',
-                // );
               }
 
               if (error.code === 'auth/invalid-email') {

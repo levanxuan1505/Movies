@@ -1,5 +1,6 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useCallback} from 'react';
+import React, {Suspense} from 'react';
 var {width, height} = Dimensions.get('window');
 import {View, Dimensions, Image, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -8,17 +9,19 @@ import {ListCarousel} from '@constants';
 //
 const ListCarouselHBO = ({index}) => {
   const isCarousel = React.useRef(null);
-  const MovieCard = useCallback(({item}) => {
+  const MovieCard = ({item}) => {
     return (
-      <TouchableOpacity>
-        <Image source={item.image} style={styles.ImageBackground} />
-        <Image
-          style={styles.Image}
-          source={require('../../assets/images/logoHBO.png')}
-        />
-      </TouchableOpacity>
+      <Suspense>
+        <TouchableOpacity>
+          <Image source={item.image} style={styles.ImageBackground} />
+          <Image
+            style={styles.Image}
+            source={require('../../assets/images/logoHBO.png')}
+          />
+        </TouchableOpacity>
+      </Suspense>
     );
-  }, []);
+  };
   return (
     <View className="my-1">
       <Carousel

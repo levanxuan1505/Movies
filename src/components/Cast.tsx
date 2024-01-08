@@ -5,15 +5,25 @@ import {
   fetchMovieCredits,
   fallbackPersonImage,
 } from '../Api/MoviesDb';
-import {FlashList} from '@shopify/flash-list';
+import {RootStackParams} from '@navigators';
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  VirtualizedList,
+} from 'react-native';
 interface Props {
   idCast: any;
   navigation: any;
 }
-const Cast: React.FC<Props> = ({idCast, navigation}) => {
+const Cast: React.FC<Props> = ({idCast}) => {
   const [cast, setCast] = useState([]);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   useEffect(() => {
     getMovieCredits(idCast);
   }, [idCast]);
@@ -23,10 +33,13 @@ const Cast: React.FC<Props> = ({idCast, navigation}) => {
       setCast(data.cast);
     }
   };
+  const getItem = (data, index) => {
+    return data[index];
+  };
   const Actor = ({person}) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('Actor', person)}
+        onPress={() => navigation.navigate('Actor', person.id)}
         className="mr-4 items-center">
         <View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500">
           <Image
@@ -52,21 +65,18 @@ const Cast: React.FC<Props> = ({idCast, navigation}) => {
   return (
     <View className="my-6 w-full">
       <Text className="text-white text-lg mx-4 mb-5">Top Cast</Text>
-      <View>
+      <View className="px-[8px]">
         {cast && cast.length > 0 && (
-          <FlashList
+          <VirtualizedList
             data={cast}
             horizontal={true}
-            estimatedItemSize={15}
-            keyExtractor={person => person.id}
-            estimatedListSize={{
-              height: 120,
-              width: Dimensions.get('screen').width,
-            }}
+            getItem={getItem}
+            initialNumToRender={5}
+            disableVirtualization={true}
+            keyExtractor={item => item.id}
+            getItemCount={data => data.length}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => {
-              return <Actor person={item} />;
-            }}
+            renderItem={({item}: any) => <Actor person={item} />}
           />
         )}
       </View>

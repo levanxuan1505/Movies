@@ -15,7 +15,6 @@ import WatchingScreen from './WatchingScreen';
 import RegisterScreen from './RegisterScreen';
 import SeeAllHBOScreen from './SeeAllHBOScreen';
 import VideoFullScreen from './VideoFullScreen';
-import AnimationScreen from './AnimationScreen';
 import BottomHomeScreen from './BottomHomeScreen';
 import TelevisionScreen from './TelevisionScreen';
 import TermsOfUseScreen from './TermsOfUseScreen';
@@ -44,7 +43,6 @@ export {
   WatchingScreen,
   VideoFullScreen,
   SeeAllHBOScreen,
-  AnimationScreen,
   OnBoardingScreen,
   TelevisionScreen,
   BottomHomeScreen,

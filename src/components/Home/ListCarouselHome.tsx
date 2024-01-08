@@ -1,26 +1,28 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {Suspense} from 'react';
+import {ListCarousel} from '@constants';
 var {width, height} = Dimensions.get('window');
+import Carousel from 'react-native-snap-carousel';
+import {ProgressiveImage} from '../ProgressiveComponent';
 import {View, Dimensions, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Carousel from 'react-native-snap-carousel';
-import {ListCarousel} from '@constants';
-import {ProgressiveImage} from '../ProgressiveComponent';
 
 //
 const ListCarouselHome = ({index}) => {
   const isCarousel = React.useRef(null);
   const MovieCard = ({item}) => {
     return (
-      <TouchableOpacity>
-        <ProgressiveImage
-          thumbnailSource={require('../../assets/images/Progress.png')}
-          source={item.image}
-          style={styles.ImageBackground}
-          resizeMode="cover"
-        />
-      </TouchableOpacity>
+      <Suspense>
+        <TouchableOpacity>
+          <ProgressiveImage
+            thumbnailSource={require('../../assets/images/Progress.png')}
+            source={item.image}
+            style={styles.ImageBackground}
+            resizeMode="cover"
+          />
+        </TouchableOpacity>
+      </Suspense>
     );
   };
   return (

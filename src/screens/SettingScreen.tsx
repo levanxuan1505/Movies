@@ -7,19 +7,14 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  RefreshControl,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Switch,
   StyleSheet,
 } from 'react-native';
-import {Loading} from '@components';
 import {styles, theme} from '../theme';
-import React, {useEffect, useState} from 'react';
-const {width, height} = Dimensions.get('window');
-import {fetchTrendingMovies} from '../Api/MoviesDb';
+import React, {useState} from 'react';
+const {width} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
-import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   ChevronLeftIcon,
@@ -30,18 +25,10 @@ import {Colors, Search} from '@constants';
 const SettingScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
-  const [isFavourite, setFavourite] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
-  }, []);
 
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">

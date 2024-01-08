@@ -94,16 +94,16 @@ const MyListsScreen = ({route}) => {
                   <View className="space-y-2 mb-4">
                     <Image
                       source={{
-                        uri: image500(item.poster_path) || fallbackMoviePoster,
+                        uri: image500(item?.poster_path) || fallbackMoviePoster,
                       }}
                       //   source={require('../assets/images/moviePoster1.png')}
                       className="rounded-3xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />
                     <Text className="text-gray-300 ml-1">
-                      {item.title.length > 22
-                        ? item.title.slice(0, 22) + '...'
-                        : item.title}
+                      {item?.title.length > 22
+                        ? item?.title.slice(0, 22) + '...'
+                        : item?.title}
                     </Text>
                   </View>
                 </TouchableWithoutFeedback>

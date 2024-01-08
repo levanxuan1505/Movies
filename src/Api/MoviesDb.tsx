@@ -13,7 +13,7 @@ const nowPlayingMoviesEndpoint = `${apiBaseUrl}/movie/now_playing?api_key=${apiK
 const discoverMoviesEndpoint = `${apiBaseUrl}/discover/movie?api_key=${apiKey}`;
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 // endpoints with dynamic params
-const trendingMoviesOphim = page =>
+const pageMoviesOphim = page =>
   `${apiBaseUrlOPhim}/danh-sach/phim-moi-cap-nhat?page=${page}`;
 const detailMoviesOPhim = slug => `${apiBaseUrlOPhim}/phim/${slug}`;
 
@@ -37,7 +37,7 @@ export const fetchSimilarMovies = movieId => {
   return apiCall(similarMoviesEndpoint(movieId), null);
 };
 export const fetchMoviesOphim = page => {
-  return apiCall(trendingMoviesOphim(page), null);
+  return apiCall(pageMoviesOphim(page), null);
 };
 export const fetchDetailsMoviesOphim = slug => {
   return apiCall(detailMoviesOPhim(slug), null);

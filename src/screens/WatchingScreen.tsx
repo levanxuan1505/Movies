@@ -98,7 +98,7 @@ const WatchingScreen = ({route}) => {
                   <View className="space-y-2 mb-4">
                     <ImageBackground
                       source={{
-                        uri: image342(item.poster_path) || fallbackMoviePoster,
+                        uri: image342(item?.poster_path) || fallbackMoviePoster,
                       }}
                       style={{
                         position: 'relative',
@@ -138,9 +138,9 @@ const WatchingScreen = ({route}) => {
                         }}></View>
                     </ImageBackground>
                     <Text className="text-gray-300 ml-1">
-                      {item.title.length > 22
-                        ? item.title.slice(0, 22) + '...'
-                        : item.title}
+                      {item?.title.length > 22
+                        ? item?.title.slice(0, 22) + '...'
+                        : item?.title}
                     </Text>
                   </View>
                 </TouchableWithoutFeedback>

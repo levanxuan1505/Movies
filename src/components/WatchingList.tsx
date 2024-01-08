@@ -126,14 +126,7 @@ const WatchingList: React.FC<Props> = ({title, hideSeeAll}) => {
           </TouchableOpacity>
         )}
       </View>
-      <View
-        style={{
-          flex: 1,
-          minHeight: 2,
-          height: 'auto',
-          paddingHorizontal: 8,
-          width: Dimensions.get('screen').width,
-        }}>
+      <View className="px-[8px]">
         {nowPlayingMovies && nowPlayingMovies.length > 0 && (
           <FlashList
             data={nowPlayingMovies}

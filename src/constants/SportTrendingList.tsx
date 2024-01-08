@@ -12,10 +12,5 @@ const SportTrendingList = [
   {id: '11', image: require('../assets/trending/11.png')},
   {id: '12', image: require('../assets/trending/12.png')},
   {id: '13', image: require('../assets/trending/13.png')},
-  {id: '14', image: require('../assets/trending/14.png')},
-  {id: '15', image: require('../assets/trending/15.png')},
-  {id: '16', image: require('../assets/trending/16.png')},
-  {id: '17', image: require('../assets/trending/17.png')},
-  {id: '18', image: require('../assets/trending/18.png')},
 ];
 export default SportTrendingList;

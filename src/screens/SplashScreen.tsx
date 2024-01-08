@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Dimensions, View} from 'react-native';
-import React, {memo, Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import LottieView from 'lottie-react-native';
 import {Colors} from '@constants';
 let {width, height} = Dimensions.get('window');

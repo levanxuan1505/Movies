@@ -6,7 +6,6 @@ import {
   Image,
   ScrollView,
   Dimensions,
-  RefreshControl,
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
@@ -21,17 +20,8 @@ import {ChevronLeftIcon, CreditCardIcon} from 'react-native-heroicons/outline';
 
 const TransactionScreen = ({route}) => {
   const title = route.params.title;
-  const [refreshing, setRefreshing] = React.useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
-  }, []);
-
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
       <SafeAreaView

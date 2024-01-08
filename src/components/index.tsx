@@ -15,7 +15,6 @@ import WatchingList from './WatchingList';
 import VideoTrailer from './VideoTrailer';
 import ButtonSocial from './ButtonSocial';
 import HomeTrending from './Home/HomeTrending';
-import HBOListOphim from './HBO/HBOListOphim';
 import VideoComponent from './VideoComponent';
 import ActorMoviesList from './ActorMoviesList';
 import SimilarMoviesList from './SimilarMoviesList';
@@ -41,14 +40,13 @@ export {
   ModalPoster,
   WatchingList,
   HomeTrending,
-  HBOListOphim,
   ButtonSocial,
   SportTrending,
   VideoTrailer,
   VideoComponent,
   ActorMoviesList,
-  TvBodyComponent,
   HBOBodyComponent,
+  TvBodyComponent,
   ListCarouselHome,
   SimilarMoviesList,
   HomeBodyComponent,

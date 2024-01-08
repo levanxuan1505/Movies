@@ -21,7 +21,7 @@ const TVList = React.lazy(() => import('./TVList'));
 const TVListOphim = React.lazy(() => import('./TVListOphim'));
 const SportList = React.lazy(() => import('../Sports/SportList'));
 const ListCarouselHome = React.lazy(() => import('../Home/ListCarouselHome'));
-const HBOListOphim = React.lazy(() => import('../HBO/HBOListOphim'));
+const HBOListOphim = React.lazy(() => import('../HBO/HBOBodyComponent'));
 
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>;

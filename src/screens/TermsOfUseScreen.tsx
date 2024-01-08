@@ -18,14 +18,6 @@ import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 const TermsOfUseScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
-  }, []);
 
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">

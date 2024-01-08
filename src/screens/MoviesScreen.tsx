@@ -9,12 +9,12 @@ import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 var {width, height} = Dimensions.get('window');
 import {Cast, SimilarMoviesList} from '@components';
-import React, {useEffect, useState} from 'react';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {ScrollView} from 'react-native-virtualized-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {View, Text, Dimensions, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useCallback, useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -29,17 +29,19 @@ const MoviesScreen = () => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    getMovieDetails(item.id);
-  }, [item]);
-  const getMovieDetails = async id => {
+
+  const getMovieDetails = useCallback(async id => {
     const data = await fetchMovieDetails(id);
     setLoading(false);
     if (data) {
       setMovie({...movie, ...data});
     }
-  };
+  }, []);
+  useEffect(() => {
+    setLoading(true);
+    getMovieDetails(item?.id);
+  }, [getMovieDetails, item?.id]);
+
   const Header = () => {
     const [isFavorite, setFavorite] = useState(false);
     return (
@@ -62,10 +64,7 @@ const MoviesScreen = () => {
           <View>
             <Image
               source={{
-                uri:
-                  image342(movie.poster_path) ||
-                  image342(item.logo_path) ||
-                  fallbackMoviePoster,
+                uri: image342(movie.poster_path) || fallbackMoviePoster,
               }}
               style={{width, height: height * 0.55}}
             />
@@ -115,19 +114,28 @@ const MoviesScreen = () => {
       </>
     );
   };
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    // Define a threshold for when to trigger the action (e.g., 100 pixels)
+    if (offsetY < -52) {
+      navigation.goBack();
+    }
+  };
   return (
     <ScrollView
+      onScroll={handleScroll}
+      scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 20}}
       className=" bg-neutral-900">
       {/* Cast */}
       <Header />
-      {item.id && <Cast idCast={item.id} navigation={navigation} />}
+      {item?.id && <Cast idCast={item?.id} />}
       <View>
         <SimilarMoviesList
           title="Similar Movies"
           hideSeeAll={true}
-          idApi={item.id}
+          idApi={item?.id}
         />
       </View>
     </ScrollView>

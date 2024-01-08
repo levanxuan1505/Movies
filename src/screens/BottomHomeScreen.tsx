@@ -7,13 +7,13 @@ av.addListener(() => {
 import React from 'react';
 import {Display} from '@utils';
 import {Colors} from '@constants';
-import HBOScreen from './HBOScreen';
-import HomeScreen from './HomeScreen';
 import {BottomImage} from '@constants';
-import SportScreen from './SportScreen';
-import TelevisionScreen from './TelevisionScreen';
+const HBOScreen = React.lazy(() => import('./HBOScreen'));
+const HomeScreen = React.lazy(() => import('./HomeScreen'));
+const SportScreen = React.lazy(() => import('./SportScreen'));
 import {Platform, Animated, Image, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+const TelevisionScreen = React.lazy(() => import('./TelevisionScreen'));
 //
 
 const Tab = createBottomTabNavigator();
@@ -29,7 +29,9 @@ const BottomHomeScreen = () => {
           }).start();
         },
       }}
+      detachInactiveScreens={false}
       screenOptions={{
+        lazy: true,
         tabBarStyle: styles.tabBarStyle,
         tabBarLabelStyle: styles.tabBarLabelStyle,
         tabBarActiveTintColor: Colors.DEFAULT_GREEN,

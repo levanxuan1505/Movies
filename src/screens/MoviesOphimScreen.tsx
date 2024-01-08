@@ -10,10 +10,10 @@ import {ScrollView} from 'react-native-virtualized-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {View, Text, Dimensions, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useCallback, useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {fetchDetailsMoviesOphim, fallbackMoviePoster} from '../Api/MoviesDb';
 export interface Data {
@@ -26,20 +26,26 @@ const MoviesOphimScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [dataOphim, setMovie] = useState([[]]);
+  const getMovieDetails = useCallback(async slug => {
+    const data = await fetchDetailsMoviesOphim(slug);
+    if (data) {
+      setMovie({...data?.movie, ...data?.episodes[0]});
+    }
+  }, []);
+
   useEffect(() => {
     getMovieDetails(slug);
-  }, [slug]);
-  const getMovieDetails = useCallback(
-    async slug => {
-      const data = await fetchDetailsMoviesOphim(slug);
-      if (data) {
-        setMovie({...data?.episodes[0], ...data?.movie});
-      }
-    },
-    [slug],
-  );
+  }, [getMovieDetails, slug]);
 
-  const moviesId = dataOphim?.server_data?.slug && dataOphim?.server_data?.slug;
+  const moviesId = dataOphim?.server_data?.slug;
+
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    // Define a threshold for when to trigger the action (e.g., 100 pixels)
+    if (offsetY < -52) {
+      navigation.goBack();
+    }
+  };
 
   const Header = () => {
     const [isFavorite, setFavorite] = useState(false);
@@ -63,7 +69,10 @@ const MoviesOphimScreen = () => {
           <View>
             <Image
               source={{
-                uri: dataOphim.thumb_url || fallbackMoviePoster,
+                uri:
+                  dataOphim?.poster_url ||
+                  dataOphim?.thumb_url ||
+                  fallbackMoviePoster,
               }}
               style={{width, height: height * 0.55}}
             />
@@ -82,7 +91,7 @@ const MoviesOphimScreen = () => {
         </View>
 
         <View style={{marginTop: -(height * 0.09)}} className="space-y-3">
-          <Text className="text-white text-center text-3xl font-bold tracking-wider">
+          <Text className="text-white text-center text-3xl px-1 font-bold tracking-wider">
             {dataOphim.name}
           </Text>
           {dataOphim?._id ? (
@@ -124,16 +133,17 @@ const MoviesOphimScreen = () => {
             flexDirection: 'row',
             paddingHorizontal: 16,
             marginBottom: 20,
+            paddingTop: 15,
           }}>
           <Text
             style={{
-              fontSize: 24,
+              fontSize: 22,
               fontFamily: 'Shrikhand-Regular',
             }}
             className="text-neutral-200 font-semibold">
             <Text>Total Episodes: </Text>
             <Text>
-              {dataOphim?.server_data ? dataOphim?.server_data.length : null}
+              {dataOphim?.episode_current ? dataOphim?.episode_current : '0'}
             </Text>
           </Text>
         </View>
@@ -154,7 +164,7 @@ const MoviesOphimScreen = () => {
                     marginBottom: 30,
                     alignItems: 'center',
                     marginHorizontal: 15,
-                    paddingHorizontal: 20,
+                    paddingHorizontal: 2,
                     justifyContent: 'center',
                     backgroundColor: items.name === isChoose ? 'green' : 'red',
                   }}>
@@ -174,8 +184,11 @@ const MoviesOphimScreen = () => {
       </>
     );
   };
+
   return (
     <ScrollView
+      onScroll={handleScroll}
+      scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 20}}
       className=" bg-neutral-900">

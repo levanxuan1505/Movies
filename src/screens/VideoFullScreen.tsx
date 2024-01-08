@@ -3,17 +3,17 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   Image,
   Dimensions,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
+import {Colors} from '@constants';
 import Video from 'react-native-video';
+const {height} = Dimensions.get('window');
 import React, {useRef, useState} from 'react';
 import Slider from '@react-native-community/slider';
 import Orientation from 'react-native-orientation-locker';
-import {Colors} from '@constants';
-const {width, height} = Dimensions.get('window');
 
 const VideoFullScreen = ({route}) => {
   const {idVideo} = route.params;
@@ -98,7 +98,7 @@ const VideoFullScreen = ({route}) => {
                 activeOpacity={1}
                 style={{padding: fullScreen ? 20 : 10}}
                 onPress={() => {
-                  ref?.current.seek(parseInt(progress.currentTime) - 10);
+                  ref?.current.seek(parseInt(progress?.currentTime) - 10);
                 }}>
                 <Image
                   source={require('../assets/images/backward.png')}
@@ -119,7 +119,7 @@ const VideoFullScreen = ({route}) => {
                     width: 65,
                     height: 65,
                     tintColor: 'white',
-                    marginLeft: height / 5,
+                    marginLeft: height / 10,
                   }}
                 />
               </TouchableOpacity>
@@ -134,7 +134,7 @@ const VideoFullScreen = ({route}) => {
                   style={{
                     width: 50,
                     height: 50,
-                    marginLeft: height / 5,
+                    marginLeft: height / 10,
                     tintColor: 'white',
                   }}
                 />
@@ -152,7 +152,9 @@ const VideoFullScreen = ({route}) => {
                 bottom: fullScreen ? height / 14 : 0,
               }}>
               <Text style={{color: 'white'}}>
-                {format(progress?.currentTime)}
+                {progress?.currentTime
+                  ? format(progress?.currentTime)
+                  : '00:00'}
               </Text>
               <Slider
                 minimumValue={0}
@@ -166,7 +168,9 @@ const VideoFullScreen = ({route}) => {
                 value={progress?.currentTime}
               />
               <Text style={{color: 'white'}}>
-                {format(progress?.seekableDuration)}
+                {progress?.seekableDuration
+                  ? format(progress?.seekableDuration)
+                  : '00:00'}
               </Text>
             </View>
             <View

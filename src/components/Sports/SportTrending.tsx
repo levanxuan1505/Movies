@@ -1,18 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {Suspense} from 'react';
 import {SportTrendingList} from '@constants';
 var {width, height} = Dimensions.get('window');
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {ProgressiveImage} from '../ProgressiveComponent';
-
 //
 const SportTrending = ({name}) => {
   const [index, setIndex] = React.useState(SportTrendingList.length / 2);
   const isCarousel = React.useRef(null);
   return (
-    <View className="mb-1 mt-[80px]">
+    <View className="mb-1  mt-[80px]">
       <Text className="text-white text-xl mx-4 mb-5 font-Primary">{name}</Text>
       <Carousel
         data={SportTrendingList}
@@ -51,17 +50,19 @@ const SportTrending = ({name}) => {
 
 const MovieCard = ({item}) => {
   return (
-    <TouchableOpacity>
-      <ProgressiveImage
-        thumbnailSource={require('../../assets/images/Progress.png')}
-        source={item.image}
-        style={styles.Image}
-        resizeMode="cover"
-      />
-    </TouchableOpacity>
+    <Suspense>
+      <TouchableOpacity>
+        <ProgressiveImage
+          thumbnailSource={require('../../assets/images/Progress.png')}
+          source={item.image}
+          style={styles.Image}
+          resizeMode="cover"
+        />
+      </TouchableOpacity>
+    </Suspense>
   );
 };
-export default React.memo(SportTrending);
+export default SportTrending;
 const styles = StyleSheet.create({
   Image: {
     width: width * 0.618,

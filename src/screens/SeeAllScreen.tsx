@@ -82,38 +82,70 @@ const SeeAllScreen = ({route}) => {
           <Text className="text-white font-semibold ml-1">
             Results ({data.length})
           </Text>
-          <View className="flex-row justify-between flex-wrap">
-            {data.map((item, index) => {
-              return (
-                <TouchableWithoutFeedback
-                  key={index}
-                  onPress={() => navigation.navigate('Movies', item)}>
-                  <View className="space-y-2 mb-4">
-                    <Image
-                      source={{
-                        uri:
-                          image500(item.poster_path) ||
-                          `https://img.ophim8.cc/uploads/movies/${item.thumb_url}` ||
-                          fallbackMoviePoster,
-                      }}
-                      //   source={require('../assets/images/moviePoster1.png')}
-                      className="rounded-3xl"
-                      style={{width: width * 0.44, height: height * 0.3}}
-                    />
-                    <Text className="text-gray-300 ml-1">
-                      {item?.title
-                        ? item?.title.length > 22
-                          ? item?.title.slice(0, 22) + '...'
-                          : item?.title
-                        : item?.name.length > 22
-                        ? item?.name.slice(0, 22) + '...'
-                        : item?.name}
-                    </Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
-          </View>
+          {data[0].slug ? (
+            <View className="flex-row justify-between flex-wrap">
+              {data.map((item, index) => {
+                return (
+                  <TouchableWithoutFeedback
+                    key={index}
+                    onPress={() =>
+                      navigation.navigate('MoviesOphim', item.slug)
+                    }>
+                    <View className="space-y-2 mb-4">
+                      <Image
+                        source={{
+                          uri:
+                            `https://img.ophim8.cc/uploads/movies/${item.thumb_url}` ||
+                            fallbackMoviePoster,
+                        }}
+                        className="rounded-3xl"
+                        style={{width: width * 0.44, height: height * 0.3}}
+                      />
+                      <Text className="text-gray-300 ml-1">
+                        {item?.title
+                          ? item?.title.length > 22
+                            ? item?.title.slice(0, 22) + '...'
+                            : item?.title
+                          : item?.name.length > 22
+                          ? item?.name.slice(0, 22) + '...'
+                          : item?.name}
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                );
+              })}
+            </View>
+          ) : (
+            <View className="flex-row justify-between flex-wrap">
+              {data.map((item, index) => {
+                return (
+                  <TouchableWithoutFeedback
+                    key={index}
+                    onPress={() => navigation.navigate('Movies', item)}>
+                    <View className="space-y-2 mb-4">
+                      <Image
+                        source={{
+                          uri:
+                            image500(item.poster_path) || fallbackMoviePoster,
+                        }}
+                        className="rounded-3xl"
+                        style={{width: width * 0.44, height: height * 0.3}}
+                      />
+                      <Text className="text-gray-300 ml-1">
+                        {item?.title
+                          ? item?.title.length > 22
+                            ? item?.title.slice(0, 22) + '...'
+                            : item?.title
+                          : item?.name.length > 22
+                          ? item?.name.slice(0, 22) + '...'
+                          : item?.name}
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                );
+              })}
+            </View>
+          )}
         </ScrollView>
       ) : (
         <View className="flex-row justify-center">

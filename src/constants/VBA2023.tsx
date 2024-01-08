@@ -9,13 +9,5 @@ const VBA2023 = [
   {id: '8', image: require('../assets/vba/8.png')},
   {id: '9', image: require('../assets/vba/9.png')},
   {id: '10', image: require('../assets/vba/10.png')},
-  {id: '11', image: require('../assets/vba/11.png')},
-  {id: '12', image: require('../assets/vba/12.png')},
-  {id: '13', image: require('../assets/vba/13.png')},
-  {id: '14', image: require('../assets/vba/14.png')},
-  {id: '15', image: require('../assets/vba/15.png')},
-  {id: '16', image: require('../assets/vba/16.png')},
-  {id: '17', image: require('../assets/vba/17.png')},
-  {id: '18', image: require('../assets/vba/18.png')},
 ];
 export default VBA2023;

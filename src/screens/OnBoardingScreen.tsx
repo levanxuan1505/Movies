@@ -14,14 +14,20 @@ import React, {useState} from 'react';
 const {width} = Dimensions.get('window');
 import SplashScreen from './SplashScreen';
 import LottieView from 'lottie-react-native';
+import {RootStackParams} from '@navigators';
+import {setItem} from '../utils/asyncStorage';
 import {useNavigation} from '@react-navigation/native';
 import Onboarding from 'react-native-onboarding-swiper';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const OnBoardingScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   const handleDone = () => {
     navigation.replace('Drawer');
+    setItem('onboarded', '1');
   };
   const DoneButton = ({...props}) => {
     return (

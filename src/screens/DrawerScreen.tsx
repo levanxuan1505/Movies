@@ -5,10 +5,11 @@ import CustomDrawerScreen from './CustomDrawerScreen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 const BottomHomeScreen = lazy(() => import('./BottomHomeScreen'));
 import {Freeze} from 'react-freeze';
-
+import Orientation from 'react-native-orientation-locker';
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
+  Orientation.lockToPortrait();
   return (
     <Freeze freeze={false}>
       <Drawer.Navigator

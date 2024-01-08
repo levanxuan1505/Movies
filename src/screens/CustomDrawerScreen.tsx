@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import {useSelector} from 'react-redux';
 import React, {useContext} from 'react';
 import {RootStackParams} from '@navigators';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -17,8 +16,6 @@ const CustomDrawerScreen = () => {
   const {logout}: any = useContext(AuthContext);
 
   const {user}: any = useContext(AuthContext);
-  // console.log(user);
-  // const user = useSelector((state: any) => state.user);
 
   return (
     <View style={{flex: 1, backgroundColor: 'rgb(38 38 38)'}}>

@@ -38,7 +38,6 @@ const UserScreen = ({route}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const [loading, setLoading] = useState(false);
   const [isFavorite, setFavorite] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 

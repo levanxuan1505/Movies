@@ -6,48 +6,47 @@ import {
   Image,
   Platform,
   Dimensions,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import {
-  image185,
+  image342,
   fetchPersonDetails,
   fallbackPersonImage,
 } from '../Api/MoviesDb';
 import {RootStackParams} from '@navigators';
-import {ActorMoviesList, Loading} from '@components';
 import React, {useEffect, useState} from 'react';
+import {ActorMoviesList, Loading} from '@components';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {FlashList} from '@shopify/flash-list';
 
 const ios = Platform.OS === 'ios';
 const verticalMargin = ios ? '' : ' my-3';
 let {width, height} = Dimensions.get('window');
-
-const Actor = () => {
+const ActorScreen = () => {
   const {params: item} = useRoute();
-  const [person, setPerson] = useState({});
+  const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isFavorite, toggleFavorite] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
   useEffect(() => {
-    setLoading(true);
-    getPersonDetails(item.id);
+    getPersonDetails(item);
   }, [item]);
 
   const getPersonDetails = async id => {
+    setLoading(true);
     const data = await fetchPersonDetails(id);
-    setLoading(false);
     if (data) {
       setPerson(data);
+      setLoading(false);
     }
   };
+
   const Body = () => {
     return (
       <View className="flex-1 w-screen bg-neutral-900 position: relative">
@@ -56,13 +55,13 @@ const Actor = () => {
             'flex-row justify-between items-center mx-4 z-10 ' + verticalMargin
           }>
           <TouchableOpacity
+            onPress={() => navigation.goBack()}
             className="rounded-xl p-1"
-            onPress={() => navigation.goBack()}>
+            style={styles.background}>
             <ChevronLeftIcon size="28" strokeWidth={2.5} color="white" />
           </TouchableOpacity>
-
           <TouchableOpacity onPress={() => toggleFavorite(!isFavorite)}>
-            <HeartIcon size="35" color={isFavorite ? 'red' : 'white'} />
+            <HeartIcon size="35" color={isFavorite ? 'green' : 'white'} />
           </TouchableOpacity>
         </SafeAreaView>
 
@@ -74,9 +73,9 @@ const Actor = () => {
               <View className="items-center rounded-full overflow-hidden h-72 w-72 border-neutral-500 border-2">
                 <Image
                   source={{
-                    uri: image185(person?.profile_path) || fallbackPersonImage,
+                    uri: image342(person?.profile_path) || fallbackPersonImage,
                   }}
-                  style={{height: height * 0.43, width: width * 0.74}}
+                  style={styles.Image}
                 />
               </View>
             </View>
@@ -117,38 +116,56 @@ const Actor = () => {
             <View className="my-6 mx-4 space-y-2">
               <Text className="text-white text-lg">Biography</Text>
               <Text className="text-neutral-400 tracking-wide">
-                {person?.biography ? person.biography : 'N/A'}
+                {person?.biography ? person?.biography : 'N/A'}
               </Text>
             </View>
-            {person?.id && (
-              <ActorMoviesList
-                title="Movies"
-                hideSeeAll={true}
-                idApi={item.id}
-              />
-            )}
+            <View>
+              {item && (
+                <ActorMoviesList
+                  title="Movies"
+                  hideSeeAll={true}
+                  idApi={item}
+                />
+              )}
+            </View>
           </View>
         )}
       </View>
     );
   };
-
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    if (offsetY < -70) {
+      navigation.goBack();
+    }
+  };
   return (
-    <FlashList
-      data={person}
-      estimatedItemSize={15}
-      onEndReachedThreshold={0.5}
+    <ScrollView
+      onScroll={handleScroll}
+      scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
-      renderItem={() => <Body />}
-    />
+      contentContainerStyle={styles.scroll}
+      className=" bg-neutral-900">
+      <Body />
+    </ScrollView>
   );
 };
-export default Actor;
+export default ActorScreen;
 const styles = StyleSheet.create({
+  Image: {
+    height: height * 0.43,
+    width: width * 0.74,
+  },
   Background: {
     shadowOpacity: 1,
     shadowColor: 'gray',
     shadowRadius: 40,
     shadowOffset: {width: 0, height: 5},
+  },
+  background: {
+    backgroundColor: '#00AA13',
+  },
+  scroll: {
+    paddingBottom: 20,
   },
 });

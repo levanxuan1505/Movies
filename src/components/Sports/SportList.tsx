@@ -1,5 +1,6 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {Suspense} from 'react';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
@@ -12,9 +13,9 @@ import {
   Dimensions,
   TouchableOpacity,
   StyleSheet,
+  VirtualizedList,
 } from 'react-native';
 
-import {FlashList} from '@shopify/flash-list';
 interface Props {
   data: any;
   logo: string;
@@ -31,7 +32,46 @@ const SportList: React.FC<Props> = ({
 }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
+  const getItem = (data, index) => {
+    return data[index];
+  };
+  const Sport = ({item}) => {
+    return (
+      <Suspense>
+        <TouchableOpacity>
+          <View className="space-y-1 mr-1">
+            <ProgressiveImage
+              thumbnailSource={require('../../assets/images/Progress.png')}
+              source={item.image}
+              style={{
+                width: logo === 'bigSize' ? width * 0.42 : width * 0.26,
+                height: logo === 'bigSize' ? height * 0.111 : height * 0.17,
+              }}
+              resizeMode="cover"
+            />
+            <Image
+              source={
+                symbol === 'skySport'
+                  ? require('../../assets/images/skySport.png')
+                  : symbol === 'espn'
+                  ? require('../../assets/images/espn.png')
+                  : require('../../assets/images/beinSport.png')
+              }
+              style={
+                symbol === 'skySport'
+                  ? styles.skySport
+                  : symbol === 'espn'
+                  ? styles.espn
+                  : symbol === 'beinSport'
+                  ? styles.beinSport
+                  : styles.other
+              }
+            />
+          </View>
+        </TouchableOpacity>
+      </Suspense>
+    );
+  };
   return (
     <View className="mb-3 space-y-1 w-full">
       <View className="mx-2 flex-row justify-between items-center">
@@ -47,48 +87,18 @@ const SportList: React.FC<Props> = ({
           </TouchableOpacity>
         )}
       </View>
-      <View>
+      <View className="px-[8px]">
         {data && data.length > 0 && (
-          <FlashList
+          <VirtualizedList
             data={data}
             horizontal={true}
-            estimatedItemSize={15}
+            getItem={getItem}
+            initialNumToRender={4}
+            disableVirtualization={true}
             keyExtractor={item => item.id}
+            getItemCount={data => data.length}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => (
-              <TouchableOpacity>
-                <View className="space-y-1 mr-1">
-                  <ProgressiveImage
-                    thumbnailSource={require('../../assets/images/Progress.png')}
-                    source={item.image}
-                    style={{
-                      width: logo === 'bigSize' ? width * 0.42 : width * 0.26,
-                      height:
-                        logo === 'bigSize' ? height * 0.111 : height * 0.17,
-                    }}
-                    resizeMode="cover"
-                  />
-                  <Image
-                    source={
-                      symbol === 'skySport'
-                        ? require('../../assets/images/skySport.png')
-                        : symbol === 'espn'
-                        ? require('../../assets/images/espn.png')
-                        : require('../../assets/images/beinSport.png')
-                    }
-                    style={
-                      symbol === 'skySport'
-                        ? styles.skySport
-                        : symbol === 'espn'
-                        ? styles.espn
-                        : symbol === 'beinSport'
-                        ? styles.beinSport
-                        : styles.other
-                    }
-                  />
-                </View>
-              </TouchableOpacity>
-            )}
+            renderItem={({item}: any) => <Sport item={item} />}
           />
         )}
       </View>

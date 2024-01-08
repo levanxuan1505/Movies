@@ -9,13 +9,5 @@ const VLeague = [
   {id: '8', image: require('../assets/vLeague/8.jpg')},
   {id: '9', image: require('../assets/vLeague/9.jpg')},
   {id: '10', image: require('../assets/vLeague/10.jpg')},
-  {id: '11', image: require('../assets/vLeague/11.jpg')},
-  {id: '12', image: require('../assets/vLeague/12.jpg')},
-  {id: '13', image: require('../assets/vLeague/13.jpg')},
-  {id: '14', image: require('../assets/vLeague/14.jpg')},
-  {id: '15', image: require('../assets/vLeague/15.jpg')},
-  {id: '16', image: require('../assets/vLeague/16.jpg')},
-  {id: '17', image: require('../assets/vLeague/17.jpg')},
-  {id: '18', image: require('../assets/vLeague/18.jpg')},
 ];
 export default VLeague;

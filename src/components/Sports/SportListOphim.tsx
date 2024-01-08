@@ -2,15 +2,20 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import {RootStackParams} from '@navigators';
-import {FlashList} from '@shopify/flash-list';
 import FastImage from 'react-native-fast-image';
 const {width, height} = Dimensions.get('window');
 import {fallbackMoviePoster} from '../../Api/MoviesDb';
 import {useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {imageOphim, fetchMoviesOphim} from '../../Api/MoviesDb';
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import React, {Suspense, useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  VirtualizedList,
+} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 interface Props {
@@ -31,25 +36,24 @@ const SportListOphim: React.FC<Props> = ({title, hideSeeAll, page}) => {
   useEffect(() => {
     getListMovies(page);
   }, [page]);
-
-  const Movies = useCallback(
-    ({item}) => {
-      return (
+  const getItem = (data, index) => {
+    return data[index];
+  };
+  const Movies = ({item}) => {
+    return (
+      <Suspense>
         <TouchableOpacity
           onPress={() => navigation.push('MoviesOphim', item.slug)}>
           <View className="space-y-1 mr-1">
             <FastImage
               defaultSource={require('../../assets/images/Progress.png')}
               source={{
-                uri:
-                  imageOphim(item.thumb_url) ||
-                  imageOphim(item.poster_url) ||
-                  fallbackMoviePoster,
+                uri: imageOphim(item.thumb_url) || fallbackMoviePoster,
                 headers: {Authorization: 'someAuthToken'},
                 priority: FastImage.priority.normal,
                 cache: FastImage.cacheControl.immutable,
               }}
-              resizeMode={FastImage.resizeMode.center}
+              resizeMode={FastImage.resizeMode.cover}
               style={styles.Image}
             />
             <Text
@@ -60,10 +64,9 @@ const SportListOphim: React.FC<Props> = ({title, hideSeeAll, page}) => {
             </Text>
           </View>
         </TouchableOpacity>
-      );
-    },
-    [navigation],
-  );
+      </Suspense>
+    );
+  };
   return (
     <View className="mb-3 space-y-1 w-full">
       <View className="mx-2 flex-row justify-between items-center">
@@ -79,17 +82,18 @@ const SportListOphim: React.FC<Props> = ({title, hideSeeAll, page}) => {
           </TouchableOpacity>
         )}
       </View>
-      <View>
+      <View className="px-[8px]">
         {data && data.length > 0 && (
-          <FlashList
-            data={data}
+          <VirtualizedList
+            data={data.slice(0, 12)}
             horizontal={true}
-            estimatedItemSize={15}
+            getItem={getItem}
+            initialNumToRender={4}
+            disableVirtualization={true}
             keyExtractor={item => item._id}
+            getItemCount={data => data.length}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => {
-              return <Movies item={item} />;
-            }}
+            renderItem={({item}: any) => <Movies item={item} />}
           />
         )}
       </View>

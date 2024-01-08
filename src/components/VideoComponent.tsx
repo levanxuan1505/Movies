@@ -1,18 +1,21 @@
 /* eslint-disable radix */
 /* eslint-disable react-native/no-inline-styles */
+import {Colors} from '@constants';
 import Video from 'react-native-video';
-import React, {memo, useRef, useState} from 'react';
+import {RootStackParams} from '@navigators';
+import React, {useRef, useState} from 'react';
 import Slider from '@react-native-community/slider';
 import {useNavigation} from '@react-navigation/native';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
-import {Colors} from '@constants';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const VideoComponent = ({idVideo}) => {
   const [clicked, setClicked] = useState(false);
   const [pause, setPaused] = useState(true);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(null);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const ref = useRef();
   const format = seconds => {
@@ -141,7 +144,9 @@ const VideoComponent = ({idVideo}) => {
                 alignItems: 'center',
               }}>
               <Text style={{color: 'white'}}>
-                {format(progress?.currentTime)}
+                {progress?.currentTime
+                  ? format(progress?.currentTime)
+                  : '00:00'}
               </Text>
               <Slider
                 minimumValue={0}
@@ -155,7 +160,9 @@ const VideoComponent = ({idVideo}) => {
                 }}
               />
               <Text style={{color: 'white'}}>
-                {format(progress?.seekableDuration)}
+                {progress?.seekableDuration
+                  ? format(progress?.seekableDuration)
+                  : '00:00'}
               </Text>
             </View>
             <TouchableOpacity

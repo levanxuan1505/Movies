@@ -8,14 +8,13 @@ import {
   Image,
   ScrollView,
   Dimensions,
-  RefreshControl,
   TouchableOpacity,
 } from 'react-native';
 import {Loading} from '@components';
 import React, {useState} from 'react';
 import {styles, theme} from '../theme';
 // import YouTube from 'react-native-youtube';
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 import Carousel from 'react-native-snap-carousel';
 import {useNavigation} from '@react-navigation/native';
 import {HeartIcon} from 'react-native-heroicons/solid';
@@ -27,13 +26,7 @@ const SeeAllHBOScreen = ({route}) => {
   const title = route.params.title;
   const firstItem = route.params.firstItem;
   const [isFavorite, setFavorite] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
-  }, []);
+
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const MovieCard = ({item}) => {
@@ -41,21 +34,6 @@ const SeeAllHBOScreen = ({route}) => {
       <View
         className="flex-row justify-center flex-wrap"
         style={{paddingVertical: 10}}>
-        {/* <YouTube
-          videoId={item.youtubeID} // The YouTube video ID
-          play={false} // control playback of video with true/false
-          fullscreen // control whether the video should play in fullscreen or inline
-          loop={false} // control whether the video should loop when ended
-          // onReady={e => this.setState({isReady: true})}
-          // onChangeState={e => this.setState({status: e.state})}
-          // onChangeQuality={e => this.setState({quality: e.quality})}
-          // onError={e => this.setState({error: e.error})}
-          style={{
-            //   alignSelf: 'stretch',
-            width: width * 0.85,
-            height: height * 0.23,
-          }}
-        /> */}
         <Text
           className="text-white font-semibold ml-1"
           style={{

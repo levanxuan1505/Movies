@@ -1,20 +1,20 @@
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {styles} from '../theme';
 import React, {useRef} from 'react';
 import {FlashList} from '@shopify/flash-list';
 const SportsBodyComponent = React.lazy(
   () => import('../components/Sports/SportsBodyComponent'),
 );
-import {Freeze} from 'react-freeze';
-import {SportTrending} from '@components';
+const SportTrending = React.lazy(
+  () => import('../components/Sports/SportTrending'),
+);
 import {useSharedValue} from 'react-native-reanimated';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {MagnifyingGlassIcon, BoltIcon} from 'react-native-heroicons/outline';
 import {View, Text, ViewToken, RefreshControl} from 'react-native';
+import {MagnifyingGlassIcon, BoltIcon} from 'react-native-heroicons/outline';
 
 const SportScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -135,52 +135,43 @@ const SportScreen = () => {
   const viewabilityConfigCallbackPairs = useRef([{onViewableItemsChanged}]);
 
   return (
-    <Freeze freeze={false}>
-      <View className="flex-1 w-screen bg-neutral-900 position: relative">
-        <SafeAreaView className="{ios} ? -mb-2 : -mb-3 position: absolute pb-[-35px] pt-[-14px] z-10">
-          <View className="flex-row w-screen justify-between px-[20px] items-center ">
-            <BoltIcon size={30} strokeWidth={2} color="white" />
-            <View className="flex-row items-center">
-              <Text className="text-[32px] font-Primary color-greenColor">
-                ---SPO
-              </Text>
-              <Text className="text-[32px] font-Primary color-blueColor">
-                RTS---
-              </Text>
-            </View>
-
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Search', {name: 'Sports...'})
-              }>
-              <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
-            </TouchableOpacity>
+    <View className="flex-1 w-screen bg-neutral-900 position: relative">
+      <SafeAreaView className="{ios} ? -mb-2 : -mb-3 position: absolute pb-[-35px] pt-[-14px] z-10">
+        <View className="flex-row w-screen justify-between px-[20px] items-center ">
+          <BoltIcon size={30} strokeWidth={2} color="white" />
+          <View className="flex-row items-center">
+            <Text className="text-[32px] font-Primary color-greenColor">
+              ---SPO
+            </Text>
+            <Text className="text-[32px] font-Primary color-blueColor">
+              RTS---
+            </Text>
           </View>
-        </SafeAreaView>
 
-        <FlashList
-          data={data}
-          estimatedItemSize={20}
-          maxToRenderPerBatch={2}
-          nestedScrollEnabled={true}
-          updateCellsBatchingPeriod={20}
-          removeClippedSubviews={true}
-          keyExtractor={item => item.key}
-          getItemCount={data => data.length}
-          ListHeaderComponent={<SportTrending name="Trending" />}
-          viewabilityConfigCallbackPairs={
-            viewabilityConfigCallbackPairs.current
-          }
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
-            <SportsBodyComponent item={item} viewableItems={viewableItems} />
-          )}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
-      </View>
-    </Freeze>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Search', {name: 'Sports...'})}>
+            <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+      {/*  */}
+      <FlashList
+        data={data}
+        estimatedItemSize={20}
+        maxToRenderPerBatch={2}
+        nestedScrollEnabled={true}
+        updateCellsBatchingPeriod={20}
+        ListHeaderComponent={<SportTrending name="Trending" />}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => (
+          <SportsBodyComponent item={item} viewableItems={viewableItems} />
+        )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
+    </View>
   );
 };
 
