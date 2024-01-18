@@ -9,12 +9,12 @@ import {
 import React from 'react';
 import {View, Text} from 'react-native';
 import {RootStackParams} from '@navigators';
-import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const HBOList = React.lazy(() => import('../components/HBO/HBOList'));
+const HBOBody = React.lazy(() => import('../components/HBO/HBOBody'));
 const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -44,7 +44,7 @@ const HomeScreen = () => {
         </View>
       </SafeAreaView>
 
-      <HBOList />
+      <HBOBody />
     </View>
   );
 };

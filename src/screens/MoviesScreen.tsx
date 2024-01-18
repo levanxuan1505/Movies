@@ -19,11 +19,14 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-export interface Data {
-  id: string;
-  password: number;
-}
-const MoviesScreen = () => {
+import {RouteProp, NavigationProp} from '@react-navigation/native';
+
+type MoviesScreen = {
+  route: RouteProp<RootStackParams, 'Movies'>;
+  navigation: NavigationProp<RootStackParams, 'Movies'>;
+};
+
+const MoviesScreen: React.FC<MoviesScreen> = () => {
   const {params: item} = useRoute();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -64,7 +67,7 @@ const MoviesScreen = () => {
           <View>
             <Image
               source={{
-                uri: image342(movie.poster_path) || fallbackMoviePoster,
+                uri: image342(movie?.poster_path) || fallbackMoviePoster,
               }}
               style={{width, height: height * 0.55}}
             />
@@ -85,7 +88,7 @@ const MoviesScreen = () => {
         <View style={{marginTop: -(height * 0.09)}} className="space-y-3">
           {/* title */}
           <Text className="text-white text-center text-3xl font-bold tracking-wider">
-            {item.title}
+            {item?.title}
           </Text>
           {/* status release runtiime */}
           {movie?.id ? (
@@ -96,7 +99,7 @@ const MoviesScreen = () => {
           ) : null}
           <View className="flex-row justify-center mx-4 space-x-2">
             {movie?.genres?.map((genre, index) => {
-              let showDot = index + 1 !== movie.genres.length;
+              let showDot = index + 1 !== movie?.genres.length;
               return (
                 <Text
                   key={index}

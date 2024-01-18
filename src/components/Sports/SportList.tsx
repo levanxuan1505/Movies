@@ -4,17 +4,16 @@ import React, {Suspense} from 'react';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
-import {ProgressiveImage} from '../ProgressiveComponent';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   View,
   Text,
-  Image,
   Dimensions,
   TouchableOpacity,
   StyleSheet,
   VirtualizedList,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 interface Props {
   data: any;
@@ -40,8 +39,8 @@ const SportList: React.FC<Props> = ({
       <Suspense>
         <TouchableOpacity>
           <View className="space-y-1 mr-1">
-            <ProgressiveImage
-              thumbnailSource={require('../../assets/images/Progress.png')}
+            <FastImage
+              defaultSource={require('../../assets/images/Progress.png')}
               source={item.image}
               style={{
                 width: logo === 'bigSize' ? width * 0.42 : width * 0.26,
@@ -49,7 +48,7 @@ const SportList: React.FC<Props> = ({
               }}
               resizeMode="cover"
             />
-            <Image
+            <FastImage
               source={
                 symbol === 'skySport'
                   ? require('../../assets/images/skySport.png')

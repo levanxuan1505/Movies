@@ -69,10 +69,10 @@ const CustomDrawerScreen = () => {
                   source={require('../assets/images/avatar.png')}
                 />
               </View>
-              <Text className="font-[26px] color-Primary font-[700]">
-                {user?.email > 14
-                  ? user?.email.slice(0, 14) + '...'
-                  : user?.email}
+              <Text
+                numberOfLines={1}
+                className="text-[20px] w-60 color-greenColor font-[100] font-Primary absolute pl-[65px] ">
+                {user?.email}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -126,9 +126,7 @@ const CustomDrawerScreen = () => {
 
           <TouchableOpacity
             style={styles.viewContainer}
-            onPress={() =>
-              navigation.navigate('Animation', {title: 'LogInTV'})
-            }>
+            onPress={() => navigation.navigate('LogInTV', {title: 'LogInTV'})}>
             <Iconssss name="tv" size={28} color="#00AA13" />
             <Text style={styles.text}>Log In SmartTV</Text>
           </TouchableOpacity>

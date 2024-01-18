@@ -6,6 +6,7 @@ import React, {createContext, useState} from 'react';
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
+
   return (
     <AuthContext.Provider
       value={{
@@ -42,19 +43,23 @@ export const AuthProvider = ({children}) => {
               // console.error(error);
             });
         },
-        register: async (email, password) => {
+        register: async (
+          email,
+          password,
+          setModalVisible,
+          setModalVisible1,
+        ) => {
           auth()
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
-              console.log('User account created & signed in!');
+              setModalVisible(true);
             })
             .catch(error => {
               if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
+                setModalVisible1(true);
               }
 
               if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!');
               }
 
               console.error(error);

@@ -275,7 +275,7 @@ const HBOBodyComponent: React.FC<Props> = ({data}) => {
                 initialNumToRender={4}
                 renderItem={renderItems}
                 disableVirtualization={true}
-                data={data.items.slice(0, 10)}
+                data={data.items.slice(0, 12)}
                 keyExtractor={item => item._id}
                 extraData={item => item._id.toString()}
                 getItemCount={data => data.length}

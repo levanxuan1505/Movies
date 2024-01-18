@@ -29,8 +29,8 @@ type ListItemProps = {
     key: any;
     hbo: string;
     data: string;
-    logo: string;
     ophim: string;
+    logo: string;
     value: number;
     title: string;
     index: number;
@@ -48,12 +48,7 @@ const TV = ({item}) => {
 const TVOphim = ({item}) => {
   return (
     <Suspense>
-      <TVListOphim
-        title={item?.title}
-        hideSeeAll={false}
-        page={item?.value}
-        logo={item?.logo}
-      />
+      <TVListOphim title={item?.title} hideSeeAll={false} page={item?.value} />
     </Suspense>
   );
 };
@@ -104,7 +99,7 @@ const TvBodyComponent: React.FC<ListItemProps> = memo(
           {item?.title === 'ListCarouselHome' ? (
             <ListCarouselHome index={item.index} />
           ) : item?.hbo ? (
-            <HBOListOphim item={item} />
+            <HBOListOphim data={item} />
           ) : item?.hideSeeAll === false ? (
             <SportList
               logo={item?.logo}

@@ -16,16 +16,16 @@ import {styles, theme} from '../theme';
 import {RootStackParams} from '@navigators';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
-import {HeartIcon} from 'react-native-heroicons/solid';
+import {FilmIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
+import {fallbackMoviePoster, image500, imageOphim} from '../Api/MoviesDb';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import FastImage from 'react-native-fast-image';
 
 const SeeAllScreen = ({route}) => {
   const data = route.params.data;
   const title = route.params.title;
-  const [isFavorite, setFavorite] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -61,12 +61,7 @@ const SeeAllScreen = ({route}) => {
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>---{title}---</Text>
           </Text>
-          <TouchableOpacity onPress={() => setFavorite(!isFavorite)}>
-            <HeartIcon
-              size="35"
-              color={isFavorite ? theme.background : 'white'}
-            />
-          </TouchableOpacity>
+          <FilmIcon size="35" color={theme.background} />
         </View>
       </SafeAreaView>
       {loading ? (
@@ -77,13 +72,13 @@ const SeeAllScreen = ({route}) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
+          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 90}}
           className="space-y-3">
           <Text className="text-white font-semibold ml-1">
             Results ({data.length})
           </Text>
           {data[0].slug ? (
-            <View className="flex-row justify-between flex-wrap">
+            <View className="flex-row justify-between flex-wrap mb-2">
               {data.map((item, index) => {
                 return (
                   <TouchableWithoutFeedback
@@ -91,24 +86,26 @@ const SeeAllScreen = ({route}) => {
                     onPress={() =>
                       navigation.navigate('MoviesOphim', item.slug)
                     }>
-                    <View className="space-y-2 mb-4">
-                      <Image
+                    <View className="space-y-2 mb-4 ">
+                      <FastImage
+                        defaultSource={require('../assets/images/Progress.png')}
                         source={{
                           uri:
-                            `https://img.ophim8.cc/uploads/movies/${item.thumb_url}` ||
+                            imageOphim(item?.poster_url) ||
+                            imageOphim(item?.thumb_url) ||
                             fallbackMoviePoster,
+                          headers: {Authorization: 'someAuthToken'},
+                          priority: FastImage.priority.normal,
                         }}
-                        className="rounded-3xl"
+                        className="rounded-2xl"
+                        resizeMode={FastImage.resizeMode.cover}
                         style={{width: width * 0.44, height: height * 0.3}}
                       />
-                      <Text className="text-gray-300 ml-1">
-                        {item?.title
-                          ? item?.title.length > 22
-                            ? item?.title.slice(0, 22) + '...'
-                            : item?.title
-                          : item?.name.length > 22
-                          ? item?.name.slice(0, 22) + '...'
-                          : item?.name}
+                      <Text
+                        numberOfLines={1}
+                        style={{width: width * 0.4}}
+                        className="text-gray-300 ml-1">
+                        {item?.title || item?.name}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>

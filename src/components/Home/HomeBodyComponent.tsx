@@ -17,9 +17,26 @@ import {fallbackMoviePoster} from '../../Api/MoviesDb';
 import {useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-interface Props {
-  data: any;
-}
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
+import {ViewToken} from 'react-native';
+type ListItemProps = {
+  data: {
+    key: any;
+    items: any;
+    hbo: string;
+    data: string;
+    logo: string;
+    ophim: string;
+    value: number;
+    title: string;
+    index: number;
+    symbol: string;
+    pagination: any;
+    hideSeeAll: boolean;
+  };
+  viewableItems: Animated.SharedValue<ViewToken[]>;
+};
+
 const Array = [
   {
     id: 1,
@@ -113,7 +130,22 @@ const Array = [
 const getItem = (data, index) => {
   return data[index];
 };
-const HomeBodyComponent: React.FC<Props> = ({data}) => {
+const HomeBodyComponent: React.FC<ListItemProps> = ({data, viewableItems}) => {
+  const rStyle = useAnimatedStyle(() => {
+    const isVisible = Boolean(
+      viewableItems.value
+        .filter(item => item.isViewable)
+        .find(viewableItem => viewableItem.item.key === data.key),
+    );
+    return {
+      opacity: withTiming(isVisible ? 1 : 0),
+      transform: [
+        {
+          scale: withTiming(isVisible ? 1 : 1),
+        },
+      ],
+    };
+  }, []);
   const styles = StyleSheet.create({
     text: {
       width:
@@ -190,50 +222,52 @@ const HomeBodyComponent: React.FC<Props> = ({data}) => {
     data.items &&
     data.items.length > 0 && (
       <>
-        <View className="mb-3 space-y-1 w-full">
-          <View className="mx-2 flex-row justify-between items-center">
-            <Text className="text-white font-Primary text-[15px]">
-              {Array.map(item => {
-                if (item.id === data.pagination.currentPage) {
-                  return item.title;
-                }
-              })}
-            </Text>
-
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('SeeAll', {
-                  title: Array.map(item => {
-                    if (item.id === data.pagination.currentPage) {
-                      return item.title;
-                    }
-                  }),
-                  data: data.items,
-                })
-              }>
-              <Text className="text-lg font-Primary text-[15px] color-greenColor">
-                See All
+        <Animated.View style={[rStyle]}>
+          <View className="mb-3 space-y-1 w-full">
+            <View className="mx-2 flex-row justify-between items-center">
+              <Text className="text-white font-Primary text-[15px]">
+                {Array.map(item => {
+                  if (item.id === data.pagination.currentPage) {
+                    return item.title;
+                  }
+                })}
               </Text>
-            </TouchableOpacity>
-          </View>
 
-          <View className="px-[8px]">
-            {data.items && data.items.length > 0 && (
-              <VirtualizedList
-                horizontal={true}
-                getItem={getItem}
-                initialNumToRender={4}
-                disableVirtualization={true}
-                data={data.items.slice(0, 10)}
-                keyExtractor={item => item._id}
-                getItemCount={data => data.length}
-                extraData={item => item._id.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderItems}
-              />
-            )}
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('SeeAll', {
+                    title: Array.map(item => {
+                      if (item.id === data.pagination.currentPage) {
+                        return item.title;
+                      }
+                    }),
+                    data: data.items,
+                  })
+                }>
+                <Text className="text-lg font-Primary text-[15px] color-greenColor">
+                  See All
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View className="px-[8px]">
+              {data.items && data.items.length > 0 && (
+                <VirtualizedList
+                  horizontal={true}
+                  getItem={getItem}
+                  initialNumToRender={4}
+                  disableVirtualization={true}
+                  data={data.items.slice(0, 12)}
+                  keyExtractor={item => item._id}
+                  getItemCount={data => data.length}
+                  extraData={item => item._id.toString()}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={renderItems}
+                />
+              )}
+            </View>
           </View>
-        </View>
+        </Animated.View>
       </>
     )
   );

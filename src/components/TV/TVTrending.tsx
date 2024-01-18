@@ -16,6 +16,7 @@ import {
   Dimensions,
   StyleSheet,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
 import {
   State,
@@ -24,8 +25,12 @@ import {
 } from 'react-native-gesture-handler';
 import React from 'react';
 const {width} = Dimensions.get('screen');
-import {image185} from '../../Api/MoviesDb';
+import {image500} from '../../Api/MoviesDb';
+import {RootStackParams} from '@navigators';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 import {fallbackMoviePoster, fetchTvChannelsMovies} from '../../Api/MoviesDb';
 const OVERFLOW_HEIGHT = 70;
 const SPACING = 10;
@@ -59,6 +64,8 @@ const OverflowItems = ({data, scrollXAnimated}) => {
 
 const TVTrending = () => {
   const [data, setData] = React.useState([]);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   React.useEffect(() => {
     setTimeout(() => {}, 1000);
   }, []);
@@ -164,33 +171,37 @@ const TVTrending = () => {
               });
 
               return (
-                <Animated.View
-                  style={{
-                    position: 'absolute',
-                    left: -ITEM_WIDTH / 2,
-                    opacity,
-                    transform: [
-                      {
-                        translateX,
-                      },
-                      {scale},
-                    ],
-                  }}>
-                  <FastImage
-                    defaultSource={require('../../assets/images/Progress.png')}
-                    source={{
-                      uri: image185(item.poster_path) || fallbackMoviePoster,
-                      headers: {Authorization: 'someAuthToken'},
-                      priority: FastImage.priority.high,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
+                <TouchableOpacity
+                  onPress={() => navigation.push('Movies', item)}>
+                  <Animated.View
                     style={{
-                      width: ITEM_WIDTH,
-                      height: ITEM_HEIGHT,
-                      borderRadius: 12,
-                    }}
-                  />
-                </Animated.View>
+                      position: 'absolute',
+                      left: -ITEM_WIDTH / 2,
+                      opacity,
+                      transform: [
+                        {
+                          translateX,
+                        },
+                        {scale},
+                      ],
+                    }}>
+                    <FastImage
+                      defaultSource={require('../../assets/images/Progress.png')}
+                      source={{
+                        uri: image500(item.poster_path) || fallbackMoviePoster,
+                        headers: {Authorization: 'someAuthToken'},
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                      style={{
+                        width: ITEM_WIDTH,
+                        height: ITEM_HEIGHT,
+                        borderRadius: 12,
+                      }}
+                    />
+                  </Animated.View>
+                </TouchableOpacity>
               );
             }}
           />

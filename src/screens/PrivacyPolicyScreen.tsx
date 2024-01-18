@@ -53,9 +53,9 @@ const PrivacyPolicyScreen = ({route}) => {
           <Icons name="newspaper-outline" size={28} color="#00AA13" />
         </View>
       </SafeAreaView>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{marginTop: 100, marginBottom: 20, paddingHorizontal: 20}}>
-          <Text style={{fontSize: 14, color: 'white'}}>
+          <Text style={{fontSize: 18, color: 'white'}}>
             Khi chúng tôi cung cấp bất kỳ dịch vụ tương tác, chúng tôi sẽ cung
             cấp thông tin rõ ràng để bạn biết về loại dịch vụ được cung cấp, nếu
             nó được kiểm duyệt và hình thức kiểm duyệt được sử dụng, nếu có. Nếu
@@ -78,10 +78,15 @@ const PrivacyPolicyScreen = ({route}) => {
             phương tiện liên lạc với người điều tiết, nếu một mối quan tâm hoặc
             khó khăn nào đó nảy sinh.
           </Text>
-          <Text style={{fontSize: 16, color: 'white', paddingVertical: 10}}>
+          <Text
+            style={{
+              fontSize: 22,
+              color: '#00AA13',
+              paddingVertical: 10,
+            }}>
             * Tiêu chuẩn nội dung
           </Text>
-          <Text style={{fontSize: 14, color: 'white'}}>
+          <Text style={{fontSize: 18, color: 'white'}}>
             Các tiêu chuẩn nội dung này áp dụng cho bất kỳ và tất cả tài liệu mà
             bạn đóng góp vào trang web của chúng tôi ("sự đống góp") bao gồm các
             bài đánh giá và câu hỏi được gửi cho chúng tôi. Các tiêu chuẩn và

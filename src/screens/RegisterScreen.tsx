@@ -18,6 +18,9 @@ import LottieView from 'lottie-react-native';
 import {Button, Loader, Input} from '@components';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../navigators/AuthProvider';
+import {useSelector} from 'react-redux';
+import Modal from 'react-native-modal';
+
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export interface Error {
   email: string;
@@ -26,7 +29,10 @@ export interface Error {
   phone: number;
 }
 const RegisterScreen = () => {
-  const register = useContext(AuthContext);
+  const {register}: any = useContext(AuthContext);
+  const {data} = useSelector((state: any) => state.scrollHBO);
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [isModalVisible1, setModalVisible1] = React.useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [inputs, setInputs] = React.useState({
@@ -35,6 +41,7 @@ const RegisterScreen = () => {
     phone: '',
     password: '',
   });
+  console.log(data);
   const [errors, setErrors] = React.useState<Error>({});
   const [loading, setLoading] = React.useState(false);
 
@@ -81,22 +88,18 @@ const RegisterScreen = () => {
 
     if (isValid) {
       registerAccess(inputs.email, inputs.password);
-      // register(inputs.email, inputs.password);
     }
   };
-
   const registerAccess = (email, password) => {
     setLoading(true);
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
         setLoading(false);
-        // AsyncStorage.setItem('userData', JSON.stringify(inputs));
-        register(email, password);
-        navigation.navigate('LogIn');
+        await register(email, password, setModalVisible, setModalVisible1);
       } catch (error) {
         Alert.alert('Error', 'Something went wrong');
       }
-    }, 2000);
+    }, 1200);
   };
 
   const handleOnchange = (text: string, input: string) => {
@@ -106,108 +109,159 @@ const RegisterScreen = () => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
   return (
-    <SafeAreaView className="flex-1 bg-neutral-800">
-      <Loader visible={loading} />
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: Colors.DEFAULT_GREEN,
-            fontSize: Display.setWidth(8),
-            fontFamily: 'Shrikhand-Regular',
-          }}>
-          Register
-        </Text>
-        <View style={{width: width * 0.2, height: width * 0.15}}>
-          <LottieView
-            source={require('../assets/OnboardingAnimations/8.json')}
-            autoPlay
-            loop
-          />
-        </View>
-      </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingTop: Display.setWidth(0),
-          paddingHorizontal: 20,
-          paddingBottom: Display.setWidth(20),
-        }}>
-        <View>
-          <Input
-            password={false}
-            label="Email"
-            error={errors.email}
-            iconName="email-outline"
-            placeholder="Your Email"
-            onFocus={() => handleError(null, 'email')}
-            onChangeText={(text: string) => handleOnchange(text, 'email')}
-          />
-
-          <Input
-            password={false}
-            label="Full Name"
-            error={errors.fullname}
-            iconName="account-outline"
-            placeholder="Your Full Name"
-            onFocus={() => handleError(null, 'fullname')}
-            onChangeText={(text: string) => handleOnchange(text, 'fullname')}
-          />
-
-          <Input
-            password={false}
-            label="Phone Number"
-            error={errors.phone}
-            keyboardType="numeric"
-            iconName="phone-outline"
-            placeholder="Your Number"
-            onFocus={() => handleError(null, 'phone')}
-            onChangeText={(text: string) => handleOnchange(text, 'phone')}
-          />
-          <Input
-            password={true}
-            label="Password"
-            error={errors.password}
-            iconName="lock-outline"
-            placeholder="Your Password"
-            onFocus={() => handleError(null, 'password')}
-            onChangeText={(text: string) => handleOnchange(text, 'password')}
-          />
-          <Button logo="register" title="Register" onPress={validate} />
-          <TouchableOpacity onPress={navigation.goBack}>
-            <Text
-              style={{
-                color: Colors.DEFAULT_YELLOW,
-                fontWeight: '700',
-                textAlign: 'center',
-                fontSize: 16,
-                paddingTop: 10,
-                fontFamily: 'Shrikhand-Regular',
+    <>
+      <Modal
+        animationIn={'zoomIn'}
+        animationInTiming={500}
+        backdropOpacity={0.85}
+        animationOut={'zoomOut'}
+        animationOutTiming={1000}
+        isVisible={isModalVisible}>
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-[#00AA13] font-bold text-[32px] font-['Shrikhand-Regular']">
+            App auto log in for you
+          </Text>
+          <View className="flex-row w-full justify-around py-4 items-center">
+            <TouchableOpacity
+              className="border-2 border-white rounded bg-slate-600 p-2"
+              onPress={() => {
+                setModalVisible(!isModalVisible);
+                navigation.navigate('Drawer');
               }}>
-              You have an account? Log In
-            </Text>
-          </TouchableOpacity>
-          <View
+              <Text className="text-[#24C869] font-bold text-[32px] font-['Shrikhand-Regular']">
+                Go to Home
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationIn={'zoomIn'}
+        animationInTiming={500}
+        backdropOpacity={0.85}
+        animationOut={'zoomOut'}
+        animationOutTiming={1000}
+        isVisible={isModalVisible1}>
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-[#F53920] font-bold text-[26px] font-['Shrikhand-Regular']">
+            Already User email address
+          </Text>
+          <View className="flex-row w-full justify-around py-4 items-center">
+            <TouchableOpacity
+              className="border-2 border-white rounded bg-slate-600 p-1"
+              onPress={() => {
+                setModalVisible1(!isModalVisible1);
+              }}>
+              <Text className="text-[#24C869] font-bold text-[32px] font-['Shrikhand-Regular']">
+                Try Again!
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <SafeAreaView className="flex-1 bg-neutral-800">
+        <Loader visible={loading} />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <Text
             style={{
-              width: width * 0.92,
-              height: width * 0.6,
-              alignItems: 'center',
-              margin: 0,
+              fontWeight: 'bold',
+              color: Colors.DEFAULT_GREEN,
+              fontSize: Display.setWidth(8),
+              fontFamily: 'Shrikhand-Regular',
             }}>
+            Register
+          </Text>
+          <View style={{width: width * 0.2, height: width * 0.15}}>
             <LottieView
-              source={require('../assets/OnboardingAnimations/7.json')}
+              source={require('../assets/OnboardingAnimations/8.json')}
               autoPlay
               loop
             />
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingTop: Display.setWidth(0),
+            paddingHorizontal: 20,
+            paddingBottom: Display.setWidth(20),
+          }}>
+          <View>
+            <Input
+              password={false}
+              label="Email"
+              error={errors.email}
+              iconName="email-outline"
+              placeholder="Your Email"
+              onFocus={() => handleError(null, 'email')}
+              onChangeText={(text: string) => handleOnchange(text, 'email')}
+            />
+
+            <Input
+              password={false}
+              label="Full Name"
+              error={errors.fullname}
+              iconName="account-outline"
+              placeholder="Your Full Name"
+              onFocus={() => handleError(null, 'fullname')}
+              onChangeText={(text: string) => handleOnchange(text, 'fullname')}
+            />
+
+            <Input
+              password={false}
+              label="Phone Number"
+              error={errors.phone}
+              keyboardType="numeric"
+              iconName="phone-outline"
+              placeholder="Your Number"
+              onFocus={() => handleError(null, 'phone')}
+              onChangeText={(text: string) => handleOnchange(text, 'phone')}
+            />
+            <Input
+              password={true}
+              label="Password"
+              error={errors.password}
+              iconName="lock-outline"
+              placeholder="Your Password"
+              onFocus={() => handleError(null, 'password')}
+              onChangeText={(text: string) => handleOnchange(text, 'password')}
+            />
+            <Button logo="register" title="Register" onPress={validate} />
+            <TouchableOpacity onPress={navigation.goBack}>
+              <Text
+                style={{
+                  color: Colors.DEFAULT_YELLOW,
+                  fontWeight: '700',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  paddingTop: 10,
+                  fontFamily: 'Shrikhand-Regular',
+                }}>
+                You have an account? Log In
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                width: width * 0.92,
+                height: width * 0.6,
+                alignItems: 'center',
+                margin: 0,
+              }}>
+              <LottieView
+                source={require('../assets/OnboardingAnimations/7.json')}
+                autoPlay
+                loop
+              />
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 

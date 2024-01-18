@@ -60,10 +60,6 @@ const Backdrop = ({movies, scrollX}) => {
                     priority: FastImage.priority.normal,
                     cache: FastImage.cacheControl.immutable,
                   }}
-                  onLoad={() => {
-                    FastImage.clearDiskCache();
-                    FastImage.clearMemoryCache();
-                  }}
                   style={{
                     width,
                     position: 'absolute',

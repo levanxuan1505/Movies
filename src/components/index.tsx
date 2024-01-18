@@ -6,13 +6,12 @@ import TVList from './TV/TVList';
 import Loading from './Loading';
 import TVTrending from './TV/TVTrending';
 import ModalPoster from './ModalPoster';
+import ModalPopUp from './ModalPopUp';
 import SportList from './Sports/SportList';
 import Trending from './Home/HomeTrending';
-import HBODiscover from './HBO/HBODiscover';
 import HBOListTest from './HBO/HBOListTest';
 import HBOTrending from './HBO/HBOTrending';
 import WatchingList from './WatchingList';
-import VideoTrailer from './VideoTrailer';
 import ButtonSocial from './ButtonSocial';
 import HomeTrending from './Home/HomeTrending';
 import VideoComponent from './VideoComponent';
@@ -24,6 +23,7 @@ import HBOBodyComponent from './HBO/HBOBodyComponent';
 import ListCarouselHome from './Home/ListCarouselHome';
 import HomeBodyComponent from './Home/HomeBodyComponent';
 import SportsBodyComponent from './Sports/SportsBodyComponent';
+
 export {
   Cast,
   Input,
@@ -32,17 +32,16 @@ export {
   Button,
   Trending,
   Loading,
+  ModalPopUp,
   SportList,
   HBOTrending,
   TVTrending,
-  HBODiscover,
   HBOListTest,
   ModalPoster,
   WatchingList,
   HomeTrending,
   ButtonSocial,
   SportTrending,
-  VideoTrailer,
   VideoComponent,
   ActorMoviesList,
   HBOBodyComponent,

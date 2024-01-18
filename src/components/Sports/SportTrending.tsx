@@ -5,7 +5,7 @@ var {width, height} = Dimensions.get('window');
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {ProgressiveImage} from '../ProgressiveComponent';
+import FastImage from 'react-native-fast-image';
 //
 const SportTrending = ({name}) => {
   const [index, setIndex] = React.useState(SportTrendingList.length / 2);
@@ -38,10 +38,10 @@ const SportTrending = ({name}) => {
           height: 10,
           borderRadius: 10,
           marginHorizontal: -10,
-          backgroundColor: 'rgba(0, 0, 0, 0.92)',
+          backgroundColor: '#00AA13',
         }}
         inactiveDotOpacity={0.6}
-        inactiveDotScale={0.5}
+        inactiveDotScale={0.45}
         tappableDots={true}
       />
     </View>
@@ -52,11 +52,11 @@ const MovieCard = ({item}) => {
   return (
     <Suspense>
       <TouchableOpacity>
-        <ProgressiveImage
-          thumbnailSource={require('../../assets/images/Progress.png')}
+        <FastImage
+          defaultSource={require('../../assets/images/Progress.png')}
           source={item.image}
           style={styles.Image}
-          resizeMode="cover"
+          resizeMode={FastImage.resizeMode.cover}
         />
       </TouchableOpacity>
     </Suspense>

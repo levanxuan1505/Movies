@@ -19,7 +19,7 @@ import React, {useState, useContext} from 'react';
 import {AuthContext} from '../navigators/AuthProvider';
 import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonSocial, Input, Loader} from '@components';
-import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+// import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 // Ask for consent first if necessary
@@ -28,8 +28,8 @@ Settings.initializeSDK();
 
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth, {firebase} from '@react-native-firebase/auth';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
-
+// import {appleAuth} from '@invertase/react-native-apple-authentication';
+import {RouteProp, NavigationProp} from '@react-navigation/native';
 import {NativeModules} from 'react-native';
 const {RNTwitterSignIn} = NativeModules;
 
@@ -41,7 +41,12 @@ export interface Error {
   email: string;
   password: number;
 }
-const LogInScreen = () => {
+type LogInScreen = {
+  route: RouteProp<RootStackParams, 'LogIn'>;
+  navigation: NavigationProp<RootStackParams, 'LogIn'>;
+};
+
+const LogInScreen: React.FC<LogInScreen> = () => {
   // const {user}: any = useContext(AuthContext);
   const {login}: any = useContext(AuthContext);
   GoogleSignin.configure({
@@ -105,87 +110,87 @@ const LogInScreen = () => {
       navigation.navigate('Drawer');
     });
   }
-  async function onFacebookButtonPress() {
-    // Attempt login with permissions
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
+  // async function onFacebookButtonPress() {
+  //   // Attempt login with permissions
+  //   const result = await LoginManager.logInWithPermissions([
+  //     'public_profile',
+  //     'email',
+  //   ]);
 
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
-    }
+  //   if (result.isCancelled) {
+  //     throw 'User cancelled the login process';
+  //   }
 
-    // Once signed in, get the users AccessToken
-    const data = await AccessToken.getCurrentAccessToken();
+  //   // Once signed in, get the users AccessToken
+  //   const data = await AccessToken.getCurrentAccessToken();
 
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
+  //   if (!data) {
+  //     throw 'Something went wrong obtaining access token';
+  //   }
 
-    // Create a Firebase credential with the AccessToken
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
+  //   // Create a Firebase credential with the AccessToken
+  //   const facebookCredential = auth.FacebookAuthProvider.credential(
+  //     data.accessToken,
+  //   );
 
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(facebookCredential);
-  }
-  async function onAppleButtonPress() {
-    // 1). start a apple sign-in request
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-    });
+  //   // Sign-in the user with the credential
+  //   return auth().signInWithCredential(facebookCredential);
+  // }
+  // async function onAppleButtonPress() {
+  //   // 1). start a apple sign-in request
+  //   const appleAuthRequestResponse = await appleAuth.performRequest({
+  //     requestedOperation: appleAuth.Operation.LOGIN,
+  //     requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+  //   });
 
-    // 2). if the request was successful, extract the token and nonce
-    const {identityToken, nonce} = appleAuthRequestResponse;
+  //   // 2). if the request was successful, extract the token and nonce
+  //   const {identityToken, nonce} = appleAuthRequestResponse;
 
-    // can be null in some scenarios
-    if (identityToken) {
-      // 3). create a Firebase `AppleAuthProvider` credential
-      const appleCredential = firebase.auth.AppleAuthProvider.credential(
-        identityToken,
-        nonce,
-      );
+  //   // can be null in some scenarios
+  //   if (identityToken) {
+  //     // 3). create a Firebase `AppleAuthProvider` credential
+  //     const appleCredential = firebase.auth.AppleAuthProvider.credential(
+  //       identityToken,
+  //       nonce,
+  //     );
 
-      // 4). use the created `AppleAuthProvider` credential to start a Firebase auth request,
-      //     in this example `signInWithCredential` is used, but you could also call `linkWithCredential`
-      //     to link the account to an existing user
-      const userCredential = await firebase
-        .auth()
-        .signInWithCredential(appleCredential);
+  //     // 4). use the created `AppleAuthProvider` credential to start a Firebase auth request,
+  //     //     in this example `signInWithCredential` is used, but you could also call `linkWithCredential`
+  //     //     to link the account to an existing user
+  //     const userCredential = await firebase
+  //       .auth()
+  //       .signInWithCredential(appleCredential);
 
-      // user is now signed in, any Firebase `onAuthStateChanged` listeners you have will trigger
-      console.warn(
-        `Firebase authenticated via Apple, UID: ${userCredential.user.uid}`,
-      );
-    } else {
-      // handle this - retry?
-    }
-  }
+  //     // user is now signed in, any Firebase `onAuthStateChanged` listeners you have will trigger
+  //     console.warn(
+  //       `Firebase authenticated via Apple, UID: ${userCredential.user.uid}`,
+  //     );
+  //   } else {
+  //     // handle this - retry?
+  //   }
+  // }
   //google
-  async function onTwitterButtonPress() {
-    // Perform the login request
-    RNTwitterSignIn.init(
-      'VEBHtMFimOOOekrz7on5mqmHX',
-      'Jno6QVkGSWEYRie1cpNHKiMDlZs1yyEY5uVuDQBS5EuzBT1DbH',
-    ).then(() => console.log('Twitter SDK initialized'));
-    const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn();
+  // async function onTwitterButtonPress() {
+  //   // Perform the login request
+  //   RNTwitterSignIn.init(
+  //     'VEBHtMFimOOOekrz7on5mqmHX',
+  //     'Jno6QVkGSWEYRie1cpNHKiMDlZs1yyEY5uVuDQBS5EuzBT1DbH',
+  //   ).then(() => console.log('Twitter SDK initialized'));
+  //   const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn();
 
-    // Create a Twitter credential with the tokens
-    const twitterCredential = auth.TwitterAuthProvider.credential(
-      authToken,
-      authTokenSecret,
-    );
+  //   // Create a Twitter credential with the tokens
+  //   const twitterCredential = auth.TwitterAuthProvider.credential(
+  //     authToken,
+  //     authTokenSecret,
+  //   );
 
-    // Sign-in the user with the credential
-    // return auth().signInWithCredential(twitterCredential);
-    const user_sign_in = auth().signInWithCredential(twitterCredential);
-    user_sign_in.then(re => {
-      console.log(re);
-    });
-  }
+  //   // Sign-in the user with the credential
+  //   // return auth().signInWithCredential(twitterCredential);
+  //   const user_sign_in = auth().signInWithCredential(twitterCredential);
+  //   user_sign_in.then(re => {
+  //     console.log(re);
+  //   });
+  // }
   return (
     <SafeAreaView className="flex-1 bg-neutral-800">
       <StatusBar barStyle="light-content" />
@@ -255,17 +260,17 @@ const LogInScreen = () => {
               title="Log In with Google"
             />
             <ButtonSocial
-              onPress={() => onAppleButtonPress()}
+              // onPress={() => onAppleButtonPress()}
               logo="apple"
               title="Log In with Apple ID"
             />
             <ButtonSocial
-              onPress={() => onFacebookButtonPress()}
+              // onPress={() => onFacebookButtonPress()}
               logo="facebook"
               title="Log In with Facebook"
             />
             <ButtonSocial
-              onPress={() => onTwitterButtonPress()}
+              // onPress={() => onTwitterButtonPress()}
               logo="twitter"
               title="Log In with Twitter"
             />

@@ -8,26 +8,23 @@ import {
   Dimensions,
   RefreshControl,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from 'react-native';
-import {Loading} from '@components';
 import {styles, theme} from '../theme';
-import React, {useEffect, useState} from 'react';
 const {width, height} = Dimensions.get('window');
-import {fetchTrendingMovies} from '../Api/MoviesDb';
+import {AuthContext} from '../navigators/AuthProvider';
 import {useNavigation} from '@react-navigation/native';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {fallbackMoviePoster, image500} from '../Api/MoviesDb';
+import React, {useEffect, useContext, useState} from 'react';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
-
+import firestore from '@react-native-firebase/firestore';
+import FastImage from 'react-native-fast-image';
 const MyListsScreen = ({route}) => {
   const title = route.params.title;
   const navigation = useNavigation();
   const [isFavorite, setFavorite] = useState(false);
-  const [watchingMovies, setWatchingMovies] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
-  const [loading, setLoading] = useState(false);
+  const {user}: any = useContext(AuthContext);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -35,15 +32,25 @@ const MyListsScreen = ({route}) => {
       setRefreshing(false);
     }, 500);
   }, []);
+
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
-    getWatchingMovies();
-  });
-  const getWatchingMovies = async () => {
-    const data = await fetchTrendingMovies();
-    // console.log(data);
-    if (data && data.results) setWatchingMovies(data.results);
-    setLoading(false);
-  };
+    firestore()
+      .collection('users')
+      .doc(user?.email)
+      .collection('listMovies')
+      .onSnapshot(snap => {
+        if (!snap.empty) {
+          console.log('OK');
+          const items = [];
+          snap.forEach(item => items.push({id: item.id, ...item.data()}));
+          setPosts(items);
+        } else {
+          setPosts([]);
+          console.log('Data not found');
+        }
+      });
+  }, []);
   return (
     <View style={{position: 'relative'}} className="flex-1 bg-neutral-800 ">
       <SafeAreaView
@@ -72,41 +79,48 @@ const MyListsScreen = ({route}) => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-      {loading ? (
-        <Loading />
-      ) : watchingMovies.length > 0 ? (
+
+      {user && posts ? (
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 15, paddingTop: 100}}
-          className="space-y-3">
+          contentContainerStyle={{
+            paddingTop: 90,
+            paddingBottom: 20,
+            paddingHorizontal: 15,
+          }}
+          className="space-y-2">
           <Text className="text-white font-semibold ml-1">
-            Results ({watchingMovies.length})
+            Results ({posts.length})
           </Text>
           <View className="flex-row justify-between flex-wrap">
-            {watchingMovies.map((item, index) => {
+            {posts.map((item, index) => {
               return (
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                   key={index}
-                  onPress={() => navigation.navigate('Movies', item)}>
+                  onPress={() => navigation.navigate('MoviesOphim', item.slug)}>
                   <View className="space-y-2 mb-4">
-                    <Image
+                    <FastImage
+                      defaultSource={require('../assets/images/Progress.png')}
                       source={{
-                        uri: image500(item?.poster_path) || fallbackMoviePoster,
+                        uri: item?.poster_url || item?.thumb_url,
+                        headers: {Authorization: 'someAuthToken'},
+                        priority: FastImage.priority.normal,
                       }}
-                      //   source={require('../assets/images/moviePoster1.png')}
-                      className="rounded-3xl"
+                      resizeMode={FastImage.resizeMode.cover}
+                      className="rounded-2xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />
-                    <Text className="text-gray-300 ml-1">
-                      {item?.title.length > 22
-                        ? item?.title.slice(0, 22) + '...'
-                        : item?.title}
+                    <Text
+                      numberOfLines={1}
+                      style={{width: width * 0.4}}
+                      className="text-gray-300 ml-1">
+                      {item?.title || item?.name}
                     </Text>
                   </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
               );
             })}
           </View>

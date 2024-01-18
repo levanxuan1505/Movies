@@ -20,7 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {Suspense, useEffect, useState} from 'react';
 import FastImage from 'react-native-fast-image';
 
-const HomeListTest = ({title, logo, hideSeeAll, idApi}) => {
+const Sport = ({title, logo, hideSeeAll, idApi}) => {
   const navigation = useNavigation();
   const [data, setListMovies] = useState([]);
   const getListMovies = async id => {
@@ -41,7 +41,7 @@ const HomeListTest = ({title, logo, hideSeeAll, idApi}) => {
     return (
       <Suspense>
         <TouchableWithoutFeedback
-          onPress={() => navigation.push('Movies', item)}>
+          onPress={() => navigation.navigate('Movies', item)}>
           <View className="space-y-1 mr-1">
             <FastImage
               source={{
@@ -122,7 +122,7 @@ const HomeListTest = ({title, logo, hideSeeAll, idApi}) => {
     </View>
   );
 };
-export default HomeListTest;
+export default Sport;
 const styles = StyleSheet.create({
   Image: {
     width: width * 0.26,

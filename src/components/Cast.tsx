@@ -18,7 +18,6 @@ import {
 } from 'react-native';
 interface Props {
   idCast: any;
-  navigation: any;
 }
 const Cast: React.FC<Props> = ({idCast}) => {
   const [cast, setCast] = useState([]);

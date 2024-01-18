@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable curly */
-import React, {useContext, lazy, Suspense, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import React, {useContext, lazy, Suspense, useEffect, useState} from 'react';
 
 const UserScreen = lazy(() => import('../screens/UserScreen'));
 const ActorScreen = lazy(() => import('../screens/ActorScreen'));
@@ -16,56 +16,54 @@ const MyListsScreen = lazy(() => import('../screens/MyListsScreen'));
 const DrawerScreen = lazy(() => import('../screens/DrawerScreen'));
 const WatchingScreen = lazy(() => import('../screens/WatchingScreen'));
 const RegisterScreen = lazy(() => import('../screens/RegisterScreen'));
-const SeeAllHBOScreen = lazy(() => import('../screens/SeeAllHBOScreen'));
 const VideoFullScreen = lazy(() => import('../screens/VideoFullScreen'));
 const TermsOfUseScreen = lazy(() => import('../screens/TermsOfUseScreen'));
 const OnBoardingScreen = lazy(() => import('../screens/OnBoardingScreen'));
 const TransactionScreen = lazy(() => import('../screens/TransactionScreen'));
 const MoviesOphimScreen = lazy(() => import('../screens/MoviesOphimScreen'));
 const LogInSmartTVScreen = lazy(() => import('../screens/LogInSmartTVScreen'));
+const HomeScreen = lazy(() => import('../screens/HomeScreen'));
 const ManageDevicesScreen = lazy(
   () => import('../screens/ManageDevicesScreen'),
 );
 const PrivacyPolicyScreen = lazy(
   () => import('../screens/PrivacyPolicyScreen'),
 );
-const SeeAllCoreAPIScreen = lazy(
-  () => import('../screens/SeeAllCoreAPIScreen'),
-);
+
 import {getItem} from '../utils/asyncStorage';
 import auth from '@react-native-firebase/auth';
 import {AuthContext} from './AuthProvider';
 export type RootStackParams = {
   openDrawer(): any;
-  User;
-  Home;
-  Actor;
-  LogIn;
+  User: any;
+  Home: any;
+  Actor: any;
+  LogIn: any;
   Movies: {
     item: Object;
   };
-  Drawer;
-  Search;
-  SeeAll;
-  MyList;
-  LogInTV;
-  Settings;
-  Register;
-  Watching;
-  Animation;
-  SeeAllHBO: {
+  Drawer: any;
+  Search: any;
+  // SeeAll: any;
+  MyList: any;
+  LogInTV: any;
+  Settings: any;
+  Register: any;
+  Watching: any;
+  Animation: any;
+  SeeAll: {
     title: string;
     data: any;
     firstItem: number;
   };
-  VideoFull;
-  TermsOfUse;
-  OnBoarding;
-  Transaction;
-  MoviesOphim;
-  ManageDevices;
-  PrivacyPolicy;
-  SeeAllCoreAPIS;
+  VideoFull: any;
+  TermsOfUse: any;
+  OnBoarding: any;
+  Transaction: any;
+  MoviesOphim: any;
+  ManageDevices: any;
+  PrivacyPolicy: any;
+  SeeAllCoreAPIS: any;
 };
 const Stack = createStackNavigator<RootStackParams>();
 //
@@ -93,6 +91,13 @@ const Routes = () => {
   useEffect(() => {
     checkIfAlreadyOnboarded();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    if (user) {
+      // Người dùng đã đăng nhập, xử lý logic ở đây
+      console.log('User is logged in:', user.email);
+    } else {
+      // Người dùng chưa đăng nhập
+      console.log('User is not logged in.');
+    }
     return subscriber; // unsubscribe on unmount
   }, []);
 
@@ -196,10 +201,10 @@ const Routes = () => {
             )}
           </Stack.Screen>
 
-          <Stack.Screen name="SeeAllHBO">
+          <Stack.Screen name="Home">
             {props => (
               <Suspense>
-                <SeeAllHBOScreen {...props} />
+                <HomeScreen {...props} />
               </Suspense>
             )}
           </Stack.Screen>
@@ -267,13 +272,6 @@ const Routes = () => {
               </Suspense>
             )}
           </Stack.Screen>
-          <Stack.Screen name="SeeAllCoreAPIS">
-            {props => (
-              <Suspense>
-                <SeeAllCoreAPIScreen {...props} />
-              </Suspense>
-            )}
-          </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -288,6 +286,14 @@ const Routes = () => {
             {props => (
               <Suspense>
                 <UserScreen {...props} />
+              </Suspense>
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Home">
+            {props => (
+              <Suspense>
+                <HomeScreen {...props} />
               </Suspense>
             )}
           </Stack.Screen>
@@ -372,22 +378,6 @@ const Routes = () => {
             )}
           </Stack.Screen>
 
-          <Stack.Screen name="Animation">
-            {props => (
-              <Suspense>
-                <AnimationScreen {...props} />
-              </Suspense>
-            )}
-          </Stack.Screen>
-
-          <Stack.Screen name="SeeAllHBO">
-            {props => (
-              <Suspense>
-                <SeeAllHBOScreen {...props} />
-              </Suspense>
-            )}
-          </Stack.Screen>
-
           <Stack.Screen name="VideoFull">
             {props => (
               <Suspense>
@@ -448,13 +438,6 @@ const Routes = () => {
             {props => (
               <Suspense>
                 <PrivacyPolicyScreen {...props} />
-              </Suspense>
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="SeeAllCoreAPIS">
-            {props => (
-              <Suspense>
-                <SeeAllCoreAPIScreen {...props} />
               </Suspense>
             )}
           </Stack.Screen>

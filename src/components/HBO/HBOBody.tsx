@@ -1,46 +1,46 @@
-import {FlashList} from '@shopify/flash-list';
-import {useDispatch, useSelector} from 'react-redux';
 import React, {useCallback, useEffect} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {FlashList} from '@shopify/flash-list';
 import {fetchMoviesOphim} from '../../Api/MoviesDb';
-import {setDataHBO, setLoadingHBO, incrementPageHBO} from '../../redux/store';
+import {View, ActivityIndicator, RefreshControl} from 'react-native';
 const HBOTrending = React.lazy(() => import('./HBOTrending'));
 const HBOBodyComponent = React.lazy(() => import('./HBOBodyComponent'));
+
 const HBOBody = () => {
-  const dispatch = useDispatch();
-  const {data, isLoading, page} = useSelector(
-    (state: any) => state.scrollHBOSlice,
-  );
-  const fetchData = useCallback(
-    async (pageNumber: number) => {
-      if (pageNumber > 50) {
-        return;
+  const [data, setData] = React.useState([]);
+  const [page, setPage] = React.useState(31);
+  const [isLoading, setLoading] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
+
+  const fetchData = async (pageNumber: number) => {
+    if (pageNumber > 50) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const newData = await fetchMoviesOphim(pageNumber);
+      if (newData) {
+        setData([...data, ...[newData]]);
       }
-      try {
-        dispatch(setLoadingHBO(true));
-        const newData = await fetchMoviesOphim(pageNumber);
-        if (newData) {
-          dispatch(setDataHBO(newData));
-          dispatch(incrementPageHBO());
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        dispatch(setLoadingHBO(false));
-      }
-    },
-    [dispatch],
-  );
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchData(page);
-  }, [fetchData, page]);
+  }, [page]);
 
-  const handleEndReached = useCallback(() => {
-    if (!isLoading) {
-      fetchData(page);
-    }
-  }, [fetchData, isLoading, page]);
+  const handleEndReached = () => {
+    setPage(prev => prev + 1);
+  };
 
   const renderFooter = () => {
     if (!isLoading) {
@@ -58,19 +58,29 @@ const HBOBody = () => {
   }, []);
 
   return (
-    <FlashList
-      data={data}
-      estimatedItemSize={20}
-      onEndReached={handleEndReached}
-      onEndReachedThreshold={0.1}
-      showsVerticalScrollIndicator={false}
-      ListHeaderComponent={<HBOTrending />}
-      // extraData={item => item?.[0]._id.toString()}
-      // keyExtractor={item => item?.[0]._id.toString()}
-      // renderItem={({item}) => <HBOBodyComponent data={item} />}
-      renderItem={renderItems}
-      ListFooterComponent={renderFooter}
-    />
+    data &&
+    data.length > 0 && (
+      <FlashList
+        data={data}
+        estimatedItemSize={20}
+        renderItem={renderItems}
+        onEndReachedThreshold={0.005}
+        onEndReached={handleEndReached}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={<HBOTrending />}
+        extraData={item => item?.items[0]._id.toString()}
+        keyExtractor={item => item?.items[0]._id.toString()}
+        refreshControl={
+          <RefreshControl
+            tintColor={'#00AA13'}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            progressViewOffset={10}
+          />
+        }
+        ListFooterComponent={renderFooter}
+      />
+    )
   );
 };
 

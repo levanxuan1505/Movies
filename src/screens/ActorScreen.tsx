@@ -23,11 +23,16 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-
+import {RouteProp, NavigationProp} from '@react-navigation/native';
+// Assuming RootStackParams is the type for your stack
+type ActorScreen = {
+  route: RouteProp<RootStackParams, 'Actor'>;
+  navigation: NavigationProp<RootStackParams, 'Actor'>;
+};
 const ios = Platform.OS === 'ios';
 const verticalMargin = ios ? '' : ' my-3';
 let {width, height} = Dimensions.get('window');
-const ActorScreen = () => {
+const ActorScreen: React.FC<ActorScreen> = () => {
   const {params: item} = useRoute();
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(false);

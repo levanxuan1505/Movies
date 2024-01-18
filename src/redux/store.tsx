@@ -5,49 +5,32 @@ const scrollSlice = createSlice({
   name: 'scroll',
   initialState: {
     data: [],
-    isLoading: false,
-    page: 1,
   },
   reducers: {
     setData: (state: any, action) => {
-      state.data = [...state.data, action.payload];
-    },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    incrementPage: state => {
-      state.page += 1;
+      state.data = action.payload;
     },
   },
 });
 
 const scrollHBOSlice = createSlice({
-  name: 'scrollHBOSlice',
+  name: 'scrollHBO',
   initialState: {
-    data: [],
-    isLoading: false,
-    page: 31,
+    data: '',
   },
   reducers: {
     setDataHBO: (state: any, action) => {
-      state.data = [...state.data, action.payload];
-    },
-    setLoadingHBO: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    incrementPageHBO: state => {
-      state.page += 1;
+      state.data = action.payload;
     },
   },
 });
 
-export const {setData, setLoading, incrementPage} = scrollSlice.actions;
-export const {setDataHBO, setLoadingHBO, incrementPageHBO} =
-  scrollHBOSlice.actions;
+export const {setData} = scrollSlice.actions;
+export const {setDataHBO} = scrollHBOSlice.actions;
 
 const reducer = {
   scroll: scrollSlice.reducer,
-  scrollHBOSlice: scrollHBOSlice.reducer,
+  scrollHBO: scrollHBOSlice.reducer,
 };
 
 const store = configureStore({

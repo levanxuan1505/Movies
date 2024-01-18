@@ -3,7 +3,6 @@
 import {
   View,
   Text,
-  Image,
   ScrollView,
   Dimensions,
   TouchableOpacity,
@@ -17,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ChevronLeftIcon, CreditCardIcon} from 'react-native-heroicons/outline';
+import FastImage from 'react-native-fast-image';
 
 const TransactionScreen = ({route}) => {
   const title = route.params.title;
@@ -57,14 +57,19 @@ const TransactionScreen = ({route}) => {
               justifyContent: 'center',
               marginTop: 100,
             }}>
-            <Image
+            <FastImage
               style={{
                 width: width * 0.9,
                 height: width * 0.56,
                 borderRadius: 10,
+                marginBottom: 20,
               }}
               source={require('../assets/images/NFC.png')}
+              resizeMode={FastImage.resizeMode.cover}
             />
+            <Text style={{fontSize: 26, fontWeight: '800', color: '#00AA13'}}>
+              Scan to Payment
+            </Text>
           </View>
           <View style={{width: width, height: width}}>
             <LottieView

@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Colors} from '@constants';
-import {Freeze} from 'react-freeze';
 import React, {useState} from 'react';
 const {width} = Dimensions.get('window');
 import SplashScreen from './SplashScreen';
@@ -82,73 +81,69 @@ const OnBoardingScreen = () => {
       </TouchableOpacity>
     );
   };
-  return (
-    <Freeze freeze={false}>
-      {isLoading ? (
-        <SplashScreen setIsLoading={setIsLoading} />
-      ) : (
-        <View style={styles.container}>
-          <Onboarding
-            skipToPage={2}
-            onDone={handleDone}
-            bottomBarHeight={110}
-            initialNumToRender={0}
-            DotComponent={DotButton}
-            titleStyles={styles.title}
-            bottomBarHighlight={false}
-            SkipButtonComponent={SkipButton}
-            DoneButtonComponent={DoneButton}
-            NextButtonComponent={NextButton}
-            subTitleStyles={styles.subTitle}
-            transitionAnimationDuration={1000}
-            pages={[
-              {
-                title: 'Netflix',
-                subtitle: 'Watch Money Heist | Netflix Official Site',
-                backgroundColor: Colors.LIGHT_GREEN,
-                image: (
-                  <View style={styles.lottie}>
-                    <LottieView
-                      source={require('../assets/OnboardingAnimations/1.json')}
-                      autoPlay
-                      loop
-                    />
-                  </View>
-                ),
-              },
-              {
-                title: 'HBO_GO',
-                subtitle: 'Home to Groundbreaking Series, Movies, Comedies ...',
-                backgroundColor: Colors.DARK_FIVE,
-                image: (
-                  <View style={styles.lottie}>
-                    <LottieView
-                      source={require('../assets/OnboardingAnimations/2.json')}
-                      autoPlay
-                      loop
-                    />
-                  </View>
-                ),
-              },
-              {
-                title: 'Sports',
-                subtitle: 'F1 - The Official Home of Formula 1® Racing',
-                backgroundColor: Colors.DARK_FOUR,
-                image: (
-                  <View style={styles.lottie}>
-                    <LottieView
-                      source={require('../assets/OnboardingAnimations/3.json')}
-                      autoPlay
-                      loop
-                    />
-                  </View>
-                ),
-              },
-            ]}
-          />
-        </View>
-      )}
-    </Freeze>
+  return isLoading ? (
+    <SplashScreen setIsLoading={setIsLoading} />
+  ) : (
+    <View style={styles.container}>
+      <Onboarding
+        skipToPage={2}
+        onDone={handleDone}
+        bottomBarHeight={110}
+        initialNumToRender={0}
+        DotComponent={DotButton}
+        titleStyles={styles.title}
+        bottomBarHighlight={false}
+        SkipButtonComponent={SkipButton}
+        DoneButtonComponent={DoneButton}
+        NextButtonComponent={NextButton}
+        subTitleStyles={styles.subTitle}
+        transitionAnimationDuration={1000}
+        pages={[
+          {
+            title: 'Netflix',
+            subtitle: 'Watch Money Heist | Netflix Official Site',
+            backgroundColor: Colors.LIGHT_GREEN,
+            image: (
+              <View style={styles.lottie}>
+                <LottieView
+                  source={require('../assets/OnboardingAnimations/1.json')}
+                  autoPlay
+                  loop
+                />
+              </View>
+            ),
+          },
+          {
+            title: 'HBO_GO',
+            subtitle: 'Home to Groundbreaking Series, Movies, Comedies ...',
+            backgroundColor: Colors.DARK_FIVE,
+            image: (
+              <View style={styles.lottie}>
+                <LottieView
+                  source={require('../assets/OnboardingAnimations/2.json')}
+                  autoPlay
+                  loop
+                />
+              </View>
+            ),
+          },
+          {
+            title: 'Sports',
+            subtitle: 'F1 - The Official Home of Formula 1® Racing',
+            backgroundColor: Colors.DARK_FOUR,
+            image: (
+              <View style={styles.lottie}>
+                <LottieView
+                  source={require('../assets/OnboardingAnimations/3.json')}
+                  autoPlay
+                  loop
+                />
+              </View>
+            ),
+          },
+        ]}
+      />
+    </View>
   );
 };
 const styles = StyleSheet.create({
